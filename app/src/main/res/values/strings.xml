@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TravelerApp</string>
+    <string name="heading">Traveler</string>
+    <string name="welcome">Welcome to Traveler</string>
 </resources>
