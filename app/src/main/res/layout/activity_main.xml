@@ -10,9 +10,19 @@
     tools:context="prak.travelerapp.MainActivity">
 
     <TextView
+        android:id="@+id/welcomeMessage"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text= "@string/heading"
+        android:text= "@string/welcome"
         android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/newTrip"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newTrip"
+        style="?android:attr/borderlessButtonStyle"
+        />
 </RelativeLayout>
