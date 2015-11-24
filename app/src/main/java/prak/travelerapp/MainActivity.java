@@ -1,14 +1,19 @@
 package prak.travelerapp;
 
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import prak.travelerapp.Database.Dataset;
+import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
+
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private Datasource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,26 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         WeatherTask weathertask = new WeatherTask();
         weathertask.delegate = this;
         weathertask.execute(new String[]{"London,UK"});
+
+        // Probeweise Erstellung eines Test Datasets
+        String[] testKategorien = new String[11];
+
+        testKategorien[0] = "Trocken"; // eher trockenes Wetter, Niederschlagswahrscheinlichkeit <= 50%
+        testKategorien[1] = "Nass"; // eher nasses Wetter, Niederschlagswahrscheinlichkeit > 50%
+        testKategorien[2] = "Strandurlaub";
+        testKategorien[3] = "Städtetrip";
+        testKategorien[4] = "Skifahren";
+        testKategorien[5] = "Wandern";
+        testKategorien[6] = "Geschäftsreise";
+        testKategorien[7] = "Partyurlaub";
+        testKategorien[8] = "Camping";
+        testKategorien[9] = "Festival";
+        testKategorien[10] = "Manuell"; // vom User manuell hinzugefügtes Item
+
+        Dataset testSet = new Dataset(0, "Testitem", 0, 0, testKategorien);
+        Log.d(LOG_TAG, "Inhalt des Testsets: " + testSet.toString());
+
+        dataSource = new Datasource(this);
 
     }
 
