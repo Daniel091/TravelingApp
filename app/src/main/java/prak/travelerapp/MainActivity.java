@@ -30,24 +30,17 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         weathertask.execute(new String[]{"London,UK"});
 
         // Probeweise Erstellung eines Test Datasets
-        String[] testKategorien = new String[11];
 
-        testKategorien[0] = "Trocken"; // eher trockenes Wetter, Niederschlagswahrscheinlichkeit <= 50%
-        testKategorien[1] = "Nass"; // eher nasses Wetter, Niederschlagswahrscheinlichkeit > 50%
-        testKategorien[2] = "Strandurlaub";
-        testKategorien[3] = "Städtetrip";
-        testKategorien[4] = "Skifahren";
-        testKategorien[5] = "Wandern";
-        testKategorien[6] = "Geschäftsreise";
-        testKategorien[7] = "Partyurlaub";
-        testKategorien[8] = "Camping";
-        testKategorien[9] = "Festival";
-        testKategorien[10] = "Manuell"; // vom User manuell hinzugefügtes Item
-
-        Dataset testSet = new Dataset(0, "Testitem", 0, 0, testKategorien);
+        Dataset testSet = new Dataset(0, "Testitem", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Log.d(LOG_TAG, "Inhalt des Testsets: " + testSet.toString());
 
         dataSource = new Datasource(this);
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geöffnet.");
+        dataSource.open();
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
+        dataSource.close();
 
     }
 
