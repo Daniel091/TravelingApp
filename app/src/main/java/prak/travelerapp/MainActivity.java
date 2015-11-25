@@ -1,33 +1,35 @@
 package prak.travelerapp;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    private Button newTrip;
+import prak.travelerapp.WeatherAPI.WeatherTask;
+import prak.travelerapp.WeatherAPI.model.Weather;
+
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("dsd", "dchih");
+        Log.d("dsd","dchdjskdskjih");
 
-        prepareViews();
-        prepareListeners();
+        //WeatherAPI weather = new WeatherAPI();
+        //weather.execute("http://api.openweathermap.org/data/2.5/forecast/daily?q=ibiza&cnt=3&appid=5883d3f233f058145feca6dd84ec76f9");
+
+        WeatherTask weathertask = new WeatherTask();
+        weathertask.delegate = this;
+        weathertask.execute(new String[]{"London,UK"});
+
     }
 
-    private void prepareListeners() {
-        newTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MainActivity","Clicked Started new Trip");
-            }
-        });
-    }
+    @Override
+    public void weatherProcessFinish(Weather output) {
 
-    private void prepareViews() {
-        newTrip = (Button) findViewById(R.id.newTrip);
+        Log.d("dcw",output.toString());
+
     }
 }
