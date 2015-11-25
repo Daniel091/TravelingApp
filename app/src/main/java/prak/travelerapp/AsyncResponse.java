@@ -7,4 +7,5 @@ import prak.travelerapp.WeatherAPI.model.Weather;
  */
 public interface AsyncResponse {
     void weatherProcessFinish(Weather output);
+    void weatherProcessFailed();
 }

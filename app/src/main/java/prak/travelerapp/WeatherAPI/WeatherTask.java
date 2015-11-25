@@ -13,16 +13,18 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 public class WeatherTask extends AsyncTask<String, Void, Weather> {
 
     public AsyncResponse delegate = null;
+    private Exception error;
+
     @Override
     protected Weather doInBackground(String... params) {
         Weather weather = new Weather();
-        String data = ( (new WeatherHTTPClient()).getWeatherData(params[0]));
 
         try {
+            String data = ( (new WeatherHTTPClient()).getWeatherData(params[0]));
             weather = JSONWeatherParser.getWeather(data);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            return null;
         }
         return weather;
 
@@ -34,7 +36,11 @@ public class WeatherTask extends AsyncTask<String, Void, Weather> {
     @Override
     protected void onPostExecute(Weather weather) {
         super.onPostExecute(weather);
-        delegate.weatherProcessFinish(weather);
+        if(weather != null) {
+            delegate.weatherProcessFinish(weather);
+        }else{
+            delegate.weatherProcessFailed();
+        }
     }
 
 
