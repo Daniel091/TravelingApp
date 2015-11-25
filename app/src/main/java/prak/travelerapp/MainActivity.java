@@ -1,31 +1,16 @@
 package prak.travelerapp;
 
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class MainActivity extends AppCompatActivity {
     private Button newTrip;
-    private TextView mViewName,mViewAddress;
-    /**
-     * Request code passed to the PlacePicker intent to identify its result when it returns.
-     */
-    private static final int REQUEST_PLACE_PICKER = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         prepareViews();
         prepareListeners();
+        setUpFragment();
 
 
     }
@@ -43,19 +29,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivity", "Clicked Started new Trip");
-                //setUpFragments();
-                onPickButtonClick(v);
             }
         });
     }
 
     private void prepareViews() {
         newTrip = (Button) findViewById(R.id.newTrip);
-        mViewName = (TextView) findViewById(R.id.mViewName1);
-        mViewAddress = (TextView) findViewById(R.id.mViewName2);
     }
 
-    private void setUpFragments() {
+    private void setUpFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -63,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.ll,fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 
+    /*
     public void onPickButtonClick(View v) {
         // Construct an intent for the place picker
         try {
@@ -111,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+    */
 }
