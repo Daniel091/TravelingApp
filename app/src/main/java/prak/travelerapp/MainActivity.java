@@ -1,5 +1,6 @@
 package prak.travelerapp;
 
+import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -14,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
@@ -25,16 +29,25 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("dsd", "dchih");
-        Log.d("dsd","dchdjskdskjih");
 
+        googlePlacesTest();
+
+        //weatherAPItest();
+
+    }
+
+    private void googlePlacesTest(){
+
+        //request latest google play services update
+        int googleServiceStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this,googleServiceStatus, 10);
+        if(dialog!=null){
+            dialog.show();
+        }
 
         prepareViews();
         prepareListeners();
         setUpFragment();
-
-        //weatherAPItest();
-
     }
 
     private void prepareListeners() {
