@@ -17,6 +17,26 @@
         android:text= "@string/welcome"
         android:textSize="25sp"/>
 
+    <LinearLayout
+        android:layout_below="@id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <TextView
+        android:layout_below="@id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mViewName1"/>
+
+    <TextView
+        android:layout_below="@id/mViewName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mViewName2"/>
+
     <Button
         android:id="@+id/newTrip"
         android:layout_alignParentBottom="true"
