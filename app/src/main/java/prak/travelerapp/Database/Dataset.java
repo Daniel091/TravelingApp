@@ -148,112 +148,12 @@ public class Dataset {
 
     @Override
     public String toString() {
-
-        String basicOutput;
-        if (basic == 0) {
-            basicOutput = "Nein";
-        } else if (basic == 1) {
-            basicOutput = "Ja";
-        } else {
-            basicOutput = "falscher Wert";
-        }
-
-        String geschlechtOutput;
-        if (geschlecht == 0) {
-            geschlechtOutput = "Neutral";
-        } else if (geschlecht == 1) {
-            geschlechtOutput = "Mann";
-        } else if (geschlecht == 2) {
-            geschlechtOutput = "Frau";
-        } else {
-            geschlechtOutput = "falscher Wert";
-        }
-
-        String trockenOutput;
-        if (trocken == 0) {
-            trockenOutput = "Nein";
-        } else if (trocken == 1) {
-            trockenOutput = "Ja";
-        } else {
-            trockenOutput = "falscher Wert";
-        }
-
-        String strandurlaubOutput;
-        if (strandurlaub == 0) {
-            strandurlaubOutput = "Nein";
-        } else if (strandurlaub == 1) {
-            strandurlaubOutput = "Ja";
-        } else {
-            strandurlaubOutput = "falscher Wert";
-        }
-
-        String staedtetripOutput;
-        if (staedtetrip == 0) {
-            staedtetripOutput = "Nein";
-        } else if (staedtetrip == 1) {
-            staedtetripOutput = "Ja";
-        } else {
-            staedtetripOutput = "falscher Wert";
-        }
-
-        String skifahrenOutput;
-        if (skifahren == 0) {
-            skifahrenOutput = "Nein";
-        } else if (skifahren == 1) {
-            skifahrenOutput = "Ja";
-        } else {
-            skifahrenOutput = "falscher Wert";
-        }
-
-        String wandernOutput;
-        if (wandern == 0) {
-            wandernOutput = "Nein";
-        } else if (wandern == 1) {
-            wandernOutput = "Ja";
-        } else {
-            wandernOutput = "falscher Wert";
-        }
-
-        String geschaeftsreiseOutput;
-        if (trocken == 0) {
-            geschaeftsreiseOutput = "Nein";
-        } else if (trocken == 1) {
-            geschaeftsreiseOutput = "Ja";
-        } else {
-            geschaeftsreiseOutput = "falscher Wert";
-        }
-
-        String partyurlaubOutput;
-        if (partyurlaub == 0) {
-            partyurlaubOutput = "Nein";
-        } else if (partyurlaub == 1) {
-            partyurlaubOutput = "Ja";
-        } else {
-            partyurlaubOutput = "falscher Wert";
-        }
-
-        String campingOutput;
-        if (camping == 0) {
-            campingOutput = "Nein";
-        } else if (camping == 1) {
-            campingOutput = "Ja";
-        } else {
-            campingOutput = "falscher Wert";
-        }
-
-        String festivalOutput;
-        if (festival == 0) {
-            festivalOutput = "Nein";
-        } else if (festival == 1) {
-            festivalOutput = "Ja";
-        } else {
-            festivalOutput = "falscher Wert";
-        }
-        String output = "ID: " + itemID + ", " + itemName + ", Basic: " + basicOutput + ", Geschlecht: " +
-                geschlechtOutput + ", Trocken: " + trockenOutput + ", Strandurlaub: " + strandurlaubOutput
-                + ", Städtetrip: " + staedtetripOutput + ", Skifahren: " + skifahrenOutput + ", Wandern: " + wandernOutput +
-                ", Geschäftsreise: " + geschaeftsreiseOutput + ", Partyurlaub: " + partyurlaubOutput +
-                ", Camping: " + campingOutput + ", Festival: " + festivalOutput;
+        
+        String output = "ID: " + itemID + ", Name: " + itemName + ", Basic: " + basic + ", Geschlecht: " +
+                geschlecht + ", Trocken: " + trocken + ", Strandurlaub: " + strandurlaub
+                + ", Städtetrip: " + staedtetrip + ", Skifahren: " + skifahren + ", Wandern: " + wandern +
+                ", Geschäftsreise: " + geschaeftsreise + ", Partyurlaub: " + partyurlaub +
+                ", Camping: " + camping + ", Festival: " + festival;
 
         return output;
     }
