@@ -2,8 +2,6 @@ package prak.travelerapp;
 
 import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
-
-
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
