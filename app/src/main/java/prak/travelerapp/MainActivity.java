@@ -13,12 +13,17 @@ import android.widget.Button;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import prak.travelerapp.Database.Dataset;
+import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private Button newTrip;
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private Datasource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }else{
             //TODO tell user to get internet connection
         }
+
+        // Probeweise Erstellung eines Test Datasets
+
+        Dataset testSet = new Dataset(0, "Testitem", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        Log.d(LOG_TAG, "Inhalt des Testsets: " + testSet.toString());
+
+        dataSource = new Datasource(this);
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geöffnet.");
+        dataSource.open();
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
+        dataSource.close();
 
     }
 
