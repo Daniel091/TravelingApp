@@ -13,50 +13,60 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 public class JSONWeatherParser {
 
     public static Weather getWeather(String data) throws JSONException  {
-        Weather weather = new Weather();
 
-        // We create out JSONObject from the data
-        JSONObject jObj = new JSONObject(data);
+        if(data != null) {
+            try {
+                Weather weather = new Weather();
 
-        // We start extracting the info
-        Location loc = new Location();
+                // We create out JSONObject from the data
+                JSONObject jObj = new JSONObject(data);
 
-        JSONObject cityObj = getObject("city", jObj);
-        loc.setCity(getString("name",cityObj));
-        loc.setCountry(getString("country", cityObj));
+                // We start extracting the info
+                Location loc = new Location();
 
-
-        JSONObject coordObj = getObject("coord", cityObj);
-        loc.setLatitude(getFloat("lat", coordObj));
-        loc.setLongitude(getFloat("lon", coordObj));
-        weather.location = loc;
+                JSONObject cityObj = getObject("city", jObj);
+                loc.setCity(getString("name", cityObj));
+                loc.setCountry(getString("country", cityObj));
 
 
-        JSONArray weatherList = getArray("list", jObj);
+                JSONObject coordObj = getObject("coord", cityObj);
+                loc.setLatitude(getFloat("lat", coordObj));
+                loc.setLongitude(getFloat("lon", coordObj));
+                weather.location = loc;
 
-        for (int i = 0; i < weatherList.length(); i++) {
-            Day curDay = new Day();
-            JSONObject dayObj = weatherList.getJSONObject(i);
 
-            curDay.setClouds(getInt("clouds",dayObj));
-            curDay.setDeg(getInt("deg",dayObj));
+                JSONArray weatherList = getArray("list", jObj);
 
-            JSONObject tempObj = getObject("temp",dayObj);
-            curDay.temperature.setDayTemp(getFloat("day", tempObj));
-            curDay.temperature.setNightTemp(getFloat("night", tempObj));
-            curDay.temperature.setMinTemp(getFloat("min", tempObj));
-            curDay.temperature.setMaxTemp(getFloat("max", tempObj));
-            curDay.temperature.setMornTemp(getFloat("morn", tempObj));
-            curDay.temperature.setEveTemp(getFloat("eve", tempObj));
+                for (int i = 0; i < weatherList.length(); i++) {
+                    Day curDay = new Day();
+                    JSONObject dayObj = weatherList.getJSONObject(i);
 
-            JSONObject weath = getArray("weather", dayObj).getJSONObject(0);
-            curDay.condition.setDescription(getString("description",weath));
-            curDay.condition.setMain(getString("main",weath));
+                    curDay.setClouds(getInt("clouds", dayObj));
+                    curDay.setDeg(getInt("deg", dayObj));
 
-            weather.days[i] = curDay;
+                    JSONObject tempObj = getObject("temp", dayObj);
+                    curDay.temperature.setDayTemp(getFloat("day", tempObj));
+                    curDay.temperature.setNightTemp(getFloat("night", tempObj));
+                    curDay.temperature.setMinTemp(getFloat("min", tempObj));
+                    curDay.temperature.setMaxTemp(getFloat("max", tempObj));
+                    curDay.temperature.setMornTemp(getFloat("morn", tempObj));
+                    curDay.temperature.setEveTemp(getFloat("eve", tempObj));
+
+                    JSONObject weath = getArray("weather", dayObj).getJSONObject(0);
+                    curDay.condition.setDescription(getString("description", weath));
+                    curDay.condition.setMain(getString("main", weath));
+
+                    weather.days[i] = curDay;
+                }
+
+                return weather;
+            }catch(JSONException e){
+                return null;
+            }
+
+        }else{
+            return null;
         }
-
-        return weather;
     }
 
 

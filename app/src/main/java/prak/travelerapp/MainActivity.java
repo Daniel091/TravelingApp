@@ -17,19 +17,38 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         Log.d("dsd", "dchih");
         Log.d("dsd","dchdjskdskjih");
 
-        //WeatherAPI weather = new WeatherAPI();
-        //weather.execute("http://api.openweathermap.org/data/2.5/forecast/daily?q=ibiza&cnt=3&appid=5883d3f233f058145feca6dd84ec76f9");
 
-        WeatherTask weathertask = new WeatherTask();
-        weathertask.delegate = this;
-        weathertask.execute(new String[]{"London,UK"});
+        weatherAPItest();
+
+    }
+
+    public void weatherAPItest(){
+
+        boolean isOnline = Utils.isOnline(this);
+        if(isOnline) {
+
+            WeatherTask weathertask = new WeatherTask();
+            weathertask.delegate = this;
+            weathertask.execute(new String[]{"Berlin"});
+
+        }else{
+            //TODO tell user to get internet connection
+        }
 
     }
 
     @Override
     public void weatherProcessFinish(Weather output) {
 
-        Log.d("dcw",output.toString());
+        Log.d("dcw", output.toString());
+
+    }
+
+    @Override
+    public void weatherProcessFailed() {
+
+        Log.d("ERROR", "WeatherAPIcall failed");
+        //TODO -> handle exception
 
     }
 }
