@@ -11,7 +11,6 @@ public class Dataset {
 
     private long itemID;
     private String itemName;
-    private int basic; // 0 für normales Item, 1 für Basic Item
     private int geschlecht; // 0 für "Neutral" , 1 für "Mann", 2 für "Frau"
     private int trocken; // 0 für "Nein", 1 für "Ja"
     private int strandurlaub;  // 0 für "Nein", 1 für "Ja"
@@ -23,12 +22,11 @@ public class Dataset {
     private int camping;  // 0 für "Nein", 1 für "Ja"
     private int festival;  // 0 für "Nein", 1 für "Ja"
 
-    public Dataset(long itemID, String itemName, int basic, int geschlecht, int trocken,
+    public Dataset(long itemID, String itemName, int geschlecht, int trocken,
                    int strandurlaub, int staedtetrip, int skifahren, int wandern, int geschaeftsreise, int partyurlaub, int camping, int festival) {
 
         this.itemID = itemID;
         this.itemName = itemName;
-        this.basic = basic;
         this.geschlecht = geschlecht;
         this.trocken = trocken;
         this.strandurlaub = strandurlaub;
@@ -56,14 +54,6 @@ public class Dataset {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public int getBasic() {
-        return basic;
-    }
-
-    public void setBasic(int basic) {
-        this.basic = basic;
     }
 
     public int getGeschlecht() {
@@ -149,11 +139,15 @@ public class Dataset {
     @Override
     public String toString() {
         
-        String output = "ID: " + itemID + ", Name: " + itemName + ", Basic: " + basic + ", Geschlecht: " +
+        String output = "ID: " + itemID + ", Name: " + itemName;
+                /**
+
+                + ", Basic: " + basic + ", Geschlecht: " +
                 geschlecht + ", Trocken: " + trocken + ", Strandurlaub: " + strandurlaub
                 + ", Städtetrip: " + staedtetrip + ", Skifahren: " + skifahren + ", Wandern: " + wandern +
                 ", Geschäftsreise: " + geschaeftsreise + ", Partyurlaub: " + partyurlaub +
                 ", Camping: " + camping + ", Festival: " + festival;
+                 */
 
         return output;
     }

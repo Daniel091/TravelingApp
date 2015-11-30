@@ -25,7 +25,6 @@ public class Datasource {
     private String[] columns = {
             DatabaseHelper.COLUMN_ID,
             DatabaseHelper.COLUMN_NAME,
-            DatabaseHelper.COLUMN_BASIC,
             DatabaseHelper.COLUMN_SEX,
             DatabaseHelper.COLUMN_TROCKEN,
             DatabaseHelper.COLUMN_STAEDTETRIP,
@@ -59,21 +58,21 @@ public class Datasource {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_NAME, itemName);
-        values.put(DatabaseHelper.COLUMN_BASIC, basic);
-        values.put(DatabaseHelper.COLUMN_SEX, geschlecht);
-        values.put(DatabaseHelper.COLUMN_TROCKEN, trocken);
-        values.put(DatabaseHelper.COLUMN_STRANDURLAUB, strandurlaub);
-        values.put(DatabaseHelper.COLUMN_STAEDTETRIP, staedtetrip);
-        values.put(DatabaseHelper.COLUMN_SKIFAHREN, skifahren);
-        values.put(DatabaseHelper.COLUMN_WANDERN, wandern);
-        values.put(DatabaseHelper.COLUMN_GESCHAEFTSREISE, geschaeftsreise);
-        values.put(DatabaseHelper.COLUMN_PARTYURLAUB, partyurlaub);
-        values.put(DatabaseHelper.COLUMN_CAMPING, camping);
-        values.put(DatabaseHelper.COLUMN_FESTIVAL, festival);
+        //values.put(DatabaseHelper.COLUMN_BASIC, basic);
+        //values.put(DatabaseHelper.COLUMN_SEX, geschlecht);
+        //values.put(DatabaseHelper.COLUMN_TROCKEN, trocken);
+        //values.put(DatabaseHelper.COLUMN_STRANDURLAUB, strandurlaub);
+        //values.put(DatabaseHelper.COLUMN_STAEDTETRIP, staedtetrip);
+        //values.put(DatabaseHelper.COLUMN_SKIFAHREN, skifahren);
+        //values.put(DatabaseHelper.COLUMN_WANDERN, wandern);
+        //values.put(DatabaseHelper.COLUMN_GESCHAEFTSREISE, geschaeftsreise);
+        //values.put(DatabaseHelper.COLUMN_PARTYURLAUB, partyurlaub);
+        //values.put(DatabaseHelper.COLUMN_CAMPING, camping);
+        //values.put(DatabaseHelper.COLUMN_FESTIVAL, festival);
 
-        long insertId = database.insert(DatabaseHelper.TABLE_ITEMS, null, values);
+        long insertId = database.insert(DatabaseHelper.TABLE_ITEM_LIST, null, values);
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_ITEMS,
+        Cursor cursor = database.query(DatabaseHelper.TABLE_ITEM_LIST,
                 columns, DatabaseHelper.COLUMN_ID + "=" + insertId,
                 null, null, null, null);
 
@@ -86,8 +85,7 @@ public class Datasource {
 
     private Dataset cursorToDataset(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_ID);
-        int idName = cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME);
-        int idBasic = cursor.getColumnIndex(DatabaseHelper.COLUMN_BASIC);
+        int idName = cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME);;
         int idSex = cursor.getColumnIndex(DatabaseHelper.COLUMN_SEX);
         int idTrocken = cursor.getColumnIndex(DatabaseHelper.COLUMN_TROCKEN);
         int idStrandurlaub = cursor.getColumnIndex(DatabaseHelper.COLUMN_STRANDURLAUB);
@@ -101,7 +99,6 @@ public class Datasource {
 
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(idName);
-        int basic = cursor.getInt(idBasic);
         int geschlecht = cursor.getInt(idSex);
         int trocken = cursor.getInt(idTrocken);
         int strandurlaub = cursor.getInt(idStrandurlaub);
@@ -113,7 +110,7 @@ public class Datasource {
         int camping = cursor.getInt(idCamping);
         int festival = cursor.getInt(idFestival);
 
-        Dataset dataSet = new Dataset(id, name, basic, geschlecht, trocken, strandurlaub,
+        Dataset dataSet = new Dataset(id, name, geschlecht, trocken, strandurlaub,
                 staedtetrip, skifahren, wandern, geschaeftsreise, partyurlaub, camping, festival);
 
         return dataSet;
@@ -122,7 +119,7 @@ public class Datasource {
     public List<Dataset> getAllDatasets() {
         List<Dataset> dataSetList = new ArrayList<>();
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_ITEMS,
+        Cursor cursor = database.query(DatabaseHelper.TABLE_ITEM_LIST,
                 columns, null, null, null, null, null);
 
         cursor.moveToFirst();
