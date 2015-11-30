@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Neue Schriftart für alle Texte
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
