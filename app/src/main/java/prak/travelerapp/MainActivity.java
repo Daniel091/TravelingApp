@@ -1,11 +1,11 @@
 package prak.travelerapp;
 
-import android.os.AsyncTask;
 import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import prak.travelerapp.Database.Dataset;
 import prak.travelerapp.Database.Datasource;
+import prak.travelerapp.Database.ItemViewActivity;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private Button newTrip;
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Datasource dataSource;
+    private Button itemList; // startet die Packliste
+    private Intent listIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,31 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         googlePlacesTest();
         //weatherAPItest();
+
+        //Wechselt zur View der Packliste
+        changeToItemList();
+    }
+
+    private void changeToItemList() {
+
+        itemList = (Button) findViewById(R.id.itemList);
+        itemList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listIntent = new Intent(MainActivity.this, ItemViewActivity.class);
+                Log.d("MainActivity", "Click started item list");
+
+                startActivity(listIntent);
+            }
+        });
     }
 
     private void googlePlacesTest(){
 
         //request latest google play services update
         int googleServiceStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this,googleServiceStatus, 10);
+        Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this, googleServiceStatus, 10);
         if(dialog!=null){
             dialog.show();
         }
@@ -51,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         newTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("MainActivity", "Clicked Started new Trip");
+                Log.d("MainActivity", "Click started new trip");
             }
         });
     }
@@ -82,20 +102,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }else{
             //TODO tell user to get internet connection
         }
-
-        // Probeweise Erstellung eines Test Datasets
-
-        Dataset testSet = new Dataset(0, "Testitem", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
-        Log.d(LOG_TAG, "Inhalt des Testsets: " + testSet.toString());
-
-        dataSource = new Datasource(this);
-
-        Log.d(LOG_TAG, "Die Datenquelle wird geöffnet.");
-        dataSource.open();
-
-        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
-        dataSource.close();
-
     }
 
     @Override

@@ -1,7 +1,5 @@
 package prak.travelerapp.Database;
 
-import java.util.Arrays;
-
 /**
  * Created by marcel on 24.11.15.
  *
@@ -23,12 +21,11 @@ public class Dataset {
     private int camping;  // 0 für "Nein", 1 für "Ja"
     private int festival;  // 0 für "Nein", 1 für "Ja"
 
-    public Dataset(long itemID, String itemName, int basic, int geschlecht, int trocken,
+    public Dataset(long itemID, String itemName, int geschlecht, int trocken,
                    int strandurlaub, int staedtetrip, int skifahren, int wandern, int geschaeftsreise, int partyurlaub, int camping, int festival) {
 
         this.itemID = itemID;
         this.itemName = itemName;
-        this.basic = basic;
         this.geschlecht = geschlecht;
         this.trocken = trocken;
         this.strandurlaub = strandurlaub;
@@ -56,14 +53,6 @@ public class Dataset {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public int getBasic() {
-        return basic;
-    }
-
-    public void setBasic(int basic) {
-        this.basic = basic;
     }
 
     public int getGeschlecht() {
@@ -148,13 +137,8 @@ public class Dataset {
 
     @Override
     public String toString() {
-        
-        String output = "ID: " + itemID + ", Name: " + itemName + ", Basic: " + basic + ", Geschlecht: " +
-                geschlecht + ", Trocken: " + trocken + ", Strandurlaub: " + strandurlaub
-                + ", Städtetrip: " + staedtetrip + ", Skifahren: " + skifahren + ", Wandern: " + wandern +
-                ", Geschäftsreise: " + geschaeftsreise + ", Partyurlaub: " + partyurlaub +
-                ", Camping: " + camping + ", Festival: " + festival;
 
+        String output = "ID: " + itemID + ", Name: " + itemName;
         return output;
     }
 

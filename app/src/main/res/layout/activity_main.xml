@@ -33,4 +33,13 @@
         android:text="@string/newTrip"
         style="?android:attr/borderlessButtonStyle"
         />
+
+    <Button
+        android:id="@+id/itemList"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/itemList"
+        style="?android:attr/borderlessButtonStyle"
+        />
 </RelativeLayout>

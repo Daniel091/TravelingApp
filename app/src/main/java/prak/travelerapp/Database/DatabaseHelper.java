@@ -17,11 +17,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "kofferitems.db";
     public static final int DB_VERSION = 1;
 
-    public static final String TABLE_ITEMS = "item_list";
-
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "itemname";
-    public static final String COLUMN_BASIC = "basic";
+    public static final String TABLE_ITEM_LIST = "item_list";
     public static final String COLUMN_SEX = "geschlecht";
     public static final String COLUMN_TROCKEN = "trocken";
     public static final String COLUMN_STAEDTETRIP = "staedtetrip";
@@ -34,10 +32,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FESTIVAL = "festival";
 
     public static final String SQL_CREATE =
-            "CREATE TABLE " + TABLE_ITEMS +
+
+            "CREATE TABLE " + TABLE_ITEM_LIST +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
-                    COLUMN_BASIC + " INTEGER, " +
                     COLUMN_SEX + " INTEGER, " +
                     COLUMN_TROCKEN + " INTEGER, " +
                     COLUMN_STAEDTETRIP + " INTEGER, " +
