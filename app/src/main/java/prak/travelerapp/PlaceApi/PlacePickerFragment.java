@@ -1,4 +1,4 @@
-package prak.travelerapp;
+package prak.travelerapp.PlaceApi;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+
+import prak.travelerapp.R;
 
 public class PlacePickerFragment extends Fragment {
     /**

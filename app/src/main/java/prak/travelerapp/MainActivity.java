@@ -15,6 +15,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.Database.ItemViewActivity;
+import prak.travelerapp.PlaceApi.AutocompleteActivity;
+import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Datasource dataSource;
     private Button itemList; // startet die Packliste
-    private Intent listIntent;
+    private Intent listIntent,PlaceActivityIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +56,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     private void googlePlacesTest(){
-
         //request latest google play services update
         int googleServiceStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this, googleServiceStatus, 10);
         if(dialog!=null){
             dialog.show();
         }
-
         prepareViews();
         prepareListeners();
         setUpFragment();
@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivity", "Click started new trip");
+                PlaceActivityIntent = new Intent(MainActivity.this,AutocompleteActivity.class);
+                startActivity(PlaceActivityIntent);
             }
         });
     }
@@ -91,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void weatherAPItest(){
-
         boolean isOnline = Utils.isOnline(this);
         if(isOnline) {
 
@@ -106,16 +107,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void weatherProcessFinish(Weather output) {
-
         Log.d("dcw", output.toString());
-
     }
 
     @Override
     public void weatherProcessFailed() {
-
         Log.d("ERROR", "WeatherAPIcall failed");
         //TODO -> handle exception
-
     }
 }
