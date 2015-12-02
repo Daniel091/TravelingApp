@@ -22,10 +22,10 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
-    private Button newTrip;
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Datasource dataSource;
-    private Button itemList; // startet die Packliste
+    private Button newTrip;     // startet neue Reise
+    private Button itemList;    // startet die Packliste
     private Intent listIntent,PlaceActivityIntent;
 
     @Override

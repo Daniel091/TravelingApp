@@ -22,9 +22,15 @@
         android:id="@+id/itemList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/itemList"
-        style="?android:attr/borderlessButtonStyle"
-        />
+        android:text="@string/itemList" />
+
+
+    <Button
+        android:id="@+id/newTrip"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newTrip" />
 
     <LinearLayout
         android:layout_centerInParent="true"
@@ -34,12 +40,4 @@
         android:orientation="vertical">
     </LinearLayout>
 
-    <Button
-        android:id="@+id/newTrip"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/newTrip"
-        style="?android:attr/borderlessButtonStyle"
-        />
 </RelativeLayout>

@@ -9,9 +9,7 @@
         android:layout_height="wrap_content"
         android:text="@string/btnName"
         android:id="@+id/placeButton"
-        android:layout_gravity="center_horizontal"
-        style="?android:attr/borderlessButtonStyle"
-        />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_gravity="center_horizontal"
@@ -24,9 +22,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/place"/>
-
-
-
-
 
 </LinearLayout>
