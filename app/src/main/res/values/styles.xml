@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
@@ -20,9 +20,13 @@
         <item name="android:listViewStyle">@style/itemList</item>
     </style>
 
-    <style name="itemList" parent="Widget.AppCompat.ListView">
+    <style name="itemList" parent="android:style/Widget.ListView">
         <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:divider">@color/colorAccent</item>
+        <item name="android:divider">@color/lightGrey</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:listSelector">@color/colorAccent</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:cacheColorHint">#00000000</item>
     </style>
-
 </resources>

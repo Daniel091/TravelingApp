@@ -49,7 +49,7 @@ public class ItemViewActivity extends AppCompatActivity {
 
         ArrayAdapter<Dataset> dataSetArrayAdapter = new ArrayAdapter<> (
                 this,
-                android.R.layout.simple_list_item_multiple_choice,
+                R.layout.list_item,
                 dataSetList);
 
         ListView dataSetsListView = (ListView) findViewById(R.id.item_list_view);
