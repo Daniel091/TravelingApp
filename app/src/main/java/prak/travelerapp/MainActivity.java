@@ -15,6 +15,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.Database.ItemViewActivity;
+import prak.travelerapp.FlickrAPI.LandingActivity;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.WeatherAPI.WeatherTask;
@@ -26,18 +27,20 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private Datasource dataSource;
     private Button newTrip;     // startet neue Reise
     private Button itemList;    // startet die Packliste
-    private Intent listIntent,PlaceActivityIntent;
+    private Button flickrButton;    // startet Flickr Test Activity
+    private Intent listIntent,flickrIntent,PlaceActivityIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Neue Schriftart für alle Texte
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
+        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         googlePlacesTest();
         //weatherAPItest();
+        flickrAPItest();
 
         //Wechselt zur View der Packliste
         changeToItemList();
@@ -54,6 +57,21 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 Log.d("MainActivity", "Click started item list");
 
                 startActivity(listIntent);
+            }
+        });
+    }
+
+    private void flickrAPItest() {
+
+        flickrButton = (Button) findViewById(R.id.flickrTest);
+        flickrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                flickrIntent = new Intent(MainActivity.this, LandingActivity.class);
+                Log.d("MainActivity", "Flickr Test Button clicked");
+
+                startActivity(flickrIntent);
             }
         });
     }

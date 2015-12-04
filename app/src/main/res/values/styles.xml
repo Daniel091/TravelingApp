@@ -29,4 +29,10 @@
         <item name="android:drawSelectorOnTop">false</item>
         <item name="android:cacheColorHint">#00000000</item>
     </style>
+    <style name="Basic.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Basic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Basic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
