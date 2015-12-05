@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="prak.travelerapp">
+    package="prak.travelerapp" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,12 +16,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Test">
+        android:theme="@style/Test" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC7hQk5LW0FQMWi8lhZrOEILmzcW5tRbL4" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,8 +30,10 @@
         </activity>
         <activity
             android:name=".Database.ItemViewActivity"
-            android:label="@string/title_activity_item_view"></activity>
-        <activity android:name=".PlaceApi.AutocompleteActivity"></activity>
+            android:label="@string/title_activity_item_view" />
+        <activity android:name=".PlaceApi.AutocompleteActivity" />
+        <activity android:name=".Autocompleter.CityAutocompleteActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,17 +1,27 @@
 package prak.travelerapp.PlaceApi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import prak.travelerapp.AsyncResponse;
+import prak.travelerapp.Database.ItemViewActivity;
+import prak.travelerapp.MainActivity;
 import prak.travelerapp.R;
+import prak.travelerapp.WeatherAPI.WeatherTask;
+import prak.travelerapp.WeatherAPI.model.Weather;
 
-public class AutocompleteActivity extends Activity {
+public class AutocompleteActivity extends Activity implements AsyncResponse{
     private AutoCompleteTextView autocompleteView;
+
+    private Button btn_getWeather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +34,31 @@ public class AutocompleteActivity extends Activity {
     private void prepareViews() {
         autocompleteView = (AutoCompleteTextView) findViewById(R.id.autocomplete);
         autocompleteView.setAdapter(new PlacesAutoCompleteAdapter(getBaseContext(), R.layout.autocomplete_list_item));
+        btn_getWeather = (Button) findViewById(R.id.button_get_weather);
+        btn_getWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = autocompleteView.getText().toString();
+                String[] separated = text.split(",");
+                String city = separated[0];
+                Log.d("mw", city);
+                WeatherTask weathertask = new WeatherTask();
+                weathertask.delegate = AutocompleteActivity.this;
+                weathertask.execute(new String[]{city});
+
+            }
+        });
+    }
+
+    @Override
+    public void weatherProcessFinish(Weather output) {
+
+        Log.d("dcw", output.toString());
+    }
+
+    @Override
+    public void weatherProcessFailed() {
+        Log.d("ERROR", "WeatherAPIcall failed");
+        //TODO -> handle exception
     }
 }

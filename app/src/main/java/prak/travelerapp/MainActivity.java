@@ -2,6 +2,7 @@ package prak.travelerapp;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
+import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.Database.ItemViewActivity;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
@@ -26,18 +29,21 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Datasource dataSource;
     private Button itemList; // startet die Packliste
-    private Intent listIntent,PlaceActivityIntent;
+    private Button autocomplete; //wechselt zur testview für die autocompletion
+    private Intent listIntent,PlaceActivityIntent,autocompleteIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        googlePlacesTest();
+        //googlePlacesTest();
         //weatherAPItest();
 
         //Wechselt zur View der Packliste
-        changeToItemList();
+        //changeToItemList();
+
+        changeToAutoComplete();
     }
 
     private void changeToItemList() {
@@ -53,6 +59,23 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 startActivity(listIntent);
             }
         });
+    }
+
+    private void changeToAutoComplete(){
+
+        autocomplete = (Button) findViewById(R.id.button_autocomplete);
+        autocomplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                autocompleteIntent = new Intent(MainActivity.this, CityAutocompleteActivity.class);
+                Log.d("MainActivity", "Click started autocomplete view");
+
+                startActivity(autocompleteIntent);
+            }
+        });
+
+
     }
 
     private void googlePlacesTest(){

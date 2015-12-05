@@ -35,6 +35,12 @@
     </LinearLayout>
 
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Autocomplete"
+        android:id="@+id/button_autocomplete" />
+
+    <Button
         android:id="@+id/newTrip"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

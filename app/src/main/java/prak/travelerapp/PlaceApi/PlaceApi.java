@@ -34,6 +34,7 @@ public class PlaceApi {
             sb.append("?key=" + API_KEY);
             sb.append("&types=(cities)");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
+            sb.append("&language=de");
 
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();

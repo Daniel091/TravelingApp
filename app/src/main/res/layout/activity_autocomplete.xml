@@ -16,4 +16,11 @@
         android:id="@+id/autocomplete"
         android:hint="Type in your Holiday destination" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autocomplete"
+        android:text="Hole Wetter"
+        android:id="@+id/button_get_weather" />
+
 </RelativeLayout>
