@@ -25,15 +25,19 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
-    private Button newTrip;
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Datasource dataSource;
+    private Button newTrip;     // startet neue Reise
     private Button itemList; // startet die Packliste
     private Button autocomplete; //wechselt zur testview für die autocompletion
     private Intent listIntent,PlaceActivityIntent,autocompleteIntent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Neue Schriftart für alle Texte
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

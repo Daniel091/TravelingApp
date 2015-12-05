@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">TravelerApp</string>
+    <string name="app_name">TRAVeL</string>
     <string name="heading">Traveler</string>
     <string name="welcome">TRAVeL</string>
+    
     <string name="newTrip">Eine neue Reise starten</string>
     <string name="btnName">Find a cool Place</string>
     <string name="itemList">Koffer packen</string>

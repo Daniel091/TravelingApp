@@ -13,7 +13,8 @@
         android:id="@+id/myautocomplete"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:completionThreshold="1" >
+        android:completionThreshold="1"
+        android:textColor="@color/black">
     </prak.travelerapp.Autocompleter.CityAutoCompleteView>
 
 </LinearLayout>
