@@ -13,9 +13,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -25,7 +29,16 @@ public class LandingActivity extends AppCompatActivity {
 
     private Button sanFrancisco;    // Photo Test
     private ImageView imageView;    // ImageView
-    public static final String URL = "http://c1.staticflickr.com/3/2882/13831351534_64c6d4e018_n.jpg";
+    public static final String URL = "https://c2.staticflickr.com/6/5640/22590561377_344ee98fed_c.jpg"; //Default Background
+
+    // Flickr Settings
+    private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
+    private static final String FLICKRSECRET = "746fc3e64519bcee";
+
+    // REST Request with JSON Output
+    private String location = "sanfrancisco";
+    private String images = "1";
+    private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +58,8 @@ public class LandingActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        // Create an object for subclass of AsyncTask
-        GetXMLTask task = new GetXMLTask();
+        // Set Image from static URL as Background
+        DefaultBackground task = new DefaultBackground();
         // Execute the task
         task.execute(new String[] { URL });
 
@@ -54,14 +67,69 @@ public class LandingActivity extends AppCompatActivity {
         sanFrancisco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Log.d("Landing Activity", "JSON for San Francisco");
-
+                loadImageUrl();
             }
         });
     }
 
-    private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
+    private String loadImageUrl() {
+        Log.d("Flickr API", "Image URL");
+
+        HttpURLConnection con = null;
+        InputStream is = null;
+
+        try {
+            String url = restUrl;
+            con = (HttpURLConnection) (new URL(url)).openConnection();
+            con.setRequestMethod("GET");
+            con.setDoInput(true);
+            con.setDoOutput(true);
+            con.connect();
+
+            // todo: hier kommt ein Fehler
+            int code = con.getResponseCode();
+
+
+            if (code == 200) {
+                // Let's read the response
+                StringBuffer buffer = new StringBuffer();
+                is = con.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                    buffer.append(line + "\r\n");
+                is.close();
+                con.disconnect();
+                return buffer.toString();
+            } else {
+                return null;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (Throwable t) {
+            }
+            try {
+                con.disconnect();
+            } catch (Throwable t) {
+            }
+        }
+        return null;
+
+
+    }
+
+
+
+    // Basic Backgroundimage from static URL
+    private class DefaultBackground extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... urls) {
             Bitmap map = null;
@@ -116,5 +184,4 @@ public class LandingActivity extends AppCompatActivity {
             return stream;
         }
     }
-
 }
