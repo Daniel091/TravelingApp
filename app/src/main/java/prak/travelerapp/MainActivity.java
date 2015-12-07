@@ -14,6 +14,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
+import prak.travelerapp.FlickrAPI.LandingActivity;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.WeatherAPI.WeatherTask;
@@ -25,13 +26,14 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private Button newTrip;     // startet neue Reise
     private Button itemList; // startet die Packliste
     private Button autocomplete; //wechselt zur testview für die autocompletion
-    private Intent listIntent,PlaceActivityIntent,autocompleteIntent;
+    private Button flickrButton;    // startet Flickr Test Activity
+    private Intent listIntent,PlaceActivityIntent,autocompleteIntent,flickrIntent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Neue Schriftart für alle Texte
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
+        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         //googlePlacesTest();
         //weatherAPItest();
+        flickrAPItest();
 
         //Wechselt zur View der Packliste
         changeToItemList();
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         });
     }
 
-    private void changeToAutoComplete(){
+    private void changeToAutoComplete() {
 
         autocomplete = (Button) findViewById(R.id.button_autocomplete);
         autocomplete.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +77,21 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 startActivity(autocompleteIntent);
             }
         });
+    }
 
+    private void flickrAPItest() {
 
+        flickrButton = (Button) findViewById(R.id.flickrTest);
+        flickrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                flickrIntent = new Intent(MainActivity.this, LandingActivity.class);
+                Log.d("MainActivity", "Flickr Test Button clicked");
+
+                startActivity(flickrIntent);
+            }
+        });
     }
 
     private void googlePlacesTest(){
