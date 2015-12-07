@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import prak.travelerapp.AsyncResponse;
+import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.R;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
-public class AutocompleteActivity extends Activity implements AsyncResponse{
+public class AutocompleteActivity extends Activity implements AsyncWeatherResponse {
     private AutoCompleteTextView autocompleteView;
 
     private Button btn_getWeather;

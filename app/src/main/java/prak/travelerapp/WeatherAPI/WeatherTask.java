@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import org.json.JSONException;
 
-import prak.travelerapp.AsyncResponse;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 /**
@@ -12,7 +11,7 @@ import prak.travelerapp.WeatherAPI.model.Weather;
  */
 public class WeatherTask extends AsyncTask<String, Void, Weather> {
 
-    public AsyncResponse delegate = null;
+    public AsyncWeatherResponse delegate = null;
     private Exception error;
 
     @Override

@@ -4,14 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.net.URLConnection;
 
 import prak.travelerapp.R;
 
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity implements AsyncFlickrResponse {
 
     private Button sanFrancisco;    // Photo Test
     private ImageView imageView;    // ImageView
@@ -47,6 +48,10 @@ public class LandingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
+        flickrAPI.delegate = this;
+        flickrAPI.execute("sanfrancisco");
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +75,7 @@ public class LandingActivity extends AppCompatActivity {
                 Log.d("Landing Activity", "JSON for San Francisco");
                 //loadImageUrl();
             }
-        });
+        });*/
     }
 
     private String loadImageUrl() {
@@ -126,6 +131,26 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void flickrProcessFinish(JSONObject output) {
+        Log.d("mw", output.toString());
+        try {
+            JSONObject photosObj = output.getJSONObject("photos");
+            JSONArray photoArray = photosObj.getJSONArray("photo");
+            JSONObject photoObj = photoArray.getJSONObject(0);
+            String id = photoObj.getString("id");
+            String owner = photoObj.getString("owner");
+            Log.d("mw", owner + " " + id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void flickrProcessFailed() {
+
+    }
 
 
     // Basic Backgroundimage from static URL

@@ -17,10 +17,11 @@ import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
 import prak.travelerapp.FlickrAPI.LandingActivity;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
+import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse {
+public class MainActivity extends AppCompatActivity implements AsyncWeatherResponse {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     private Button newTrip;     // startet neue Reise
