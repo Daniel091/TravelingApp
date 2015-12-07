@@ -17,6 +17,21 @@
         android:text= "@string/welcome"
         android:textSize="25sp"/>
 
+    <Button
+        android:layout_below="@id/welcomeMessage"
+        android:id="@+id/itemList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/itemList" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Autocomplete"
+        android:layout_below="@id/itemList"
+        android:id="@+id/button_autocomplete"
+        />
+
     <LinearLayout
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -34,12 +49,5 @@
         style="?android:attr/borderlessButtonStyle"
         />
 
-    <Button
-        android:id="@+id/itemList"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/itemList"
-        style="?android:attr/borderlessButtonStyle"
-        />
+
 </RelativeLayout>
