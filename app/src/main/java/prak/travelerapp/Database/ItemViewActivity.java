@@ -1,8 +1,8 @@
 package prak.travelerapp.Database;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -10,14 +10,17 @@ import java.util.List;
 
 import prak.travelerapp.R;
 
+
 /**
  * Created by marcel on 26.11.15.
  */
 public class ItemViewActivity extends AppCompatActivity {
 
-    // Datenbank
-    private Datasource dataSource;
+    // Log Tag
     public static final String LOG_TAG = ItemViewActivity.class.getSimpleName();
+
+    // Instanz der Datenbank erzeugen
+    private Datasource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +30,14 @@ public class ItemViewActivity extends AppCompatActivity {
 
         dataSource = new Datasource(this);
 
-        Log.d(LOG_TAG, "Die Datenquelle wird geöffnet.");
         dataSource.open();
+        // Nur zum testen
+        Dataset dataSet = dataSource.createDataset("Testitem",0,0,0,0,0,0,0,0,0,0,0,0);
 
-        Dataset testSet = dataSource.createDataset("Testitem", 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0);
-        Log.d(LOG_TAG, "Inhalt der Testmemo: " + testSet.toString());
-
-        Dataset dataSet = dataSource.createDataset("WeiteresTestitem", 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0);
-        Log.d(LOG_TAG, "Es wurde der folgende Eintrag in die Datenbank geschrieben:");
-        Log.d(LOG_TAG, "ID: " + dataSet.getItemID() + ", Inhalt: " + dataSet.toString());
-
-        Log.d(LOG_TAG, "Folgende Einträge sind in der Datenbank vorhanden:");
+        // Zeigt alle Einträge in der ListView
         showAllListEntries();
-
-        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
         dataSource.close();
+
     }
 
     private void showAllListEntries () {
@@ -55,4 +51,5 @@ public class ItemViewActivity extends AppCompatActivity {
         ListView dataSetsListView = (ListView) findViewById(R.id.item_list_view);
         dataSetsListView.setAdapter(dataSetArrayAdapter);
     }
+
 }

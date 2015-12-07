@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         //weatherAPItest();
 
         //Wechselt zur View der Packliste
-        //changeToItemList();
+        changeToItemList();
 
         changeToAutoComplete();
     }
