@@ -14,7 +14,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import prak.travelerapp.Database.Datasource;
-import prak.travelerapp.Database.ItemViewActivity;
+import prak.travelerapp.Database.ItemListActivity;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         changeToItemList();
     }
 
+    // Wechselt in ItemListActivity
     private void changeToItemList() {
 
         itemList = (Button) findViewById(R.id.itemList);
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             @Override
             public void onClick(View v) {
 
-                listIntent = new Intent(MainActivity.this, ItemViewActivity.class);
-                Log.d("MainActivity", "Click started item list");
+                listIntent = new Intent(MainActivity.this, ItemListActivity.class);
+                Log.d("MainActivity", "Koffer packen wurde gedrückt...");
 
                 startActivity(listIntent);
             }

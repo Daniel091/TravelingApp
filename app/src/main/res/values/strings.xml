@@ -15,6 +15,6 @@
 
     <string name="editText_errorMessage">Das Feld darf nicht leer sein.</string>
 
-    <string name="title_activity_item_view">Item View Activity</string>
+    <string name="title_activity_item_list">Item List Activity</string>
 
 </resources>

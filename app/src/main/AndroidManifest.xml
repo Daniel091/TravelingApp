@@ -29,8 +29,8 @@
         </activity>
 
         <activity
-            android:name=".Database.ItemViewActivity"
-            android:label="@string/title_activity_item_view">
+            android:name=".Database.ItemListActivity"
+            android:label="@string/title_activity_item_list">
         </activity>
 
     </application>
