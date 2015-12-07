@@ -9,7 +9,6 @@ public class Dataset {
 
     private long itemID;
     private String itemName;
-    private int basic; // 0 für normales Item, 1 für Basic Item
     private int geschlecht; // 0 für "Neutral" , 1 für "Mann", 2 für "Frau"
     private int trocken; // 0 für "Nein", 1 für "Ja"
     private int strandurlaub;  // 0 für "Nein", 1 für "Ja"
@@ -20,9 +19,11 @@ public class Dataset {
     private int partyurlaub;  // 0 für "Nein", 1 für "Ja"
     private int camping;  // 0 für "Nein", 1 für "Ja"
     private int festival;  // 0 für "Nein", 1 für "Ja"
+    private int kategorie; // 0 für "Kleidung", 1 für "Hygiene", 2 für "Equipment", 3 für "Dokumente"
 
     public Dataset(long itemID, String itemName, int geschlecht, int trocken,
-                   int strandurlaub, int staedtetrip, int skifahren, int wandern, int geschaeftsreise, int partyurlaub, int camping, int festival) {
+                   int strandurlaub, int staedtetrip, int skifahren, int wandern,
+                   int geschaeftsreise, int partyurlaub, int camping, int festival, int kategorie) {
 
         this.itemID = itemID;
         this.itemName = itemName;
@@ -36,6 +37,7 @@ public class Dataset {
         this.partyurlaub = partyurlaub;
         this.camping = camping;
         this.festival = festival;
+        this.kategorie = kategorie;
 
     }
 
@@ -135,10 +137,14 @@ public class Dataset {
         this.camping = camping;
     }
 
+    public int getKategorie() { return kategorie; }
+
+    public void setKategorie(int kategorie) { this.camping = camping; }
+
     @Override
     public String toString() {
 
-        String output = "ID: " + itemID + ", Name: " + itemName;
+        String output = itemName;
         return output;
     }
 

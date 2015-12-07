@@ -34,7 +34,8 @@ public class Datasource {
             DatabaseHelper.COLUMN_GESCHAEFTSREISE,
             DatabaseHelper.COLUMN_PARTYURLAUB,
             DatabaseHelper.COLUMN_CAMPING,
-            DatabaseHelper.COLUMN_FESTIVAL
+            DatabaseHelper.COLUMN_FESTIVAL,
+            DatabaseHelper.COLUMN_KATEGORIE
     };
 
     public Datasource(Context context) {
@@ -54,7 +55,9 @@ public class Datasource {
     }
 
     public Dataset createDataset(String itemName, int basic, int geschlecht, int trocken,
-                                 int strandurlaub, int staedtetrip, int skifahren, int wandern, int geschaeftsreise, int partyurlaub, int camping, int festival) {
+                                 int strandurlaub, int staedtetrip, int skifahren, int wandern,
+                                 int geschaeftsreise, int partyurlaub, int camping, int festival,
+                                 int kategorie) {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_NAME, itemName);
@@ -68,6 +71,7 @@ public class Datasource {
         values.put(DatabaseHelper.COLUMN_PARTYURLAUB, partyurlaub);
         values.put(DatabaseHelper.COLUMN_CAMPING, camping);
         values.put(DatabaseHelper.COLUMN_FESTIVAL, festival);
+        values.put(DatabaseHelper.COLUMN_KATEGORIE, kategorie);
 
         long insertId = database.insert(DatabaseHelper.TABLE_ITEM_LIST, null, values);
 
@@ -95,6 +99,7 @@ public class Datasource {
         int idPartyurlaub = cursor.getColumnIndex(DatabaseHelper.COLUMN_PARTYURLAUB);
         int idCamping = cursor.getColumnIndex(DatabaseHelper.COLUMN_CAMPING);
         int idFestival = cursor.getColumnIndex(DatabaseHelper.COLUMN_FESTIVAL);
+        int idKategorie = cursor.getColumnIndex(DatabaseHelper.COLUMN_KATEGORIE);
 
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(idName);
@@ -108,9 +113,11 @@ public class Datasource {
         int partyurlaub = cursor.getInt(idPartyurlaub);
         int camping = cursor.getInt(idCamping);
         int festival = cursor.getInt(idFestival);
+        int kategorie = cursor.getInt(idKategorie);
 
         Dataset dataSet = new Dataset(id, name, geschlecht, trocken, strandurlaub,
-                staedtetrip, skifahren, wandern, geschaeftsreise, partyurlaub, camping, festival);
+                staedtetrip, skifahren, wandern, geschaeftsreise,
+                partyurlaub, camping, festival, kategorie);
 
         return dataSet;
     }

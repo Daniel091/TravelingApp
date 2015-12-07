@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PARTYURLAUB = "partyurlaub";
     public static final String COLUMN_CAMPING = "camping";
     public static final String COLUMN_FESTIVAL = "festival";
+    public static final String COLUMN_KATEGORIE = "kategorie";
 
     public static final String SQL_CREATE =
 
@@ -45,7 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_GESCHAEFTSREISE + " INTEGER, " +
                     COLUMN_PARTYURLAUB + " INTEGER, " +
                     COLUMN_CAMPING + " INTEGER, " +
-                    COLUMN_FESTIVAL + " INTEGER);";
+                    COLUMN_FESTIVAL + " INTEGER, " +
+                    COLUMN_KATEGORIE + " INTEGER);";
 
     public DatabaseHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION); // 1 == Version der Datenbank, Erhöhung um jeweils 1 bei DB Upgrade
