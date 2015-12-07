@@ -68,7 +68,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("Landing Activity", "JSON for San Francisco");
-                loadImageUrl();
+                //loadImageUrl();
             }
         });
     }
