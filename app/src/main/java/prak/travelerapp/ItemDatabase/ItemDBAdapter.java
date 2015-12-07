@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michael on 05.12.15.
@@ -65,34 +67,101 @@ public class ItemDBAdapter {
     }
 
 
-    public Cursor getTestData()
+    public List<Dataset> getItems()
     {
         try
         {
             String sql ="SELECT * FROM item_table";
 
-            Cursor mCur = mDb.rawQuery(sql, null);
-            if (mCur!=null)
+            Cursor cursor = mDb.rawQuery(sql, null);
+            List<Dataset> dataSetList = new ArrayList<>();
+            if (cursor!=null)
             {
                 // move cursor to first row
-                if (mCur.moveToFirst()) {
+                if (cursor.moveToFirst()) {
                     do {
-                        // Get version from Cursor
-                        String itemname = mCur.getString(mCur.getColumnIndex("NAME"));
-                        // add the bookName into the bookTitles ArrayList
-                        Log.d("mw", itemname);
-                        // move to next row
-                    } while (mCur.moveToNext());
+                        Dataset itemSet = cursorToDataset(cursor);
+                        dataSetList.add(itemSet);
+
+                    } while (cursor.moveToNext());
                 }
 
             }
-            return mCur;
+            return dataSetList;
         }
         catch (SQLException mSQLException)
         {
             Log.e(TAG, "getTestData >>"+ mSQLException.toString());
             throw mSQLException;
         }
+    }
+
+    public Dataset createDataset(String itemName, int basic, int geschlecht, int trocken,
+                                 int strandurlaub, int staedtetrip, int skifahren, int wandern,
+                                 int geschaeftsreise, int partyurlaub, int camping, int festival,
+                                 int kategorie) {
+
+        ContentValues values = new ContentValues();
+        values.put(ItemDBHelper.COLUMN_NAME, itemName);
+        values.put(ItemDBHelper.COLUMN_SEX, geschlecht);
+        values.put(ItemDBHelper.COLUMN_TROCKEN, trocken);
+        values.put(ItemDBHelper.COLUMN_STRANDURLAUB, strandurlaub);
+        values.put(ItemDBHelper.COLUMN_STAEDTETRIP, staedtetrip);
+        values.put(ItemDBHelper.COLUMN_SKIFAHREN, skifahren);
+        values.put(ItemDBHelper.COLUMN_WANDERN, wandern);
+        values.put(ItemDBHelper.COLUMN_GESCHAEFTSREISE, geschaeftsreise);
+        values.put(ItemDBHelper.COLUMN_PARTYURLAUB, partyurlaub);
+        values.put(ItemDBHelper.COLUMN_CAMPING, camping);
+        values.put(ItemDBHelper.COLUMN_FESTIVAL, festival);
+        values.put(ItemDBHelper.COLUMN_KATEGORIE, kategorie);
+
+        long insertId = mDb.insert(ItemDBHelper.TABLE_ITEM_LIST, null, values);
+
+        Cursor cursor = mDb.query(ItemDBHelper.TABLE_ITEM_LIST,
+                mDbHelper.columns, ItemDBHelper.COLUMN_ID + "=" + insertId,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        Dataset dataSet = cursorToDataset(cursor);
+        cursor.close();
+
+        return dataSet;
+    }
+
+    public Dataset cursorToDataset(Cursor cursor) {
+        int idIndex = cursor.getColumnIndex(ItemDBHelper.COLUMN_ID);
+        int idName = cursor.getColumnIndex(ItemDBHelper.COLUMN_NAME);
+        int idSex = cursor.getColumnIndex(ItemDBHelper.COLUMN_SEX);
+        int idTrocken = cursor.getColumnIndex(ItemDBHelper.COLUMN_TROCKEN);
+        int idStrandurlaub = cursor.getColumnIndex(ItemDBHelper.COLUMN_STRANDURLAUB);
+        int idStaedtetrip = cursor.getColumnIndex(ItemDBHelper.COLUMN_STAEDTETRIP);
+        int idSkifahren = cursor.getColumnIndex(ItemDBHelper.COLUMN_SKIFAHREN);
+        int idWandern = cursor.getColumnIndex(ItemDBHelper.COLUMN_WANDERN);
+        int idGeschaeftsreise = cursor.getColumnIndex(ItemDBHelper.COLUMN_GESCHAEFTSREISE);
+        int idPartyurlaub = cursor.getColumnIndex(ItemDBHelper.COLUMN_PARTYURLAUB);
+        int idCamping = cursor.getColumnIndex(ItemDBHelper.COLUMN_CAMPING);
+        int idFestival = cursor.getColumnIndex(ItemDBHelper.COLUMN_FESTIVAL);
+        int idKategorie = cursor.getColumnIndex(ItemDBHelper.COLUMN_KATEGORIE);
+
+        long id = cursor.getLong(idIndex);
+        String name = cursor.getString(idName);
+        int geschlecht = cursor.getInt(idSex);
+        int trocken = cursor.getInt(idTrocken);
+        int strandurlaub = cursor.getInt(idStrandurlaub);
+        int staedtetrip = cursor.getInt(idStaedtetrip);
+        int skifahren = cursor.getInt(idSkifahren);
+        int wandern = cursor.getInt(idWandern);
+        int geschaeftsreise = cursor.getInt(idGeschaeftsreise);
+        int partyurlaub = cursor.getInt(idPartyurlaub);
+        int camping = cursor.getInt(idCamping);
+        int festival = cursor.getInt(idFestival);
+        int kategorie = cursor.getInt(idKategorie);
+
+        Dataset dataSet = new Dataset(id, name, geschlecht, trocken, strandurlaub,
+                staedtetrip, skifahren, wandern, geschaeftsreise,
+                partyurlaub, camping, festival, kategorie);
+
+        return dataSet;
     }
 
     /*

@@ -1,19 +1,13 @@
 package prak.travelerapp.PlaceApi;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import prak.travelerapp.AsyncResponse;
-import prak.travelerapp.Database.ItemViewActivity;
-import prak.travelerapp.MainActivity;
 import prak.travelerapp.R;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;

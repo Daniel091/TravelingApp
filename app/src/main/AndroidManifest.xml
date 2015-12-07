@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Database.ItemViewActivity"
+            android:name=".ItemViewActivity"
             android:label="@string/title_activity_item_view" />
         <activity android:name=".PlaceApi.AutocompleteActivity" />
         <activity android:name=".Autocompleter.CityAutocompleteActivity" >

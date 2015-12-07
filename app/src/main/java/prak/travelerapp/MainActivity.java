@@ -2,7 +2,6 @@ package prak.travelerapp;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,10 +14,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
-import prak.travelerapp.Autocompleter.database.CityDBAdapter;
-import prak.travelerapp.Database.Datasource;
-import prak.travelerapp.Database.ItemViewActivity;
-import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.WeatherAPI.WeatherTask;
@@ -27,7 +22,6 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private Datasource dataSource;
     private Button newTrip;     // startet neue Reise
     private Button itemList; // startet die Packliste
     private Button autocomplete; //wechselt zur testview für die autocompletion
@@ -42,14 +36,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        // instantiate database handler
-        ItemDBAdapter itemDB = new ItemDBAdapter(this);
-        itemDB.createDatabase();
-        itemDB.open();
-
-        itemDB.getTestData();
-        itemDB.close();
 
         //googlePlacesTest();
         //weatherAPItest();

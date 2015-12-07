@@ -24,6 +24,37 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
+    public static final String COLUMN_ID = "ID";
+    public static final String COLUMN_NAME = "NAME";
+    public static final String TABLE_ITEM_LIST = "item_table";
+    public static final String COLUMN_SEX = "GESCHLECHT";
+    public static final String COLUMN_TROCKEN = "TROCKEN";
+    public static final String COLUMN_STAEDTETRIP = "STAEDTETRIP";
+    public static final String COLUMN_STRANDURLAUB = "STRANDURLAUB";
+    public static final String COLUMN_SKIFAHREN = "SKIFAHREN";
+    public static final String COLUMN_WANDERN = "WANDERN";
+    public static final String COLUMN_GESCHAEFTSREISE = "GESCHÄFTSREISE";
+    public static final String COLUMN_PARTYURLAUB = "PARTYURLAUB";
+    public static final String COLUMN_CAMPING = "CAMPING";
+    public static final String COLUMN_FESTIVAL = "FESTIVAL";
+    public static final String COLUMN_KATEGORIE = "KATEGORIE";
+
+    public static String[] columns = {
+            COLUMN_ID,
+            COLUMN_NAME,
+            COLUMN_SEX,
+            COLUMN_TROCKEN,
+            COLUMN_STAEDTETRIP,
+            COLUMN_STRANDURLAUB,
+            COLUMN_SKIFAHREN,
+            COLUMN_WANDERN,
+            COLUMN_GESCHAEFTSREISE,
+            COLUMN_PARTYURLAUB,
+            COLUMN_CAMPING,
+            COLUMN_FESTIVAL,
+            COLUMN_KATEGORIE
+    };
+
     public ItemDBHelper(Context context)
     {
         super(context, DB_NAME, null, 1);// 1? Its database Version

@@ -1,4 +1,4 @@
-package prak.travelerapp.Database;
+package prak.travelerapp.ItemDatabase;
 
 /**
  * Created by marcel on 24.11.15.

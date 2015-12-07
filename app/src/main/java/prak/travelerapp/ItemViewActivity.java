@@ -1,6 +1,5 @@
-package prak.travelerapp.Database;
+package prak.travelerapp;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -8,7 +7,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import prak.travelerapp.R;
+import prak.travelerapp.ItemDatabase.Dataset;
+import prak.travelerapp.ItemDatabase.ItemDBAdapter;
+import prak.travelerapp.ItemDatabase.ItemDBHelper;
 
 
 /**
@@ -19,8 +20,6 @@ public class ItemViewActivity extends AppCompatActivity {
     // Log Tag
     public static final String LOG_TAG = ItemViewActivity.class.getSimpleName();
 
-    // Instanz der Datenbank erzeugen
-    private Datasource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,25 +27,36 @@ public class ItemViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
 
-        dataSource = new Datasource(this);
+        //open items DB
+        ItemDBAdapter itemDB = new ItemDBAdapter(this);
+        itemDB.createDatabase();
+        itemDB.open();
 
-        dataSource.open();
+        //query all items
+        List<Dataset> itemList = itemDB.getItems();
+
         // Nur zum testen
-        Dataset dataSet = dataSource.createDataset("Testitem",0,0,0,0,0,0,0,0,0,0,0,0);
+        Dataset dataSet = itemDB.createDataset("Testitem",0,0,0,0,0,0,0,0,0,0,0,0);
+
+        itemList.add(dataSet);
+
+        showAllListEntries(itemList);
+
+
+        itemDB.close();
+
 
         // Zeigt alle Einträge in der ListView
-        showAllListEntries();
-        dataSource.close();
 
     }
 
-    private void showAllListEntries () {
-        List<Dataset> dataSetList = dataSource.getAllDatasets();
+    private void showAllListEntries (List<Dataset> items) {
+       // List<Dataset> dataSetList = dataSource.getAllDatasets();
 
         ArrayAdapter<Dataset> dataSetArrayAdapter = new ArrayAdapter<> (
                 this,
                 R.layout.list_item,
-                dataSetList);
+                items);
 
         ListView dataSetsListView = (ListView) findViewById(R.id.item_list_view);
         dataSetsListView.setAdapter(dataSetArrayAdapter);
