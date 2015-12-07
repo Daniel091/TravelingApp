@@ -118,7 +118,7 @@ public class ItemDBAdapter {
         long insertId = mDb.insert(ItemDBHelper.TABLE_ITEM_LIST, null, values);
 
         Cursor cursor = mDb.query(ItemDBHelper.TABLE_ITEM_LIST,
-                mDbHelper.columns, ItemDBHelper.COLUMN_ID + "=" + insertId,
+                ItemDBHelper.columns, ItemDBHelper.COLUMN_ID + "=" + insertId,
                 null, null, null, null);
 
         cursor.moveToFirst();
