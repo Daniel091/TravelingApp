@@ -18,6 +18,7 @@ import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
 import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Database.Datasource;
 import prak.travelerapp.Database.ItemViewActivity;
+import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.PlaceApi.AutocompleteActivity;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.WeatherAPI.WeatherTask;
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // instantiate database handler
+        ItemDBAdapter itemDB = new ItemDBAdapter(this);
+        itemDB.createDatabase();
+        itemDB.open();
+
+        itemDB.getTestData();
+        itemDB.close();
 
         //googlePlacesTest();
         //weatherAPItest();

@@ -23,7 +23,7 @@ public class CityAutocompleteActivity extends AppCompatActivity {
     ArrayAdapter<String> myAdapter;
 
     // for database operations
-    CityDBAdapter databaseH;
+    CityDBAdapter cityDB;
 
     // just to add some initial value
     String[] item = new String[] {"Please search..."};
@@ -36,9 +36,10 @@ public class CityAutocompleteActivity extends AppCompatActivity {
         try{
 
             // instantiate database handler
-            databaseH = new CityDBAdapter(this);
-            databaseH.createDatabase();
-            databaseH.open();
+            cityDB = new CityDBAdapter(this);
+            cityDB.createDatabase();
+            cityDB.open();
+
 
             // autocompletetextview is in activity_main.xml
             myAutoComplete = (CityAutoCompleteView) findViewById(R.id.myautocomplete);
@@ -61,7 +62,7 @@ public class CityAutocompleteActivity extends AppCompatActivity {
     public String[] getItemsFromDb(String searchTerm){
 
         // add items on the array dynamically
-        List<City> products = databaseH.read(searchTerm);
+        List<City> products = cityDB.read(searchTerm);
         int rowCount = products.size();
 
         String[] item = new String[rowCount];
@@ -78,7 +79,7 @@ public class CityAutocompleteActivity extends AppCompatActivity {
 
     protected void onDestroy(){
         super.onDestroy();
-        databaseH.close();
+        cityDB.close();
 
     }
 }
