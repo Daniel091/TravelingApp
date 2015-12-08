@@ -12,9 +12,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import prak.travelerapp.MainActivity;
-import prak.travelerapp.R;
-
 /**
  * Created by Michael on 24.11.15.
  */
@@ -23,14 +20,15 @@ public class FlickrHTTPClient {
     private static String BASE_URL = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1";
     private static String IMAGES_PARAM = "&per_page=1";
     private static String LOCATION_PARAM = "&tags=";
+    private static String GROUP_ID = "&group_id=";
     private static String API_KEY = "&api_key=7c4034aedc42e402d26421f9388e189f";
 
-    public String getFlickrImageURL(String location) {
+    public String getFlickrImageURL(String location, String group) {
         HttpURLConnection con = null;
         InputStream is = null;
 
         try {
-            String url = BASE_URL + API_KEY + IMAGES_PARAM + LOCATION_PARAM + location;
+            String url = BASE_URL + API_KEY + IMAGES_PARAM + GROUP_ID + group + LOCATION_PARAM + location;
             con = (HttpURLConnection) (new URL(url)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);

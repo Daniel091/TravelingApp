@@ -31,11 +31,11 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
     private static final String FLICKRSECRET = "746fc3e64519bcee";
 
-    /* REST Request with JSON Output
+    // REST Request with JSON Output
+    private String group_id = "26328425@N00";
     private String location = "sanfrancisco";
-    private String images = "1";
-    private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
-    */
+    //private String images = "1";
+    //private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
 
         FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
         flickrAPI.delegate = this;
-        flickrAPI.execute("münchen");
+        flickrAPI.execute(location, group_id);
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
