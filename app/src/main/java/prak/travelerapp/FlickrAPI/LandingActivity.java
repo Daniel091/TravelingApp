@@ -14,13 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -30,16 +26,16 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
 
     private Button sanFrancisco;    // Photo Test
     private ImageView imageView;    // ImageView
-    public static final String URL = "https://c2.staticflickr.com/6/5640/22590561377_344ee98fed_c.jpg"; //Default Background
 
     // Flickr Settings
     private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
     private static final String FLICKRSECRET = "746fc3e64519bcee";
 
-    // REST Request with JSON Output
+    /* REST Request with JSON Output
     private String location = "sanfrancisco";
     private String images = "1";
     private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +46,7 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
 
         FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
         flickrAPI.delegate = this;
-        flickrAPI.execute("sanfrancisco");
+        flickrAPI.execute("münchen");
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,59 +74,6 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
         });*/
     }
 
-    private String loadImageUrl() {
-        Log.d("Flickr API", "Image URL");
-
-        HttpURLConnection con = null;
-        InputStream is = null;
-
-        try {
-            String url = restUrl;
-            con = (HttpURLConnection) (new URL(url)).openConnection();
-            con.setRequestMethod("GET");
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.connect();
-
-            // todo: hier kommt ein Fehler
-            int code = con.getResponseCode();
-
-
-            if (code == 200) {
-                // Let's read the response
-                StringBuffer buffer = new StringBuffer();
-                is = con.getInputStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                String line = null;
-                while ((line = br.readLine()) != null)
-                    buffer.append(line + "\r\n");
-                is.close();
-                con.disconnect();
-                return buffer.toString();
-            } else {
-                return null;
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (Throwable t) {
-            }
-            try {
-                con.disconnect();
-            } catch (Throwable t) {
-            }
-        }
-        return null;
-
-
-    }
-
     @Override
     public void flickrProcessFinish(JSONObject output) {
         Log.d("mw", output.toString());
@@ -138,9 +81,19 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
             JSONObject photosObj = output.getJSONObject("photos");
             JSONArray photoArray = photosObj.getJSONArray("photo");
             JSONObject photoObj = photoArray.getJSONObject(0);
-            String id = photoObj.getString("id");
-            String owner = photoObj.getString("owner");
-            Log.d("mw", owner + " " + id);
+            String photoid = photoObj.getString("id");
+            String farmid = photoObj.getString("farm");
+            String serverid = photoObj.getString("server");
+            String secret = photoObj.getString("secret");
+            String flickrURL = "https://farm" + farmid + ".staticflickr.com/" + serverid + "/" + photoid + "_" + secret + "_b.jpg";
+            Log.d("Flickr Image URL", flickrURL);
+
+            imageView = (ImageView) findViewById(R.id.imageView);
+
+            // Set Image from static URL as Background
+            SetBackground task = new SetBackground();
+            // Execute the task
+            task.execute(new String[]{ flickrURL });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -153,8 +106,8 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     }
 
 
-    // Basic Backgroundimage from static URL
-    private class DefaultBackground extends AsyncTask<String, Void, Bitmap> {
+    // Set Background from Flickr URL
+    private class SetBackground extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... urls) {
             Bitmap map = null;
