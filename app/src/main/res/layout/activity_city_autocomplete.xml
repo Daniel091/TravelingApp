@@ -13,8 +13,19 @@
         android:id="@+id/myautocomplete"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:completionThreshold="1"
+        android:completionThreshold="2"
+        android:dropDownHeight="20mm"
+        android:singleLine="true"
+        android:inputType="text"
+        android:cursorVisible="false"
         android:textColor="@color/black">
     </prak.travelerapp.Autocompleter.CityAutoCompleteView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myautocomplete"
+        android:text="Hole Wetter"
+        android:id="@+id/button_get_weather" />
 
 </LinearLayout>

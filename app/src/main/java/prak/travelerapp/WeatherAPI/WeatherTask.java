@@ -19,7 +19,9 @@ public class WeatherTask extends AsyncTask<String, Void, Weather> {
         Weather weather = new Weather();
 
         try {
-            String data = ( (new WeatherHTTPClient()).getWeatherData(params[0]));
+            String city = params[0].replace(" ", "%20");
+            String country = params[1].trim();
+            String data = ( (new WeatherHTTPClient()).getWeatherData(city +"," + country));
             weather = JSONWeatherParser.getWeather(data);
 
         } catch (JSONException e) {

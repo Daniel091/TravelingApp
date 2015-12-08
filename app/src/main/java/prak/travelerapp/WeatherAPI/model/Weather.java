@@ -12,4 +12,8 @@ public class Weather{
     public Location location;
     public Day[] days = new Day[16];
 
+//    public double getAverageTemperature(){
+//
+//    }
+
 }

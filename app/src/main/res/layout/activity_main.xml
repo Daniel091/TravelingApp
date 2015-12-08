@@ -25,10 +25,19 @@
         android:text="@string/itemList" />
 
     <Button
+        android:id="@+id/flickrTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/flickrTest"
+        android:layout_below="@+id/itemList"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Autocomplete"
-        android:layout_below="@id/itemList"
+        android:layout_below="@id/flickrTest"
         android:id="@+id/button_autocomplete"
         />
 
@@ -48,14 +57,5 @@
         android:text="@string/newTrip"
         style="?android:attr/borderlessButtonStyle"
         />
-
-    <Button
-        android:id="@+id/flickrTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/flickrTest"
-        android:layout_below="@+id/itemList"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
