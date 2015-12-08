@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Image from San Francisco"
+        android:text="Query Image"
         android:id="@+id/button"
         android:layout_alignTop="@+id/pager"
         android:layout_alignParentLeft="true"
@@ -29,5 +29,17 @@
         android:scaleType="centerCrop"
         android:gravity="center"
         android:id="@+id/imageView" />
+
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:background="@color/white"
+        android:hint="hduwdhuwhuieu"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

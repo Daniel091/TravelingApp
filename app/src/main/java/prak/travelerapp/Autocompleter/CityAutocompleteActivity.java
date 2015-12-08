@@ -113,6 +113,7 @@ public class CityAutocompleteActivity extends AppCompatActivity implements Async
 
     @Override
     public void weatherProcessFinish(Weather output) {
+
         Log.d("mw", "Weather Success");
     }
 

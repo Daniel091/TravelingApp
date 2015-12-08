@@ -22,7 +22,7 @@ public class FlickrHTTPClient {
 
     private static String BASE_URL = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1";
     private static String IMAGES_PARAM = "&per_page=1";
-    private static String LOCATION_PARAM = "&tags=";
+    private static String LOCATION_PARAM = "&text=";
     private static String API_KEY = "&api_key=7c4034aedc42e402d26421f9388e189f";
 
     public String getFlickrImageURL(String location) {
@@ -30,7 +30,7 @@ public class FlickrHTTPClient {
         InputStream is = null;
 
         try {
-            String url = BASE_URL + API_KEY + IMAGES_PARAM + LOCATION_PARAM + location;
+            String url = BASE_URL + API_KEY + IMAGES_PARAM + LOCATION_PARAM + location + "&tag=sightseeing,city&tag_mode=all";
             con = (HttpURLConnection) (new URL(url)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);

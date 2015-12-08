@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import org.json.JSONArray;
@@ -20,12 +22,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import prak.travelerapp.PictureAPI.AsyncPictureResponse;
+import prak.travelerapp.PictureAPI.GetImageFromURLTask;
+import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.R;
 
-public class LandingActivity extends AppCompatActivity implements AsyncFlickrResponse {
+public class LandingActivity extends AppCompatActivity implements AsyncFlickrResponse,AsyncPictureResponse {
 
     private Button sanFrancisco;    // Photo Test
-    private ImageView imageView;    // ImageView
+    private ImageView imageView;// ImageView
+    private EditText editText;
 
     // Flickr Settings
     private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
@@ -44,9 +50,18 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        editText = (EditText)findViewById(R.id.edit_text);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        GetImageURLTask getImageURLTask = new GetImageURLTask();
+        getImageURLTask.delegate = this;
+        getImageURLTask.execute("Muenchen","sightseeing");
+
+        /*
         FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
         flickrAPI.delegate = this;
-        flickrAPI.execute("münchen");
+        flickrAPI.execute("Berlin");
+        */
+
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,21 +72,28 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
             }
         });
 
-        imageView = (ImageView) findViewById(R.id.imageView);
+
 
         // Set Image from static URL as Background
         DefaultBackground task = new DefaultBackground();
         // Execute the task
         task.execute(new String[] { URL });
 
+*/
         sanFrancisco = (Button) findViewById(R.id.button);
         sanFrancisco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Landing Activity", "JSON for San Francisco");
-                //loadImageUrl();
+                String input = editText.getText().toString();
+                String [] inputs = input.split(",");
+                String searchTerm = inputs[0];
+                String tag = inputs[1];
+                GetImageURLTask getImageURLTask = new GetImageURLTask();
+                getImageURLTask.delegate = LandingActivity.this;
+                getImageURLTask.execute(searchTerm,tag);
+
             }
-        });*/
+        });
     }
 
     @Override
@@ -102,6 +124,32 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
 
     @Override
     public void flickrProcessFailed() {
+
+    }
+
+    @Override
+    public void getURLProcessFinish(String url) {
+
+        GetImageFromURLTask getImageFromURLTask = new GetImageFromURLTask();
+        getImageFromURLTask.delegate = this;
+        getImageFromURLTask.execute(url);
+
+    }
+
+    @Override
+    public void getURLProcessFailed() {
+
+    }
+
+    @Override
+    public void getImageFromURLProcessFinish(Bitmap image) {
+
+        imageView.setImageBitmap(image);
+
+    }
+
+    @Override
+    public void getImageFromURLProcessFailed() {
 
     }
 
