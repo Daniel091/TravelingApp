@@ -22,8 +22,15 @@ public class GetImageURLTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
+            String data = "";
+            //only searchterm given
+            if(params.length == 1){
+                data = ( (new PictureHTTPClient()).getImageURL(params[0]));
+            //searchterm and Tag given
+            }else{
+                data = ( (new PictureHTTPClient()).getImageURL(params[0], params[1]));
+            }
 
-            String data = ( (new PictureHTTPClient()).getImageURL(params[0], params[1]));
             String url = "";
              // We create out JSONObject from the data
             try {

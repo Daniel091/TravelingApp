@@ -84,12 +84,22 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
             @Override
             public void onClick(View v) {
                 String input = editText.getText().toString();
-                String [] inputs = input.split(",");
-                String searchTerm = inputs[0];
-                String tag = inputs[1];
-                GetImageURLTask getImageURLTask = new GetImageURLTask();
-                getImageURLTask.delegate = LandingActivity.this;
-                getImageURLTask.execute(searchTerm,tag);
+                //searchterm and tag given
+                if(input.contains(",")){
+                    String [] inputs = input.split(",");
+                    String searchTerm = inputs[0];
+                    String tag = inputs[1];
+                    GetImageURLTask getImageURLTask = new GetImageURLTask();
+                    getImageURLTask.delegate = LandingActivity.this;
+                    getImageURLTask.execute(searchTerm,tag);
+                //only searchterm given
+                }else{
+                    GetImageURLTask getImageURLTask = new GetImageURLTask();
+                    getImageURLTask.delegate = LandingActivity.this;
+                    getImageURLTask.execute(input);
+
+                }
+
 
             }
         });

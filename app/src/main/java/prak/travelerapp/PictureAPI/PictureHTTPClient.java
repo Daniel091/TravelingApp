@@ -28,6 +28,53 @@ public class PictureHTTPClient {
     private static String NUMBER_PARAM = "&rpp=2";
     private static String API_KEY = "&consumer_key=qVFJEFeFoAIoW3yjCb697qJxuYvEbpl5H68lmSQ4";
 
+
+    public String getImageURL(String term) {
+        HttpURLConnection con = null;
+        InputStream is = null;
+
+        try {
+            String url = BASE_URL + TERM_PARAM + term + SIZE_PARAM + NUMBER_PARAM+ API_KEY;
+            con = (HttpURLConnection) (new URL(url)).openConnection();
+            con.setRequestMethod("GET");
+            con.setDoInput(true);
+            con.connect();
+
+            int code = con.getResponseCode();
+
+            if (code == 200) {
+                // Let's read the response
+                StringBuffer buffer = new StringBuffer();
+                is = con.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                    buffer.append(line + "\r\n");
+                is.close();
+                con.disconnect();
+                return buffer.toString();
+            } else {
+                return null;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (Throwable t) {
+            }
+            try {
+                con.disconnect();
+            } catch (Throwable t) {
+            }
+        }
+        return null;
+    }
+
     public String getImageURL(String term, String tag) {
         HttpURLConnection con = null;
         InputStream is = null;
