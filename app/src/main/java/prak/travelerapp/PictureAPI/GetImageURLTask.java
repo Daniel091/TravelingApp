@@ -12,9 +12,6 @@ import org.json.JSONObject;
 import prak.travelerapp.FlickrAPI.AsyncFlickrResponse;
 import prak.travelerapp.FlickrAPI.FlickrHTTPClient;
 
-/**
- * Created by Michael on 24.11.15.
- */
 public class GetImageURLTask extends AsyncTask<String, Void, String> {
 
     public AsyncPictureResponse delegate = null;

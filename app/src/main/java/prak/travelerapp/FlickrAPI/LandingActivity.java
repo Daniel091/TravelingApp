@@ -2,10 +2,12 @@ package prak.travelerapp.FlickrAPI;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,9 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     private ImageView imageView;// ImageView
     private EditText editText;
 
+    private int screenheight;
+    private int screenwidth;
+
     // Flickr Settings
     private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
     private static final String FLICKRSECRET = "746fc3e64519bcee";
@@ -47,6 +52,10 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenheight = displaymetrics.heightPixels;
+        screenwidth = displaymetrics.widthPixels;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,7 +63,7 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
         imageView = (ImageView) findViewById(R.id.imageView);
         GetImageURLTask getImageURLTask = new GetImageURLTask();
         getImageURLTask.delegate = this;
-        getImageURLTask.execute("Muenchen","sightseeing");
+        getImageURLTask.execute("Muenchen");
 
         /*
         FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
@@ -148,17 +157,21 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     @Override
     public void getURLProcessFailed() {
 
+        Log.d("mw", "URL Process failed");
+
     }
 
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
 
-        imageView.setImageBitmap(image);
+        Bitmap resizedImage = getResizedBitmap(image,screenheight,screenheight);
+        imageView.setImageBitmap(resizedImage);
 
     }
 
     @Override
     public void getImageFromURLProcessFailed() {
+        Log.d("mw", "Image Process Failed");
 
     }
 
@@ -218,5 +231,28 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
             }
             return stream;
         }
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+
+        int width = bm.getWidth();
+
+        int height = bm.getHeight();
+
+        float scaleWidth = ((float) newWidth) / width;
+
+        float scaleHeight = ((float) newHeight) / height;
+
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // RECREATE THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+
+        return resizedBitmap;
+
     }
 }

@@ -26,6 +26,8 @@ public class PictureHTTPClient {
     private static String TAG_PARAM = "&tag=";
     private static String SIZE_PARAM = "&image_size=600";
     private static String NUMBER_PARAM = "&rpp=2";
+    private static String CATEGORY_PARAM = "";//"&only=Travel";
+
     private static String API_KEY = "&consumer_key=qVFJEFeFoAIoW3yjCb697qJxuYvEbpl5H68lmSQ4";
 
 
@@ -34,7 +36,7 @@ public class PictureHTTPClient {
         InputStream is = null;
 
         try {
-            String url = BASE_URL + TERM_PARAM + term + SIZE_PARAM + NUMBER_PARAM+ API_KEY;
+            String url = BASE_URL + TERM_PARAM + term + SIZE_PARAM + NUMBER_PARAM+  CATEGORY_PARAM + API_KEY;
             con = (HttpURLConnection) (new URL(url)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);
@@ -80,7 +82,7 @@ public class PictureHTTPClient {
         InputStream is = null;
 
         try {
-            String url = BASE_URL + TERM_PARAM + term + TAG_PARAM + tag + SIZE_PARAM + NUMBER_PARAM+ API_KEY;
+            String url = BASE_URL + TERM_PARAM + term + TAG_PARAM + tag + SIZE_PARAM + NUMBER_PARAM+ CATEGORY_PARAM +API_KEY;
             con = (HttpURLConnection) (new URL(url)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);
