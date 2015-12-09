@@ -17,8 +17,9 @@ import java.io.OutputStream;
  */
 public class ItemDBHelper extends SQLiteOpenHelper {
 
-    private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
+    private static String TAG = "DBHelper"; // Tag just for the LogCat window
     //destination path (location) of our database on device
+
     private static String DB_PATH = "";
     private static String DB_NAME ="items.db";// Database name
     private SQLiteDatabase mDataBase;

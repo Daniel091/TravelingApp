@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ItemDBAdapter {
 
-    protected static final String TAG = "DataAdapter";
+    protected static final String TAG = "DBAdapter";
 
     public String tableName = "items_table";
 
@@ -163,16 +163,4 @@ public class ItemDBAdapter {
 
         return dataSet;
     }
-
-    /*
-    public void insertData(String name, int ){
-
-        ContentValues values = new ContentValues();
-        //values.put("StudentName", queryValues.get("StudentName"));
-        //mdb.insert("Students", null, values);
-        mDb.insert("items_table", null,values);
-
-    }*/
-
-
 }

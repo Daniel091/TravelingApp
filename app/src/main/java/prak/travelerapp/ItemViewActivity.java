@@ -2,7 +2,10 @@ package prak.travelerapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -20,6 +23,11 @@ public class ItemViewActivity extends AppCompatActivity {
     // Log Tag
     public static final String LOG_TAG = ItemViewActivity.class.getSimpleName();
 
+    // Instanz vom ItemDBAdapter
+    ItemDBAdapter itemDB;
+
+    // Holt Items aus der DB
+    List<Dataset> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,27 +35,23 @@ public class ItemViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
 
-        //open items DB
-        ItemDBAdapter itemDB = new ItemDBAdapter(this);
+        activateAddButton();
+
+    }
+
+    protected void onResume() {
+        super.onResume();
+        itemDB = new ItemDBAdapter(this);
         itemDB.createDatabase();
         itemDB.open();
-
-        //query all items
-        List<Dataset> itemList = itemDB.getItems();
-
-        // Nur zum testen
-        Dataset dataSet = itemDB.createDataset("Testitem",0,0,0,0,0,0,0,0,0,0,0,0);
-
-        itemList.add(dataSet);
-
+        itemList = itemDB.getItems();
         showAllListEntries(itemList);
+    }
 
-
-        itemDB.close();
-
-
-        // Zeigt alle Einträge in der ListView
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+       itemDB.close();
     }
 
     private void showAllListEntries (List<Dataset> items) {
@@ -61,5 +65,21 @@ public class ItemViewActivity extends AppCompatActivity {
         ListView dataSetsListView = (ListView) findViewById(R.id.item_list_view);
         dataSetsListView.setAdapter(dataSetArrayAdapter);
     }
+
+    private void activateAddButton() {
+        Button buttonAddItem = (Button) findViewById(R.id.button_add_item);
+
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dataset dataSet = itemDB.createDataset("Testitem", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                itemList.add(dataSet);
+                showAllListEntries(itemList);
+            }
+        });
+
+    }
+
 
 }
