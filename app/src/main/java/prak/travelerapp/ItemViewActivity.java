@@ -1,6 +1,7 @@
 package prak.travelerapp;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -67,7 +68,7 @@ public class ItemViewActivity extends AppCompatActivity {
     }
 
     private void activateAddButton() {
-        Button buttonAddItem = (Button) findViewById(R.id.button_add_item);
+        FloatingActionButton buttonAddItem = (FloatingActionButton) findViewById(R.id.button_add_item);
 
         buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
