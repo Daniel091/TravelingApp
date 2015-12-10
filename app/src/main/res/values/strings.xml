@@ -2,14 +2,13 @@
     <string name="app_name">TRAVeL</string>
     <string name="heading">Traveler</string>
     <string name="welcome">TRAVeL</string>
-    
+
     <string name="newTrip">Eine neue Reise starten</string>
     <string name="btnName">Find a cool Place</string>
     <string name="itemList">Koffer packen</string>
     <string name="flickrTest">Flickr API Test</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="action_settings">Settings</string>
 
     <string name="editText_item">Item</string>
@@ -20,5 +19,10 @@
     <string name="title_activity_item_view">Item View Activity</string>
     <string name="title_activity_landing">LandingActivity</string>
 
-
+    <string-array name="menue_links">
+        <item>Home</item>
+        <item>Places Test</item>
+        <item>Flicker Test</item>
+        <item>Autocompleter Test</item>
+    </string-array>
 </resources>
