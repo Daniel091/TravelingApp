@@ -1,9 +1,9 @@
 package prak.travelerapp;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(LOG_TAG,"Selected: " + menue_links[position]);
-        Fragment fragment;
+        android.app.Fragment fragment;
         switch(position) {
             case 0:
                 fragment = new MainFragment();
@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setUpFragement(fragment);
                 break;
             case 2:
-                Toast.makeText(getBaseContext(), menue_links[position] + " To implement as Fragment",Toast.LENGTH_SHORT).show();
-                // Add here Flicker Test Fragment
+                fragment = new LandingFragment();
+                setUpFragement(fragment);
                 break;
             case 3:
-                Toast.makeText(getBaseContext(), menue_links[position] + " To implement as Fragment",Toast.LENGTH_SHORT).show();
-                // Add here Autocompleter Test Fragment
+                fragment = new CityAutocompleteFragment();
+                setUpFragement(fragment);
                 break;
         }
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void setUpFragement(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.mainContent, fragment);

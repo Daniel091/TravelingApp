@@ -1,22 +1,19 @@
-package prak.travelerapp.FlickrAPI;
+package prak.travelerapp;
 
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,9 +24,8 @@ import java.net.URLConnection;
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
-import prak.travelerapp.R;
 
-public class LandingActivity extends AppCompatActivity implements AsyncFlickrResponse,AsyncPictureResponse {
+public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
     private Button sanFrancisco;    // Photo Test
     private ImageView imageView;// ImageView
@@ -49,62 +45,47 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
     //private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_landing, container, false);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screenheight = displaymetrics.heightPixels;
         screenwidth = displaymetrics.widthPixels;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+       // getActivity().setSupportActionBar(toolbar);
 
-        editText = (EditText)findViewById(R.id.edit_text);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        editText = (EditText)getView().findViewById(R.id.edit_text);
+        imageView = (ImageView) getView().findViewById(R.id.imageView);
         GetImageURLTask getImageURLTask = new GetImageURLTask();
         getImageURLTask.delegate = this;
         getImageURLTask.execute("Muenchen");
 
-        /*
-        FlickrGetURLTask flickrAPI = new FlickrGetURLTask();
-        flickrAPI.delegate = this;
-        flickrAPI.execute("Berlin");
-        */
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
-
-        // Set Image from static URL as Background
-        DefaultBackground task = new DefaultBackground();
-        // Execute the task
-        task.execute(new String[] { URL });
-
-*/
-        sanFrancisco = (Button) findViewById(R.id.button);
+        sanFrancisco = (Button) getView().findViewById(R.id.button);
         sanFrancisco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String input = editText.getText().toString();
                 //searchterm and tag given
-                if(input.contains(",")){
-                    String [] inputs = input.split(",");
+                if (input.contains(",")) {
+                    String[] inputs = input.split(",");
                     String searchTerm = inputs[0];
                     String tag = inputs[1];
                     GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingActivity.this;
-                    getImageURLTask.execute(searchTerm,tag);
-                //only searchterm given
-                }else{
+                    getImageURLTask.delegate = LandingFragment.this;
+                    getImageURLTask.execute(searchTerm, tag);
+                    //only searchterm given
+                } else {
                     GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingActivity.this;
+                    getImageURLTask.delegate = LandingFragment.this;
                     getImageURLTask.execute(input);
 
                 }
@@ -112,37 +93,6 @@ public class LandingActivity extends AppCompatActivity implements AsyncFlickrRes
 
             }
         });
-    }
-
-    @Override
-    public void flickrProcessFinish(JSONObject output) {
-        Log.d("mw", output.toString());
-        try {
-            JSONObject photosObj = output.getJSONObject("photos");
-            JSONArray photoArray = photosObj.getJSONArray("photo");
-            JSONObject photoObj = photoArray.getJSONObject(0);
-            String photoid = photoObj.getString("id");
-            String farmid = photoObj.getString("farm");
-            String serverid = photoObj.getString("server");
-            String secret = photoObj.getString("secret");
-            String flickrURL = "https://farm" + farmid + ".staticflickr.com/" + serverid + "/" + photoid + "_" + secret + "_b.jpg";
-            Log.d("Flickr Image URL", flickrURL);
-
-            imageView = (ImageView) findViewById(R.id.imageView);
-
-            // Set Image from static URL as Background
-            SetBackground task = new SetBackground();
-            // Execute the task
-            task.execute(new String[]{ flickrURL });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void flickrProcessFailed() {
-
     }
 
     @Override

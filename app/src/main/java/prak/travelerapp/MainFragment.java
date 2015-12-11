@@ -2,15 +2,13 @@ package prak.travelerapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import prak.travelerapp.Autocompleter.CityAutocompleteActivity;
-import prak.travelerapp.FlickrAPI.LandingActivity;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
@@ -66,7 +64,7 @@ public class MainFragment extends Fragment implements AsyncWeatherResponse {
             @Override
             public void onClick(View v) {
 
-                autocompleteIntent = new Intent(getActivity(), CityAutocompleteActivity.class);
+                autocompleteIntent = new Intent(getActivity(), CityAutocompleteFragment.class);
                 Log.d("MainActivity", "Click started autocomplete view");
 
                 startActivity(autocompleteIntent);
@@ -80,7 +78,7 @@ public class MainFragment extends Fragment implements AsyncWeatherResponse {
             @Override
             public void onClick(View v) {
 
-                flickrIntent = new Intent(getActivity(), LandingActivity.class);
+                flickrIntent = new Intent(getActivity(), LandingFragment.class);
                 Log.d("MainActivity", "Flickr Test Button clicked");
 
                 startActivity(flickrIntent);

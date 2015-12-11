@@ -1,24 +1,26 @@
-package prak.travelerapp.Autocompleter;
+package prak.travelerapp;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import java.util.List;
 
+import prak.travelerapp.Autocompleter.CityAutoCompleteView;
 import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Autocompleter.model.City;
-import prak.travelerapp.PlaceApi.PlacesAutoCompleteAdapter;
-import prak.travelerapp.R;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
-public class CityAutocompleteActivity extends AppCompatActivity implements AsyncWeatherResponse {
+public class CityAutocompleteFragment extends Fragment implements AsyncWeatherResponse {
 
     /*
    * Change to type CustomAutoCompleteView instead of AutoCompleteTextView
@@ -39,24 +41,52 @@ public class CityAutocompleteActivity extends AppCompatActivity implements Async
     String[] item = new String[] {"Please search..."};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_autocomplete);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_city_autocomplete, container, false);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         prepareViews();
 
         try{
 
             // instantiate database handler
-            cityDB = new CityDBAdapter(this);
+            cityDB = new CityDBAdapter(getActivity());
             cityDB.createDatabase();
             cityDB.open();
 
             // add the listener so it will tries to suggest while the user types
-            myAutoComplete.addTextChangedListener(new CityAutocompleteTextChangedListener(this));
+            myAutoComplete.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence userInput, int start, int before, int count) {
+
+                    // query the database based on the user input
+                    item = getItemsFromDb(userInput.toString());
+
+                    // update the adapater
+                    myAdapter.notifyDataSetChanged();
+                    myAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, item);
+                    myAutoComplete.setAdapter(myAdapter);
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
             // set our adapter
-            myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item);
+            myAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, item);
             myAutoComplete.setAdapter(myAdapter);
 
         } catch (NullPointerException e) {
@@ -64,12 +94,13 @@ public class CityAutocompleteActivity extends AppCompatActivity implements Async
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void prepareViews() {
         // autocompletetextview is in activity_main.xml
-        myAutoComplete = (CityAutoCompleteView) findViewById(R.id.myautocomplete);
-        btn_getWeather = (Button) findViewById(R.id.button_get_weather);
+        myAutoComplete = (CityAutoCompleteView) getView().findViewById(R.id.myautocomplete);
+        btn_getWeather = (Button) getView().findViewById(R.id.button_get_weather);
         btn_getWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +110,7 @@ public class CityAutocompleteActivity extends AppCompatActivity implements Async
                 String country= separated[1];
                 Log.d("mw", city);
                 WeatherTask weathertask = new WeatherTask();
-                weathertask.delegate = CityAutocompleteActivity.this;
+                weathertask.delegate = CityAutocompleteFragment.this;
                 weathertask.execute(new String[]{city,country});
 
             }
@@ -105,7 +136,8 @@ public class CityAutocompleteActivity extends AppCompatActivity implements Async
         return item;
     }
 
-    protected void onDestroy(){
+    @Override
+    public void onDestroy(){
         super.onDestroy();
         cityDB.close();
 

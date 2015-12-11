@@ -33,10 +33,10 @@
             android:name=".ItemViewActivity"
             android:label="@string/title_activity_item_view" />
         <activity android:name=".PlaceApi.AutocompleteActivity" />
-        <activity android:name=".Autocompleter.CityAutocompleteActivity" />
+        <activity android:name=".CityAutocompleteFragment" />
 
         <activity
-            android:name=".FlickrAPI.LandingActivity"
+            android:name=".LandingFragment"
             android:label="@string/title_activity_landing"
             android:theme="@style/Basic.NoActionBar" >
         </activity>

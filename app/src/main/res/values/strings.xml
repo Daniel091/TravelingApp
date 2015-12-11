@@ -22,7 +22,7 @@
     <string-array name="menue_links">
         <item>Home</item>
         <item>Places Test</item>
-        <item>Flicker Test</item>
+        <item>500px Test</item>
         <item>Autocompleter Test</item>
     </string-array>
 </resources>
