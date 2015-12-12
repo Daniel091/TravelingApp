@@ -20,7 +20,7 @@
     <string name="title_activity_landing">LandingActivity</string>
 
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
-
+    <string name="neueReise">Neue Reise</string>
     <string-array name="menue_links">
         <item>Home</item>
         <item>Places Test</item>

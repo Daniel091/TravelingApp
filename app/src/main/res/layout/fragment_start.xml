@@ -33,6 +33,19 @@
             android:layout_centerHorizontal="true"
             android:textSize="30dp"/>
 
+
+        <Button
+            android:textAllCaps="false"
+            android:textSize="22dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/buttonshape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newTrip"
+            android:text="@string/neueReise"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="150dp" />
     </RelativeLayout>
 
 </RelativeLayout>
