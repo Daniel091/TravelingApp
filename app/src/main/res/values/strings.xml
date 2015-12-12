@@ -27,4 +27,13 @@
         <item>500px Test</item>
         <item>Autocompleter Test</item>
     </string-array>
+
+        <string-array name="category_array">
+            <item>Reise</item>
+            <item>Reise Reise</item>
+            <item>Reise toll</item>
+            <item>noch ne Reise </item>
+            <item>Geile Reise</item>
+            <item>Sexurlaub in Thailand</item>
+        </string-array>
 </resources>

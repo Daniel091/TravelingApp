@@ -34,7 +34,6 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
         button_newTrip = (Button) view.findViewById(R.id.button_newTrip);
         button_newTrip.setOnClickListener(this);
 
-
         return view;
     }
 
