@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         closeDrawer();
     }
 
-    private void setUpFragement(Fragment fragment) {
+    public void setUpFragement(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

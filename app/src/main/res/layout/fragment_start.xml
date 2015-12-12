@@ -12,15 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_overlay" >
 
-        <ImageButton
-            android:id="@+id/button_hamburger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginLeft="28dp"
-            android:background="@android:color/transparent"
-            android:src="@mipmap/ic_hamburger"
-            />
+        <include layout="@layout/button_hamburger"/>
 
         <TextView
             android:id="@+id/textview_opener"
@@ -60,6 +52,7 @@
 
 
         <Button
+            android:id="@+id/button_newTrip"
             android:textAllCaps="false"
             android:textSize="22dp"
             android:textColor="@android:color/white"
@@ -70,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/radioGroup_gender"
-            android:id="@+id/newTrip"
             android:text="@string/neueReise"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="60dp" />
