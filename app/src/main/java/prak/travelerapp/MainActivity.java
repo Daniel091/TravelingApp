@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -25,18 +27,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
+
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
         setContentView(R.layout.activity_main);
+        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
         prepareViews();
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menue_links));
         listView.setOnItemClickListener(this);
 
         // Start with Home Screen
-        Fragment fragment = new MainFragment();
+        Fragment fragment = new StartFragment();
         setUpFragement(fragment);
         listView.setItemChecked(1, true);
-        setTitle(menue_links[0]);
     }
 
     private void prepareViews() {
@@ -45,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView = (ListView) findViewById(R.id.drawerList);
 
         // Prepare youre views
+    }
+
+    public void openDrawer(){
+        drawerLayout.openDrawer(listView);
+    }
+
+    public void closeDrawer(){
+        drawerLayout.closeDrawer(listView);
     }
 
     @Override
@@ -72,8 +87,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Highlight the selected item, update the title, and close the drawer
         listView.setItemChecked(position, true);
-        setTitle(menue_links[position]);
-        drawerLayout.closeDrawer(listView);
+        closeDrawer();
     }
 
     private void setUpFragement(Fragment fragment) {

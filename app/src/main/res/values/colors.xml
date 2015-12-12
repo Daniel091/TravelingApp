@@ -8,4 +8,6 @@
     <color name="white">#ffffff</color>
     <color name="darkGrey">#a8a8aa</color>
     <color name="lightGrey">#f3f3f4</color>
+
+    <color name="color_overlay">#7F6f0054</color>
 </resources>
