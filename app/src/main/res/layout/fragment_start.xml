@@ -33,19 +33,47 @@
             android:layout_centerHorizontal="true"
             android:textSize="30dp"/>
 
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radioGroup_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textview_opener"
+            android:layout_marginTop="80dp">
+            <RadioButton android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="männlich"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:buttonTint="@color/colorAccent"
+                android:layout_marginRight="60dp" />
+            <RadioButton android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="weiblich"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:buttonTint="@color/colorAccent" />
+        </RadioGroup>
+
 
         <Button
             android:textAllCaps="false"
             android:textSize="22dp"
             android:textColor="@android:color/white"
             android:background="@drawable/buttonshape"
+            android:drawableLeft="@drawable/plus"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup_gender"
             android:id="@+id/newTrip"
             android:text="@string/neueReise"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp" />
+            android:layout_marginTop="60dp" />
     </RelativeLayout>
 
 </RelativeLayout>
