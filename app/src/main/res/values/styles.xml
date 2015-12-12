@@ -15,7 +15,6 @@
 
         <!-- Raised Button Style -->
         <item name="colorButtonNormal">@color/colorAccent</item>
-
         <!-- ListView Packliste -->
         <item name="android:listViewStyle">@style/itemList</item>
     </style>
