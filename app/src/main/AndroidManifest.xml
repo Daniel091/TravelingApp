@@ -42,6 +42,11 @@
             android:label="@string/title_activity_landing"
             android:theme="@style/Basic.NoActionBar" >
         </activity>
+
+        <activity
+            android:name=".AddItemPopUp"
+            android:label="@string/title_add_item_popup"
+            android:theme="@style/ItemViewTheme" />
     </application>
 
 </manifest>
