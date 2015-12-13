@@ -61,11 +61,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(LOG_TAG,"Selected: " + menue_links[position]);
-        android.app.Fragment fragment;
+        Log.d(LOG_TAG,"Selected: " + menue_links[position] + " at " + position);
+        Fragment fragment;
         switch(position) {
-            case 0:
-                fragment = new MainFragment();
+            case 1:
+                fragment = new StartFragment();
+                setUpFragement(fragment);
+                break;
+            case 3:
+                fragment = new NewTripFragment();
                 setUpFragement(fragment);
                 break;
             case 6:
