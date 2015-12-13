@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/airport">
+
+    <RelativeLayout
+        android:id="@+id/transparentOverlay"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_overlay" >
+
+    <include layout="@layout/button_hamburger"/>
+
+    <TextView
+        android:id="@+id/textview_newTrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Neue Reise"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="28dp"
+        android:textSize="30dp"/>
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/firstSection"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18dp"
+            android:paddingLeft="28dp"
+            android:gravity="center_vertical"
+            android:text="Reiseziel"
+            />
+
+        <prak.travelerapp.Autocompleter.CityAutoCompleteView
+            android:id="@+id/autocomplete_destination"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:completionThreshold="2"
+            android:dropDownHeight="20mm"
+            android:singleLine="true"
+            android:inputType="text"
+            android:cursorVisible="false"
+            android:background="#00000000"
+            android:text="San Francisco"
+            android:textColor="@color/black">
+        </prak.travelerapp.Autocompleter.CityAutoCompleteView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightGrey" />
+
+    <TableLayout
+        android:id="@+id/secondSection"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TableRow
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:gravity="center_vertical"
+                android:text="Anreise"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18dp"
+                android:gravity="center_vertical"
+                android:text="Abreise"
+                />
+
+
+        </TableRow>
+        <TableRow
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/edittext_arrival"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:text="01.01.9999"
+                android:background="#00000000"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edittext_departure"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="25dp"
+                android:text="02.01.9999"
+                android:background="#00000000"
+                android:inputType="text" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightGrey" />
+
+    <LinearLayout
+        android:id="@+id/thirdSection"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18dp"
+            android:paddingLeft="28dp"
+            android:gravity="center_vertical"
+            android:text="Reisetyp"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18dp"
+            android:gravity="center_vertical|left"
+            />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightGrey" />
+
+</LinearLayout>

@@ -21,10 +21,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC7hQk5LW0FQMWi8lhZrOEILmzcW5tRbL4" />
 
-        <activity android:name=".MainActivity" >
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Basic.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,10 +35,10 @@
             android:name=".ItemViewActivity"
             android:label="@string/title_activity_item_view" />
         <activity android:name=".PlaceApi.AutocompleteActivity" />
-        <activity android:name=".Autocompleter.CityAutocompleteActivity" />
+        <activity android:name=".CityAutocompleteFragment" />
 
         <activity
-            android:name=".FlickrAPI.LandingActivity"
+            android:name=".LandingFragment"
             android:label="@string/title_activity_landing"
             android:theme="@style/Basic.NoActionBar" >
         </activity>
