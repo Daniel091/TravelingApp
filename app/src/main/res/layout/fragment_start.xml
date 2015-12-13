@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/airport">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/transparentOverlay"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -15,24 +15,45 @@
         <include layout="@layout/button_hamburger"/>
 
         <TextView
-            android:id="@+id/textview_opener"
+            android:id="@+id/textview_opener1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/opener_text"
+            android:text="Wohin gehts?"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:layout_marginTop="150dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/textview_opener2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Was hast du vor?"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/textview_opener3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Das solltest du einpacken!"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
             android:textSize="30dp"/>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/radioGroup_gender"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/textview_opener"
-            android:layout_marginTop="80dp">
+            android:gravity="center_horizontal"
+            android:layout_marginTop="60dp">
             <RadioButton android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,10 +81,9 @@
             android:drawableLeft="@drawable/plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/radioGroup_gender"
             android:text="@string/neueReise"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp" />
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp" />
+    </LinearLayout>
 
 </RelativeLayout>
