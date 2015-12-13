@@ -50,7 +50,7 @@ public class MainFragment extends Fragment implements AsyncWeatherResponse {
             public void onClick(View v) {
 
                 listIntent = new Intent(getActivity(), ItemViewActivity.class);
-                Log.d("MainActivity", "Click started item list");
+                Log.d("MainActivity", "Click started items list");
 
                 startActivity(listIntent);
             }

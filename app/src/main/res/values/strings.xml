@@ -18,7 +18,7 @@
 
     <string name="title_activity_item_view">Deine Packliste</string>
     <string name="title_activity_landing">LandingActivity</string>
-
+    
     <string name="title_add_item_popup"></string>
 
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>

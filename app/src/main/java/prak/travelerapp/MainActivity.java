@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
         }
 
-        // Highlight the selected item, update the title, and close the drawer
+        // Highlight the selected items, update the title, and close the drawer
         listView.setItemChecked(position, true);
         closeDrawer();
     }
