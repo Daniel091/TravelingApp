@@ -22,7 +22,12 @@
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string-array name="menue_links">
-        <item>Home</item>
+        <item>TRAVeL</item>
+        <item>Start</item>
+        <item>Aktuelle Packliste</item>
+        <item>Neue Reise</item>
+        <item>Vergangene Reisen</item>
+        <item>Einstellungen</item>
         <item>Places Test</item>
         <item>500px Test</item>
         <item>Autocompleter Test</item>

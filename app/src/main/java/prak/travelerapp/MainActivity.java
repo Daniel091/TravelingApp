@@ -1,19 +1,16 @@
 package prak.travelerapp;
 
-import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 
@@ -21,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+    private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
     private String[] menue_links;
@@ -32,12 +30,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-
         setContentView(R.layout.activity_main);
         Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
         prepareViews();
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menue_links));
+        menueApdapter = new MenueApdapter(this);
+        listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
 
         // Start with Home Screen
@@ -71,15 +68,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new MainFragment();
                 setUpFragement(fragment);
                 break;
-            case 1:
+            case 6:
                 fragment = new PlacePickerFragment();
                 setUpFragement(fragment);
                 break;
-            case 2:
+            case 7:
                 fragment = new LandingFragment();
                 setUpFragement(fragment);
                 break;
-            case 3:
+            case 8:
                 fragment = new CityAutocompleteFragment();
                 setUpFragement(fragment);
                 break;
