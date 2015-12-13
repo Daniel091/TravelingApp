@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
@@ -16,7 +16,20 @@
         <!-- Raised Button Style -->
         <item name="colorButtonNormal">@color/colorAccent</item>
         <!-- ListView Packliste -->
+
         <item name="android:listViewStyle">@style/itemList</item>
+        <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
+
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/CustomDatePickerDialogTheme</item>
+    </style>
+    <style name="Basic.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextViewSpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="itemList" parent="android:style/Widget.ListView">
@@ -28,10 +41,18 @@
         <item name="android:drawSelectorOnTop">false</item>
         <item name="android:cacheColorHint">#00000000</item>
     </style>
-    <style name="Basic.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
+<<<<<<< HEAD
     <style name="Basic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Basic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ItemViewTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+=======
+>>>>>>> bf85bd1c36e0d53fe86f089f20c0cd2f77edde8c
 </resources>

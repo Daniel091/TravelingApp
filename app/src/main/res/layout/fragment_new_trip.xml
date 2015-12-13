@@ -57,12 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:completionThreshold="2"
-            android:dropDownHeight="20mm"
+            android:dropDownHeight="200dp"
             android:singleLine="true"
             android:inputType="text"
-            android:cursorVisible="false"
             android:background="#00000000"
-            android:text="San Francisco"
+            android:hint="San Francisco"
             android:textColor="@color/black">
         </prak.travelerapp.Autocompleter.CityAutoCompleteView>
 
@@ -89,9 +88,9 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginLeft="28dp"
-                android:gravity="center_vertical"
+                android:paddingStart="28dp"
+                android:paddingLeft="28dp"
+                android:gravity="center_vertical|start"
                 android:text="Anreise"
                 />
 
@@ -101,7 +100,9 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18dp"
-                android:gravity="center_vertical"
+                android:paddingEnd="28dp"
+                android:paddingRight="28dp"
+                android:gravity="center_vertical|start"
                 android:text="Abreise"
                 />
 
@@ -117,9 +118,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginStart="28dp"
-                android:layout_marginLeft="28dp"
-                android:text="01.01.9999"
+                android:paddingStart="28dp"
+                android:paddingLeft="28dp"
+                android:text="01.01.2099"
+                android:gravity="center_vertical|start"
                 android:background="#00000000"
                 android:inputType="text" />
 
@@ -128,8 +130,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginRight="25dp"
-                android:text="02.01.9999"
+                android:text="02.01.2099"
+                android:paddingEnd="28dp"
+                android:paddingRight="28dp"
+                android:gravity="center_vertical|start"
                 android:background="#00000000"
                 android:inputType="text" />
 

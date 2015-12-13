@@ -1,5 +1,6 @@
 package prak.travelerapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,9 @@ public class ItemViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                startActivity(new Intent(ItemViewActivity.this, AddItemPopUp.class));
+
+                // Testitem
                 Dataset dataSet = itemDB.createDataset("Testitem", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 itemList.add(dataSet);
                 showAllListEntries(itemList);
