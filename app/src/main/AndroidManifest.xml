@@ -11,6 +11,9 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <uses-sdk
+        android:minSdkVersion="23" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,10 +34,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ItemViewActivity"
-            android:label="@string/title_activity_item_view" />
+        <activity android:name=".ItemViewActivity" />
+
         <activity android:name=".PlaceApi.AutocompleteActivity" />
+
         <activity android:name=".CityAutocompleteFragment" />
 
         <activity
@@ -43,10 +46,6 @@
             android:theme="@style/Basic.NoActionBar" >
         </activity>
 
-        <activity
-            android:name=".AddItemPopUp"
-            android:label="@string/title_add_item_popup"
-            android:theme="@style/ItemViewTheme" />
     </application>
 
 </manifest>
