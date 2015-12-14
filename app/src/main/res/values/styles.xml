@@ -45,6 +45,7 @@
     <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Dialog" tools:targetApi="lollipop">
         <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
+
     <style name="Basic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Basic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

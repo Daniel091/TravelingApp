@@ -52,6 +52,7 @@ public class JourneyDBAdapter {
 
     public void delete(long _id) {
         database.delete(DBhelper.TABLE_NAME, DBhelper._ID + "=" + _id, null);
-    }*/
+    }
+    */
 
 }
