@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class TripDBHelper extends SQLiteOpenHelper{;
+public class TripDBHelper extends SQLiteOpenHelper{
 
 
     // Table Name
