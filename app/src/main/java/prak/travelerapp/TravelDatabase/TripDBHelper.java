@@ -5,12 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
-/**
- * Created by Michael on 14.12.15.
- */
-
-public class JourneyDBHelper extends SQLiteOpenHelper{;
+public class TripDBHelper extends SQLiteOpenHelper{;
 
 
     // Table Name
@@ -43,7 +38,7 @@ public class JourneyDBHelper extends SQLiteOpenHelper{;
             + COLUMN_ITEMS + "TEXT"
             +");";
 
-    public JourneyDBHelper(Context context) {
+    public TripDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -57,4 +52,5 @@ public class JourneyDBHelper extends SQLiteOpenHelper{;
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
 }
