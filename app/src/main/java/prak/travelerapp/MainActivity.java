@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new StartFragment();
                 setUpFragement(fragment);
                 break;
+            case 2:
+                fragment = new ItemViewActivity();
+                setUpFragement(fragment);
+                break;
             case 3:
                 fragment = new NewTripFragment();
                 setUpFragement(fragment);

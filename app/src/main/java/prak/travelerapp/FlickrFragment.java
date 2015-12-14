@@ -2,7 +2,9 @@ package prak.travelerapp;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,41 +13,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 
-public class LandingFragment extends Fragment implements AsyncPictureResponse {
+public class FlickrFragment extends Fragment implements AsyncPictureResponse {
 
-    private ImageButton button_hamburger;
-    private Button testQuery;       // Photo Test
-    private ImageView imageView;    // ImageView
+    private Button sanFrancisco;    // Photo Test
+    private ImageView imageView;// ImageView
     private EditText editText;
 
     private int screenheight;
     private int screenwidth;
 
+    // Flickr Settings
+    private static final String FLICKRKEY = "7c4034aedc42e402d26421f9388e189f";
+    private static final String FLICKRSECRET = "746fc3e64519bcee";
+
+    // REST Request with JSON Output
+    private String group_id = "26328425@N00";
+    private String location = "sanfrancisco";
+    //private String images = "1";
+    //private String restUrl = "https://api.flickr.com/services/rest/?&method=flickr.photos.search&format=json&nojsoncallback=1&api_key=" + FLICKRKEY + "&per_page=" + images + "&tags=" + location;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_landing, container, false);
-
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
-        button_hamburger.bringToFront();
-        button_hamburger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).openDrawer();
-            }
-        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_landing, container, false);
     }
+
 
     @Override
     public void onStart() {
@@ -64,8 +69,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         getImageURLTask.delegate = this;
         getImageURLTask.execute("Muenchen");
 
-        testQuery = (Button) getView().findViewById(R.id.button);
-        testQuery.setOnClickListener(new View.OnClickListener() {
+        sanFrancisco = (Button) getView().findViewById(R.id.button);
+        sanFrancisco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String input = editText.getText().toString();
@@ -75,15 +80,17 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
                     String searchTerm = inputs[0];
                     String tag = inputs[1];
                     GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingFragment.this;
+                    getImageURLTask.delegate = FlickrFragment.this;
                     getImageURLTask.execute(searchTerm, tag);
                     //only searchterm given
                 } else {
                     GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingFragment.this;
+                    getImageURLTask.delegate = FlickrFragment.this;
                     getImageURLTask.execute(input);
 
                 }
+
+
             }
         });
     }
@@ -107,7 +114,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
 
-        Bitmap resizedImage = getResizedBitmap(image, screenheight, screenheight);
+        Bitmap resizedImage = getResizedBitmap(image,screenheight,screenheight);
         imageView.setImageBitmap(resizedImage);
 
     }
@@ -118,11 +125,72 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
     }
 
+
+    // Set Background from Flickr URL
+    private class SetBackground extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap map = null;
+            for (String url : urls) {
+                map = downloadImage(url);
+            }
+            return map;
+        }
+
+        // Sets the Bitmap returned by doInBackground
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+
+        // Creates Bitmap from InputStream and returns it
+        private Bitmap downloadImage(String url) {
+            Bitmap bitmap = null;
+            InputStream stream = null;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inSampleSize = 1;
+
+            try {
+                stream = getHttpConnection(url);
+                bitmap = BitmapFactory.
+                        decodeStream(stream, null, bmOptions);
+                stream.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        // Makes HttpURLConnection and returns InputStream
+        private InputStream getHttpConnection(String urlString)
+                throws IOException {
+            InputStream stream = null;
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
+
+            try {
+                HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                httpConnection.setRequestMethod("GET");
+                httpConnection.connect();
+
+                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    stream = httpConnection.getInputStream();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return stream;
+        }
+    }
+
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
 
         int width = bm.getWidth();
+
         int height = bm.getHeight();
+
         float scaleWidth = ((float) newWidth) / width;
+
         float scaleHeight = ((float) newHeight) / height;
 
         // CREATE A MATRIX FOR THE MANIPULATION
