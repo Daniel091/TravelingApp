@@ -12,11 +12,11 @@ public class TripItems {
     }
 
     public TripItems(List<Tupel> items_list){
+
         this.items_list = items_list;
     }
 
-    @Override
-    public String toString(){
+    public String makeString(){
         String s = null;
         for(int i=0;i<items_list.size();i++){
             if(i < items_list.size()-1){

@@ -30,12 +30,12 @@ public class TripDBHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + COLUMN_ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
-            + COLUMN_STARTDATE + " TEXT NOT NULL"
-            + COLUMN_ENDDATE + " TEXT NOT NULL"
-            + COLUMN_TYPE1 + " INTEGER NOT NULL"
-            + COLUMN_TYPE2 + " INTEGER"
-            + COLUMN_ACTIVE + " INTEGER"
-            + COLUMN_ITEMS + " TEXT"
+            + COLUMN_STARTDATE + " TEXT NOT NULL,"
+            + COLUMN_ENDDATE + " TEXT NOT NULL, "
+            + COLUMN_TYPE1 + " INTEGER NOT NULL, "
+            + COLUMN_TYPE2 + " INTEGER, "
+            + COLUMN_ACTIVE + " INTEGER, "
+            + COLUMN_ITEMS + " TEXT "
             +");";
 
     public TripDBHelper(Context context) {

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setItemChecked(1, true);
 
 
-        testTripDB();
+        //testTripDB();
     }
 
     private void prepareViews() {
