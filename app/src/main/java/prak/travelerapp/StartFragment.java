@@ -1,7 +1,6 @@
 package prak.travelerapp;
 
 import android.app.Fragment;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
