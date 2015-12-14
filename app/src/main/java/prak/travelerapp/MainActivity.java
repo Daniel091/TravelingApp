@@ -116,5 +116,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
+
+        tripDBAdapter.insert(trip);
+        tripDBAdapter.fetch();
     }
 }

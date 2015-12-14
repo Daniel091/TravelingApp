@@ -37,7 +37,7 @@ public class TripDBAdapter {
     public Cursor fetch() {
         try
         {
-            String sql ="SELECT * FROM journey";
+            String sql ="SELECT * FROM " + TripDBHelper.TABLE_NAME;
 
             Cursor cursor = tripDB.rawQuery(sql, null);
             List<Dataset> dataSetList = new ArrayList<>();
@@ -46,7 +46,7 @@ public class TripDBAdapter {
                 // move cursor to first row
                 if (cursor.moveToFirst()) {
                     do {
-                        cursor.getString(cursor.getColumnIndex("name"));
+                        Log.d("DBTEST",cursor.getString(cursor.getColumnIndex("name")));
 
                     } while (cursor.moveToNext());
                 }
