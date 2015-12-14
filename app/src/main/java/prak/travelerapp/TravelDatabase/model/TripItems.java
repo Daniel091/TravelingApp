@@ -1,4 +1,4 @@
-package prak.travelerapp.TravelDatabase;
+package prak.travelerapp.TravelDatabase.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class TripItems {
 
     private List<Tupel> parseItems(String items) {
         items_list = new ArrayList<>();
-        String[] array = items.split(",");
+        String[] array = items.split(";");
 
         for(String s : array){
             int x,y;

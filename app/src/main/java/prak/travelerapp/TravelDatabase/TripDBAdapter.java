@@ -1,5 +1,6 @@
 package prak.travelerapp.TravelDatabase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
+import prak.travelerapp.TravelDatabase.model.Trip;
 
 public class TripDBAdapter {
 
@@ -57,5 +59,17 @@ public class TripDBAdapter {
             Log.e("TripDBAdapter", "getTestData >>" + mSQLException.toString());
             throw mSQLException;
         }
+    }
+
+
+    public void insert(Trip trip) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(TripDBHelper.COLUMN_NAME, trip.getName());
+        contentValue.put(TripDBHelper.COLUMN_STARTDATE, "11.10.2018");
+        contentValue.put(TripDBHelper.COLUMN_ENDDATE, "12.10.2018");
+        contentValue.put(TripDBHelper.COLUMN_TYPE1, trip.getType1().ordinal());
+        contentValue.put(TripDBHelper.COLUMN_TYPE2, trip.getType2().ordinal());
+        contentValue.put(TripDBHelper.COLUMN_ACTIVE, 0);
+        tripDB.insert(TripDBHelper.TABLE_NAME, null, contentValue);
     }
 }

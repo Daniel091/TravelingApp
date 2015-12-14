@@ -1,4 +1,4 @@
-package prak.travelerapp.TravelDatabase;
+package prak.travelerapp.TravelDatabase.model;
 
 public class Tupel{
     private final int x;

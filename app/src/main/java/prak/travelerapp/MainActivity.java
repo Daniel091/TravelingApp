@@ -13,11 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
+import prak.travelerapp.TravelDatabase.TripDBAdapter;
+import prak.travelerapp.TravelDatabase.model.TravelTypes;
+import prak.travelerapp.TravelDatabase.model.Trip;
+import prak.travelerapp.TravelDatabase.model.TripItems;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+
+    private TripDBAdapter tripDBAdapter;
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -41,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Fragment fragment = new StartFragment();
         setUpFragement(fragment);
         listView.setItemChecked(1, true);
+
+
+        testTripDB();
     }
 
     private void prepareViews() {
@@ -97,5 +106,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.mainContent, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void testTripDB(){
+
+        String s = "(3,0);(4,0)";
+        TripItems items = new TripItems(s);
+        Trip trip = new Trip(0,items, "NAMEWIdeiujef", null,null, TravelTypes.FESTIVAL, TravelTypes.SKIFAHREN, true);
+
+        tripDBAdapter = new TripDBAdapter(this);
+        tripDBAdapter.open();
     }
 }

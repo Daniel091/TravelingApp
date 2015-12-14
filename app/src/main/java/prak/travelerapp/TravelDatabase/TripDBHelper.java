@@ -9,7 +9,7 @@ public class TripDBHelper extends SQLiteOpenHelper{
 
 
     // Table Name
-    public static final String TABLE_NAME = "journeys";
+    public static final String TABLE_NAME = "trips";
 
     // Table columns
     public static final String COLUMN_ID = "_id";
@@ -21,7 +21,7 @@ public class TripDBHelper extends SQLiteOpenHelper{
     public static final String COLUMN_ACTIVE = "active";
     public static final String COLUMN_ITEMS = "items";
     // Database Information
-    static final String DB_NAME = "JOURNEYS.DB";
+    static final String DB_NAME = "TRIP.DB";
 
     // database version
     static final int DB_VERSION = 1;
@@ -31,11 +31,11 @@ public class TripDBHelper extends SQLiteOpenHelper{
             + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
             + COLUMN_STARTDATE + " TEXT NOT NULL"
-            + COLUMN_ENDDATE + "TEXT NOT NULL"
-            + COLUMN_TYPE1 + "INTEGER NOT NULL"
-            + COLUMN_TYPE2 + "INTEGER"
-            + COLUMN_ACTIVE + "INTEGER"
-            + COLUMN_ITEMS + "TEXT"
+            + COLUMN_ENDDATE + " TEXT NOT NULL"
+            + COLUMN_TYPE1 + " INTEGER NOT NULL"
+            + COLUMN_TYPE2 + " INTEGER"
+            + COLUMN_ACTIVE + " INTEGER"
+            + COLUMN_ITEMS + " TEXT"
             +");";
 
     public TripDBHelper(Context context) {
