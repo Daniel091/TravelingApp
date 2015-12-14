@@ -5,11 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
-/**
- * Created by Michael on 14.12.15.
- */
-
 public class JourneyDBHelper extends SQLiteOpenHelper{;
 
 
