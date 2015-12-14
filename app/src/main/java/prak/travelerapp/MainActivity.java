@@ -100,11 +100,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         closeDrawer();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 1){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void setUpFragement(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainContent, fragment);
+        fragmentTransaction.add(R.id.mainContent, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 
