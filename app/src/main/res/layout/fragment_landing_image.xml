@@ -4,7 +4,7 @@
     android:paddingLeft="@dimen/activity_nomargin"
     android:paddingRight="@dimen/activity_nomargin"
     android:paddingTop="@dimen/activity_nomargin"
-    android:paddingBottom="@dimen/activity_nomargin" tools:showIn="@layout/activity_landing"
+    android:paddingBottom="@dimen/activity_nomargin" tools:showIn="@layout/fragment_landing"
     tools:context="prak.travelerapp.FlickrAPI.LandingImageFragment">
 
     <android.support.v4.view.ViewPager
