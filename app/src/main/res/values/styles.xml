@@ -42,10 +42,9 @@
         <item name="android:cacheColorHint">#00000000</item>
     </style>
 
-    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
+    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Dialog" tools:targetApi="lollipop">
         <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
-<<<<<<< HEAD
     <style name="Basic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Basic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -53,6 +52,4 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-=======
->>>>>>> bf85bd1c36e0d53fe86f089f20c0cd2f77edde8c
 </resources>
