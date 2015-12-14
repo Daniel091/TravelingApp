@@ -3,6 +3,7 @@ package prak.travelerapp;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -172,6 +173,12 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
                 itemList.add(dataSet);
                 showAllListEntries(itemList);
                 popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
                 dummyPopup.dismiss();
             }
         });
