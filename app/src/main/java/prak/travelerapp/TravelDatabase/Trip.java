@@ -6,7 +6,7 @@ import java.util.List;
 import prak.travelerapp.Categories;
 
 public class Trip {
-    private List<Tupel> tupel_list;
+    private TripItems tupel_list;
     private final String name;
     private final int id;
     private final Categories categorie;
@@ -14,7 +14,7 @@ public class Trip {
     private Calendar end_date;
     private boolean active;
 
-    public Trip(int id,List<Tupel> list,String name,Calendar start_date,Calendar end_date, Categories cat, boolean active){
+    public Trip(int id,TripItems list,String name,Calendar start_date,Calendar end_date, Categories cat, boolean active){
         this.id = id;
         this.name = name;
         this.tupel_list = list;
@@ -28,7 +28,7 @@ public class Trip {
         return name;
     }
 
-    public List<Tupel> getTupel_list() {
+    public TripItems getTupel_list() {
         return tupel_list;
     }
 

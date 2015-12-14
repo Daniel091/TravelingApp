@@ -16,4 +16,9 @@ public class Tupel{
     public int getY(){
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "(" + Integer.toString(x) + "," + Integer.toString(y) + ")";
+    }
 }
