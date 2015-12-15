@@ -6,6 +6,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.graphics.Typeface;
 import android.util.Log;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.lang.reflect.Field;
 
 import java.io.IOException;
@@ -74,5 +79,19 @@ public class Utils {
         } catch (Exception e) {
             Log.e("Can not set custom font " + customFontFileNameInAssets + " instead of " + defaultFontNameToOverride, e.toString());
         }
+    }
+
+    public static DateTime stringToDatetime(String dateString){
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+        DateTime dt = formatter.parseDateTime(dateString);
+        return dt;
+    }
+
+    public static String dateTimeToString(DateTime date){
+
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
+        return date.toString(fmt);
+
     }
 }

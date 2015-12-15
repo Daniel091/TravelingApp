@@ -12,11 +12,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.joda.time.DateTime;
+
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
-import prak.travelerapp.TravelDatabase.TripDBAdapter;
-import prak.travelerapp.TravelDatabase.model.TravelTypes;
-import prak.travelerapp.TravelDatabase.model.Trip;
-import prak.travelerapp.TravelDatabase.model.TripItems;
+import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
+import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.TripDatabase.model.TripItems;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -126,12 +128,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         String s = "(3,0);(4,0)";
         TripItems items = new TripItems(s);
-        Trip trip = new Trip(0,items, "NAMEWIdeiujef", null,null, TravelTypes.FESTIVAL, TravelTypes.SKIFAHREN, true);
+        DateTime startDate = new DateTime(2016,01,12,0,0);
+        DateTime endDate = new DateTime(2016,01,15,0,0);
+
+
+        Trip trip = new Trip(0,items, "Miami", startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
+
 
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
 
         tripDBAdapter.insert(trip);
-        tripDBAdapter.fetch();
+        Trip activeTrip = tripDBAdapter.getActiveTrip();
+        System.out.println(activeTrip.getName());
     }
 }
