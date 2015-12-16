@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,6 +16,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +28,10 @@ import java.util.Locale;
 import prak.travelerapp.Autocompleter.CityAutoCompleteView;
 import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Autocompleter.model.City;
+import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
+import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.TripDatabase.model.TripItems;
 
 /**
  * Created by Michael on 12.12.15.
@@ -43,6 +51,10 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private DatePickerDialog arrivalDatePickerDialog;
     private DatePickerDialog departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
+
+    private FloatingActionButton button_submit;
+
+    private TripDBAdapter tripDBAdapter;
 
     String[] items = new String[] {};
 
@@ -108,9 +120,19 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.category_array, android.R.layout.simple_spinner_item);
+
+        //Convert Kategorie enum to String values but skip NoType
+        String[] traveltypeStrings = new String[TravelType.values().length-1];
+        for(int i = 1; i < TravelType.values().length; i++){
+            TravelType type = TravelType.values()[i];
+            traveltypeStrings[i-1] = type.getStringValue();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,traveltypeStrings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_category.setAdapter(adapter);
+
+        button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
+        button_submit.setOnClickListener(this);
 
 
         return view;
@@ -119,6 +141,53 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    public void submitTrip(){
+
+
+        String autocompleterText = autocompleter.getText().toString();
+        String[] separated = autocompleterText.split(",");
+        //City was set and is correct format -> City, Country
+        if(!autocompleterText.equals(getResources().getString(R.string.city_default)) && separated.length == 2){
+            String city = separated[0].trim();
+            String country= separated[1].trim();
+
+            //two dates were selected
+            if(!editText_arrival.getText().toString().equals(getResources().getString(R.string.arrival_default)) && !editText_departure.getText().toString().equals(getResources().getString(R.string.departure_default))){
+                DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
+                DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+
+                //startdate is not before enddate
+                if(startDate.isBefore(endDate)){
+
+                    //Check which category has been selected
+                    TravelType type1 = TravelType.NO_TYPE;
+                    for (TravelType type : TravelType.values()){
+                        if(type.getStringValue().equals(spinner_category.getSelectedItem().toString())){
+                            type1 = type;
+                        }
+                    }
+
+                    String s = "(3,0);(4,0)";
+                    TripItems items = new TripItems(s);
+
+                    tripDBAdapter = new TripDBAdapter(getActivity());
+                    tripDBAdapter.open();
+                    tripDBAdapter.insert(items,city, country ,startDate,endDate, type1, TravelType.NO_TYPE, true);
+                }else{
+                    Toast.makeText(getActivity(), "Anreisedatum muss vor Abreisedatum liegen", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }else{
+                Toast.makeText(getActivity(), "Wähle einen Reisezeitraum", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -133,6 +202,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             case R.id.edittext_departure:
                 departureDatePickerDialog.show();
                 break;
+            case R.id.button_submit:
+                submitTrip();
+
         }
     }
 

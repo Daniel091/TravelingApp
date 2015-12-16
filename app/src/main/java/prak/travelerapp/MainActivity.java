@@ -132,13 +132,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DateTime endDate = new DateTime(2016,01,15,0,0);
 
 
-        Trip trip = new Trip(0,items, "Miami", startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
-
-
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
 
-        tripDBAdapter.insert(trip);
+        tripDBAdapter.insert(items, "Miami", "US" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
         Trip activeTrip = tripDBAdapter.getActiveTrip();
         System.out.println(activeTrip.getName());
     }

@@ -16,6 +16,8 @@ import java.lang.reflect.Field;
 import java.io.IOException;
 import java.io.InputStream;
 
+import prak.travelerapp.TripDatabase.model.TravelType;
+
 /**
  * Created by Michael on 25.11.15.
  */
@@ -94,4 +96,5 @@ public class Utils {
         return date.toString(fmt);
 
     }
+
 }
