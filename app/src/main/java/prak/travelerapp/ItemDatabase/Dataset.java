@@ -144,7 +144,7 @@ public class Dataset {
     @Override
     public String toString() {
 
-        String output = itemName;
+        String output = itemName + " (" + kategorie + ")";
         return output;
     }
 

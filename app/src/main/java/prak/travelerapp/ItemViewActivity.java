@@ -2,6 +2,7 @@ package prak.travelerapp;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ import prak.travelerapp.ItemDatabase.ItemDBHelper;
 
 
 /**
- * Created by marcel on 26.11.15.
+ * Fragment, dass uns die Liste anzeigt
  */
 public class ItemViewActivity extends Fragment implements AdapterView.OnItemSelectedListener{
 
@@ -52,6 +54,7 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
     // Layout
     private LayoutInflater inflater;
 
+    // Container
     ViewGroup container;
 
     // UI Elemente für das Popup Window
@@ -59,10 +62,13 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
     private int windowWidth;
     private int windowHeight;
     private EditText userInput;
-    private String customItem;
     private Spinner spinner;
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente"};
     private Button finalAddButton;
+
+    // Werte für das vom User hinzugefügte Item
+    private String customItem; // Name des manuellen Icons
+    private int customCat;  // Gewählte Kategorie des ausgewählten Icons
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +104,10 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
        itemDB.close();
     }
 
+    /**
+     * Methode zum anzeigen der Datenbankeinträge in der Liste
+     * @param items
+     */
     private void showAllListEntries (List<Dataset> items) {
        // List<Dataset> dataSetList = dataSource.getAllDatasets();
 
@@ -109,6 +119,7 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
         dataSetsListView.setAdapter(dataSetArrayAdapter);
     }
 
+    // Setzt den "+" Button in der Liste aktiv, also zeigt die Popups an
     private void activateAddButton() {
         FloatingActionButton buttonAddItem = (FloatingActionButton) getView().findViewById(R.id.button_add_item);
 
@@ -119,13 +130,14 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
 
                 showDummyPopup(v);
                 showPopup(v);
-
             }
         });
 
     }
 
-    // Nur ein Dummy Popup zum dimmen des Backgrounds
+    /**
+     * Nur ein Dummy Popup zum dimmen des Backgrounds bei Aufruf des eigentlichen Popups
+     */
     public void showDummyPopup(View anchorView) {
 
         final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
@@ -140,6 +152,7 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
         dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
     }
 
+    // Popup zum eingeben eines neue Items
     public void showPopup(View anchorView) {
 
         View popupView = inflater.inflate(R.layout.add_item_popup, container, false);
@@ -147,21 +160,23 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        // Elemente des PopUp windows
+        /**
+         * Elemente des PopUp windows
+         */
 
         // Eingabefeld
         userInput = (EditText) popupView.findViewById(R.id.userInput);
 
         // Spinner
         spinner = (Spinner) popupView.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item,paths);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(),
+                android.R.layout.simple_spinner_item, paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        // Button zum finalen hinzufügen
+        // Button zum finalen hinzufügen eines Items
         finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
         finalAddButton.setOnClickListener(new View.OnClickListener() {
 
@@ -169,13 +184,15 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
                 customItem = userInput.getText().toString();
-                Dataset dataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                itemList.add(dataSet);
+                Dataset customDataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
+                itemList.add(customDataSet);
                 showAllListEntries(itemList);
                 popupWindow.dismiss();
             }
         });
 
+        // Listener, der abfängt sobald das popup window geschlossen wird und damit automatisch
+        // das dummy popup mitschliesst
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -199,24 +216,30 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
 
     }
 
+    // Regelt was passiert, wenn eine Kategorie im Spinner gewählt wurde
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
         switch (position) {
             case 0:
                 // Was passiert wenn "Kleidung" ausgewählt wird
+                customCat = 0;
                 break;
             case 1:
                 // Was passiert wenn "Hygiene" ausgewählt wird
+                customCat = 1;
                 break;
             case 2:
                 // Was passiert wenn "Equipment" ausgewählt wird
+                customCat = 2;
                 break;
             case 3:
                 // Was passiert wenn "Dokumente" ausgewählt wird
+                customCat = 3;
                 break;
         }
     }
 
+    // Regelt was passiert, wenn keine Kategorie ausgewählt wurde
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // TODO

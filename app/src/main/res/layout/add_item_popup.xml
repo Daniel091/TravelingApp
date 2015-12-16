@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="14dp"
+    android:padding="10dp"
     android:background="#ffffff">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="Gib dem Item einen Namen"
+        android:textStyle="bold"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -17,8 +18,9 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:id="@+id/userInput"
+        android:textStyle="bold"
         android:layout_below="@+id/textView"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView"
@@ -30,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="Wähle eine passende Kategorie"
+        android:textStyle="bold"
         android:id="@+id/textView2"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -38,7 +41,8 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
+        android:spinnerMode="dialog"
         android:layout_below="@+id/textView2"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
@@ -49,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Item hinzufügen"
+        android:textStyle="bold"
         android:id="@+id/button_final_add"
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffff" />
