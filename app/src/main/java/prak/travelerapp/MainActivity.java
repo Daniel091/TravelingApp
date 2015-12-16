@@ -12,20 +12,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.joda.time.DateTime;
-
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
-import prak.travelerapp.TripDatabase.TripDBAdapter;
-import prak.travelerapp.TripDatabase.model.TravelType;
-import prak.travelerapp.TripDatabase.model.Trip;
-import prak.travelerapp.TripDatabase.model.TripItems;
+import prak.travelerapp.TripDatabase.TripDBAsyncTask;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-
-    private TripDBAdapter tripDBAdapter;
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -51,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setItemChecked(1, true);
 
 
-        //testTripDB();
+        testTripDB();
     }
 
     private void prepareViews() {
@@ -125,21 +118,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void testTripDB(){
-
-        String s = "(3,0);(4,0)";
-        TripItems items = new TripItems(s);
-        DateTime startDate = new DateTime(2016,01,12,0,0);
-        DateTime endDate = new DateTime(2016,01,15,0,0);
-
-
-        Trip trip = new Trip(0,items, "Miami", startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
-
-
-        tripDBAdapter = new TripDBAdapter(this);
-        tripDBAdapter.open();
-
-        tripDBAdapter.insert(trip);
-        Trip activeTrip = tripDBAdapter.getActiveTrip();
-        System.out.println(activeTrip.getName());
+         new TripDBAsyncTask(this.getApplicationContext()).execute();
     }
 }
