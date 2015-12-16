@@ -13,17 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
-import prak.travelerapp.TravelDatabase.TripDBAdapter;
-import prak.travelerapp.TravelDatabase.model.TravelTypes;
-import prak.travelerapp.TravelDatabase.model.Trip;
-import prak.travelerapp.TravelDatabase.model.TripItems;
+import prak.travelerapp.TripDatabase.TripDBAsyncTask;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-
-    private TripDBAdapter tripDBAdapter;
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setItemChecked(1, true);
 
 
-        //testTripDB();
+        testTripDB();
     }
 
     private void prepareViews() {
@@ -104,24 +99,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         closeDrawer();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 1){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void setUpFragement(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainContent, fragment);
+        fragmentTransaction.add(R.id.mainContent, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 
     public void testTripDB(){
-
-        String s = "(3,0);(4,0)";
-        TripItems items = new TripItems(s);
-        Trip trip = new Trip(0,items, "NAMEWIdeiujef", null,null, TravelTypes.FESTIVAL, TravelTypes.SKIFAHREN, true);
-
-        tripDBAdapter = new TripDBAdapter(this);
-        tripDBAdapter.open();
-
-        tripDBAdapter.insert(trip);
-        tripDBAdapter.fetch();
+         new TripDBAsyncTask(this.getApplicationContext()).execute();
     }
 }

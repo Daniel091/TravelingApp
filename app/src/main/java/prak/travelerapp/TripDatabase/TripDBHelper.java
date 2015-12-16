@@ -1,4 +1,4 @@
-package prak.travelerapp.TravelDatabase;
+package prak.travelerapp.TripDatabase;
 
 
 import android.content.Context;
@@ -35,7 +35,7 @@ public class TripDBHelper extends SQLiteOpenHelper{
             + COLUMN_TYPE1 + " INTEGER NOT NULL, "
             + COLUMN_TYPE2 + " INTEGER, "
             + COLUMN_ACTIVE + " INTEGER, "
-            + COLUMN_ITEMS + " TEXT "
+            + COLUMN_ITEMS + " TEXT"
             +");";
 
     public TripDBHelper(Context context) {

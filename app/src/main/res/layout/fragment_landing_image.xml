@@ -4,13 +4,15 @@
     android:paddingLeft="@dimen/activity_nomargin"
     android:paddingRight="@dimen/activity_nomargin"
     android:paddingTop="@dimen/activity_nomargin"
-    android:paddingBottom="@dimen/activity_nomargin" tools:showIn="@layout/activity_landing"
+    android:paddingBottom="@dimen/activity_nomargin" tools:showIn="@layout/fragment_landing"
     tools:context="prak.travelerapp.FlickrAPI.LandingImageFragment">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+
+    <include layout="@layout/button_hamburger"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -21,7 +23,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="100dp"/>
 
     <ImageView
         android:layout_width="match_parent"
