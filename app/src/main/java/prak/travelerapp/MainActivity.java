@@ -24,12 +24,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-
-    private TripDBAdapter tripDBAdapter;
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
     private String[] menue_links;
+    private TripDBAdapter tripDBAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setItemChecked(1, true);
 
 
-        //testTripDB();
+        testTripDB();
     }
 
     private void prepareViews() {
