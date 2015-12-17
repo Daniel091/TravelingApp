@@ -26,6 +26,7 @@
     <string name="city_default">San Francisco</string>
     <string name="arrival_default">01.01.2099</string>
     <string name="departure_default">02.01.2099</string>
+    <string name="reiseziel">Reiseziel</string>
 
     <string-array name="menue_links">
         <item>TRAVeL</item>

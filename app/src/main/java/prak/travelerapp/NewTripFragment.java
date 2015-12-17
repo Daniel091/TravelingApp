@@ -16,12 +16,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,9 +35,6 @@ import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
 
-/**
- * Created by Michael on 12.12.15.
- */
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher {
 
     private ImageButton button_hamburger;
@@ -46,8 +45,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     // for database operations
     private CityDBAdapter cityDB;
 
-    private EditText editText_arrival;
-    private EditText editText_departure;
+    private TextView editText_arrival;
+    private TextView editText_departure;
     private DatePickerDialog arrivalDatePickerDialog;
     private DatePickerDialog departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -89,10 +88,10 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         autocompleter.setAdapter(autocompleteAdapter);
 
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-        editText_arrival = (EditText) view.findViewById(R.id.edittext_arrival);
+        editText_arrival = (TextView) view.findViewById(R.id.edittext_arrival);
         editText_arrival.setInputType(InputType.TYPE_NULL);
 
-        editText_departure = (EditText) view.findViewById(R.id.edittext_departure);
+        editText_departure = (TextView) view.findViewById(R.id.edittext_departure);
         editText_departure.setInputType(InputType.TYPE_NULL);
 
         editText_arrival.setOnClickListener(this);
@@ -108,6 +107,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
 
         departureDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
@@ -118,6 +118,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
 
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
 
