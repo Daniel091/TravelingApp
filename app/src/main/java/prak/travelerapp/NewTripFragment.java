@@ -8,13 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,10 +38,11 @@ import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
 
-public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher {
-
+public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
+    private LinearLayout secondTripType;
     private ImageButton button_hamburger;
     private Spinner spinner_category;
+    private Spinner spinner_category2;
     private CityAutoCompleteView autocompleter;
     // adapter for auto-complete
     private ArrayAdapter<String> autocompleteAdapter;
@@ -55,6 +59,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     private TripDBAdapter tripDBAdapter;
 
+    private String[] traveltypeStrings;
     String[] items = new String[] {};
 
     @Nullable
@@ -123,14 +128,15 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
 
         //Convert Kategorie enum to String values but skip NoType
-        String[] traveltypeStrings = new String[TravelType.values().length-1];
-        for(int i = 1; i < TravelType.values().length; i++){
+        traveltypeStrings = new String[TravelType.values().length];
+        for(int i = 0; i < TravelType.values().length; i++){
             TravelType type = TravelType.values()[i];
-            traveltypeStrings[i-1] = type.getStringValue();
+            traveltypeStrings[i] = type.getStringValue();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,traveltypeStrings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_category.setAdapter(adapter);
+        spinner_category.setOnItemSelectedListener(this);
 
         button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
         button_submit.setOnClickListener(this);
@@ -145,8 +151,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     }
 
     public void submitTrip(){
-
-
         String autocompleterText = autocompleter.getText().toString();
         String[] separated = autocompleterText.split(",");
         //City was set and is correct format -> City, Country
@@ -164,9 +168,15 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                     //Check which category has been selected
                     TravelType type1 = TravelType.NO_TYPE;
+                    TravelType type2 = TravelType.NO_TYPE;
                     for (TravelType type : TravelType.values()){
                         if(type.getStringValue().equals(spinner_category.getSelectedItem().toString())){
                             type1 = type;
+                        }
+                        if (spinner_category2 != null){
+                            if(type.getStringValue().equals(spinner_category2.getSelectedItem().toString())){
+                                type2 = type;
+                            }
                         }
                     }
 
@@ -175,7 +185,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                     tripDBAdapter = new TripDBAdapter(getActivity());
                     tripDBAdapter.open();
-                    tripDBAdapter.insert(items,city, country ,startDate,endDate, type1, TravelType.NO_TYPE, true);
+                    tripDBAdapter.insert(items, city, country, startDate, endDate, type1, type2, true);
+                    Log.d("NewTrip","Inserted "+ city + " " + type1 + " " + type2);
                 }else{
                     Toast.makeText(getActivity(), "Anreisedatum muss vor Abreisedatum liegen", Toast.LENGTH_SHORT).show();
                 }
@@ -216,7 +227,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     @Override
     public void onTextChanged(CharSequence userInput, int start, int before, int count) {
-
         // query the database based on the user input
         items = getItemsFromDb(userInput.toString());
 
@@ -224,7 +234,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         autocompleteAdapter.notifyDataSetChanged();
         autocompleteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, items);
         autocompleter.setAdapter(autocompleteAdapter);
-
     }
 
     @Override
@@ -255,6 +264,34 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     public void onDestroy(){
         super.onDestroy();
         cityDB.close();
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Spinner spinner = (Spinner) parent;
+        if (position != 0 && spinner.getId() == R.id.spinner_category){
+            secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
+            secondTripType.setVisibility(LinearLayout.VISIBLE);
+            setUpSecondTripType();
+        } else {
+            if (secondTripType != null && spinner.getId() == R.id.spinner_category){
+                secondTripType.setVisibility(LinearLayout.GONE);
+            }
+        }
+    }
+
+    private void setUpSecondTripType() {
+        spinner_category2 = (Spinner) getView().findViewById(R.id.spinner_category2);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,traveltypeStrings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_category2.setAdapter(adapter);
+        spinner_category2.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
