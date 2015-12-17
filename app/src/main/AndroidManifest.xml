@@ -34,11 +34,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ItemViewActivity" />
 
         <activity android:name=".PlaceApi.AutocompleteActivity" />
-
-        <activity android:name=".CityAutocompleteFragment" />
 
         <activity
             android:name=".LandingFragment"
