@@ -17,7 +17,6 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
     private RadioGroup radioGroup_gender;
     private Button button_newTrip;
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +40,12 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
         if (gender_fromPref == "not_selected") {
             radioGroup_gender.setOnCheckedChangeListener(this);
         } else {
-            radioGroup_gender.setVisibility(View.GONE);
+            if (gender_fromPref.equals("male")){
+                radioGroup_gender.check(R.id.radio_male);
+            } else {
+                radioGroup_gender.check(R.id.radio_female);
+            }
+            radioGroup_gender.setOnCheckedChangeListener(this);
             Log.d("StartFrag","Got gender from SharedPref " + gender_fromPref);
         }
 

@@ -43,12 +43,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menueApdapter = new MenueApdapter(this);
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // Start with Home Screen
         Fragment fragment = new StartFragment();
         setUpFragement(fragment);
-        listView.setItemChecked(1, true);
-
 
         //testTripDB();
     }
@@ -117,10 +116,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void setUpFragement(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.mainContent, fragment);
-        fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        fragmentTransaction.commit();
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate (fragment.getClass().getName(), 0);
+        if (!fragmentPopped) {
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.mainContent, fragment);
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+            fragmentTransaction.commit();
+        }
     }
 
     public void testTripDB(){
