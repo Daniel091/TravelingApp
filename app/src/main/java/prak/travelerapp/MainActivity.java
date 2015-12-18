@@ -12,8 +12,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.joda.time.DateTime;
+
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
-import prak.travelerapp.TripDatabase.TripDBAsyncTask;
+import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
+import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.TripDatabase.model.TripItems;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private DrawerLayout drawerLayout;
     private ListView listView;
     private String[] menue_links;
+    private TripDBAdapter tripDBAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +43,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menueApdapter = new MenueApdapter(this);
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // Start with Home Screen
         Fragment fragment = new StartFragment();
         setUpFragement(fragment);
-        listView.setItemChecked(1, true);
 
-
-        testTripDB();
+        //testTripDB();
     }
 
     private void prepareViews() {
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setUpFragement(fragment);
                 break;
             case 2:
-                fragment = new ItemViewActivity();
+                fragment = new ItemViewFragment();
                 setUpFragement(fragment);
                 break;
             case 3:
@@ -111,13 +116,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void setUpFragement(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.mainContent, fragment);
-        fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        fragmentTransaction.commit();
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate (fragment.getClass().getName(), 0);
+        if (!fragmentPopped) {
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.mainContent, fragment);
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+            fragmentTransaction.commit();
+        }
     }
 
     public void testTripDB(){
-         new TripDBAsyncTask(this.getApplicationContext()).execute();
+
+        String s = "(3,0);(4,0)";
+        TripItems items = new TripItems(s);
+        DateTime startDate = new DateTime(2016,01,12,0,0);
+        DateTime endDate = new DateTime(2016,01,15,0,0);
+
+
+        tripDBAdapter = new TripDBAdapter(this);
+        tripDBAdapter.open();
+
+        tripDBAdapter.insert(items, "Miami", "US" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
+        Trip activeTrip = tripDBAdapter.getActiveTrip();
+        System.out.println(activeTrip.getName());
     }
 }

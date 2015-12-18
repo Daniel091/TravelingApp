@@ -49,7 +49,7 @@ public class MainFragment extends Fragment implements AsyncWeatherResponse {
             @Override
             public void onClick(View v) {
 
-                listIntent = new Intent(getActivity(), ItemViewActivity.class);
+                listIntent = new Intent(getActivity(), ItemViewFragment.class);
                 Log.d("MainActivity", "Click started items list");
 
                 startActivity(listIntent);

@@ -14,6 +14,7 @@ public class TripDBHelper extends SQLiteOpenHelper{
     // Table columns
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_COUNTRY = "country";
     public static final String COLUMN_STARTDATE = "start_date";
     public static final String COLUMN_ENDDATE = "end_date";
     public static final String COLUMN_TYPE1 = "type1";
@@ -30,7 +31,8 @@ public class TripDBHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + COLUMN_ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
-            + COLUMN_STARTDATE + " TEXT NOT NULL,"
+            + COLUMN_COUNTRY + " TEXT NOT NULL, "
+            + COLUMN_STARTDATE + " TEXT NOT NULL, "
             + COLUMN_ENDDATE + " TEXT NOT NULL, "
             + COLUMN_TYPE1 + " INTEGER NOT NULL, "
             + COLUMN_TYPE2 + " INTEGER, "

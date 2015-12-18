@@ -53,6 +53,7 @@ public class TripDBAdapter {
                     do {
                         Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ID)));
                         Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME)));
+                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY)));
                         Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE)));
                         Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE)));
                         Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1)));
@@ -75,33 +76,35 @@ public class TripDBAdapter {
     }
 
 
-    public void insert(Trip trip) {
+    public void insert(TripItems list,String name,String country, DateTime startDate,DateTime endDate, TravelType cat1, TravelType cat2, boolean active) {
 
 
-        String startDate = Utils.dateTimeToString(trip.getStartdate());
-        String endDate = Utils.dateTimeToString(trip.getEnddate());
-        String items = trip.getTripItems().makeString();
+        String startDateString = Utils.dateTimeToString(startDate);
+        String endDateString = Utils.dateTimeToString(endDate);
+        String items = list.makeString();
 
         System.out.println(items);
 
         ContentValues contentValue = new ContentValues();
-        contentValue.put(TripDBHelper.COLUMN_NAME, trip.getName());
-        contentValue.put(TripDBHelper.COLUMN_STARTDATE, startDate);
-        contentValue.put(TripDBHelper.COLUMN_ENDDATE, endDate);
-        contentValue.put(TripDBHelper.COLUMN_TYPE1, trip.getType1().ordinal());
-        contentValue.put(TripDBHelper.COLUMN_TYPE2, trip.getType2().ordinal());
-        contentValue.put(TripDBHelper.COLUMN_ACTIVE, trip.isActive());
+        contentValue.put(TripDBHelper.COLUMN_NAME, name);
+        contentValue.put(TripDBHelper.COLUMN_COUNTRY, country);
+        contentValue.put(TripDBHelper.COLUMN_STARTDATE, startDateString);
+        contentValue.put(TripDBHelper.COLUMN_ENDDATE, endDateString);
+        contentValue.put(TripDBHelper.COLUMN_TYPE1, cat1.ordinal());
+        contentValue.put(TripDBHelper.COLUMN_TYPE2, cat2.ordinal());
+        contentValue.put(TripDBHelper.COLUMN_ACTIVE, active);
         contentValue.put(TripDBHelper.COLUMN_ITEMS, items);
         tripDB.insert(TripDBHelper.TABLE_NAME, null, contentValue);
     }
 
     public Trip getActiveTrip() {
-        Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null,TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, null);
+        Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, null);
         if (cursor != null) {
             // move cursor to first row
             if (cursor.moveToFirst()) {
                 int id = cursor.getInt(cursor.getColumnIndex(TripDBHelper.COLUMN_ID));
                 String name = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME));
+                String country = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY));
                 String startDateString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE));
                 DateTime startDate = Utils.stringToDatetime(startDateString);
                 String endDateString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE));
@@ -115,11 +118,46 @@ public class TripDBAdapter {
                 String tripItemsString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS));
                 TripItems items = new TripItems(tripItemsString);
 
-                Trip trip = new Trip(id,items,name,startDate,endDate,travelType1,travelType2,isActive);
+                Trip trip = new Trip(id,items,name,country,startDate,endDate,travelType1,travelType2,isActive);
                 cursor.close();
                 return trip;
             }
         }
         return null;
+    }
+
+    public List<Trip> getOldTrips(){
+
+        ArrayList<Trip> oldTrips = new ArrayList<Trip>();
+        Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null,TripDBHelper.COLUMN_ACTIVE + "=" + 0, null, null, null, null);
+        if (cursor != null) {
+            // move cursor to first row
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndex(TripDBHelper.COLUMN_ID));
+                    String name = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME));
+                    String country = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY));
+                    String startDateString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE));
+                    DateTime startDate = Utils.stringToDatetime(startDateString);
+                    String endDateString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE));
+                    DateTime endDate = Utils.stringToDatetime(endDateString);
+                    int type1 = cursor.getInt(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1));
+                    TravelType travelType1 = TravelType.values()[type1];
+                    int type2 = cursor.getInt(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE2));
+                    TravelType travelType2 = TravelType.values()[type2];
+                    int active = cursor.getInt(cursor.getColumnIndex(TripDBHelper.COLUMN_ACTIVE));
+                    boolean isActive = (active == 1);
+                    String tripItemsString = cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS));
+                    TripItems items = new TripItems(tripItemsString);
+
+                    Trip trip = new Trip(id, items, name,country ,startDate, endDate, travelType1, travelType2, isActive);
+                    oldTrips.add(trip);
+                }while (cursor.moveToNext());
+                cursor.close();
+                return oldTrips;
+            }
+        }
+        return null;
+
     }
 }

@@ -1,87 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/airport">
-
-    <RelativeLayout
-        android:id="@+id/transparentOverlay"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_overlay" >
+        android:background="@color/white">
 
-    <include layout="@layout/button_hamburger"/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/airport">
 
-    <TextView
-        android:id="@+id/textview_newTrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Neue Reise"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="28dp"
-        android:textSize="30dp"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/transparentOverlay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_overlay" >
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/firstSection"
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:background="@android:color/white">
+        <include layout="@layout/button_hamburger"/>
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18dp"
-            android:paddingLeft="28dp"
-            android:gravity="center_vertical"
-            android:text="Reiseziel"
-            />
-
-        <prak.travelerapp.Autocompleter.CityAutoCompleteView
-            android:id="@+id/autocomplete_destination"
-            android:layout_width="fill_parent"
+            android:id="@+id/textview_newTrip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:completionThreshold="2"
-            android:dropDownHeight="200dp"
-            android:singleLine="true"
-            android:inputType="text"
-            android:background="#00000000"
-            android:hint="San Francisco"
-            android:textColor="@color/black">
-        </prak.travelerapp.Autocompleter.CityAutoCompleteView>
+            android:text="Neue Reise"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="28dp"
+            android:textSize="30dp"/>
+        </RelativeLayout>
 
-    </LinearLayout>
+        </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightGrey" />
-
-    <TableLayout
-        android:id="@+id/secondSection"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <TableRow
-            android:layout_height="fill_parent"
-            android:layout_width="match_parent"
-            android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/firstSection"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@android:color/white">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -89,11 +52,112 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18dp"
-                android:paddingStart="28dp"
                 android:paddingLeft="28dp"
-                android:gravity="center_vertical|start"
-                android:text="Anreise"
+                android:gravity="center_vertical"
+                android:text="@string/reiseziel"
                 />
+
+            <prak.travelerapp.Autocompleter.CityAutoCompleteView
+                android:id="@+id/autocomplete_destination"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:completionThreshold="2"
+                android:dropDownHeight="200dp"
+                android:singleLine="true"
+                android:inputType="text"
+                android:background="#00000000"
+                android:hint="San Francisco"
+                android:textColor="@color/black">
+            </prak.travelerapp.Autocompleter.CityAutoCompleteView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGrey" />
+
+        <TableLayout
+            android:id="@+id/secondSection"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <TableRow
+                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/darker_gray"
+                    android:paddingStart="28dp"
+                    android:paddingLeft="28dp"
+                    android:gravity="center_vertical|start"
+                    android:text="Anreise"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/darker_gray"
+                    android:paddingEnd="28dp"
+                    android:paddingRight="28dp"
+                    android:gravity="center_vertical|start"
+                    android:text="Abreise"
+                    />
+
+
+            </TableRow>
+            <TableRow
+                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/edittext_arrival"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingStart="28dp"
+                    android:paddingLeft="28dp"
+                    android:textSize="18sp"
+                    android:text="01.01.2099"
+                    android:gravity="center_vertical|start"
+                    android:background="#00000000"
+                    />
+
+                <TextView
+                    android:id="@+id/edittext_departure"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="02.01.2099"
+                    android:textSize="18sp"
+                    android:paddingEnd="28dp"
+                    android:paddingRight="28dp"
+                    android:gravity="center_vertical|start"
+                    android:background="#00000000"
+                    />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGrey" />
+
+        <LinearLayout
+            android:id="@+id/thirdSection"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@android:color/white">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -101,85 +165,70 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18dp"
-                android:paddingEnd="28dp"
-                android:paddingRight="28dp"
-                android:gravity="center_vertical|start"
-                android:text="Abreise"
+                android:paddingLeft="28dp"
+                android:gravity="center_vertical"
+                android:text="Reisetyp"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18dp"
+                android:gravity="center_vertical|left"
                 />
 
 
-        </TableRow>
-        <TableRow
-            android:layout_height="fill_parent"
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_weight="1">
+            android:layout_height="1dp"
+            android:background="@color/lightGrey" />
 
-            <EditText
-                android:id="@+id/edittext_arrival"
+        <LinearLayout
+            android:id="@+id/fourthSection"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@android:color/white"
+            android:visibility="gone">
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingStart="28dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18dp"
                 android:paddingLeft="28dp"
-                android:text="01.01.2099"
-                android:gravity="center_vertical|start"
-                android:background="#00000000"
-                android:inputType="text" />
+                android:gravity="center_vertical"
+                android:text="Reisetyp2"
+                />
 
-            <EditText
-                android:id="@+id/edittext_departure"
+            <Spinner
+                android:id="@+id/spinner_category2"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="02.01.2099"
-                android:paddingEnd="28dp"
-                android:paddingRight="28dp"
-                android:gravity="center_vertical|start"
-                android:background="#00000000"
-                android:inputType="text" />
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18dp"
+                android:gravity="center_vertical|left"
+                />
 
-        </TableRow>
 
-    </TableLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightGrey" />
-
-    <LinearLayout
-        android:id="@+id/thirdSection"
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:background="@android:color/white">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18dp"
-            android:paddingLeft="28dp"
-            android:gravity="center_vertical"
-            android:text="Reisetyp"
-            />
-
-        <Spinner
-            android:id="@+id/spinner_category"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18dp"
-            android:gravity="center_vertical|left"
-            />
-
+        </LinearLayout>
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightGrey" />
 
-</LinearLayout>
+
+
+        <android.support.design.widget.FloatingActionButton android:id="@+id/button_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@mipmap/ic_new" />
+
+</RelativeLayout>
