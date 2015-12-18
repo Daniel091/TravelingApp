@@ -2,6 +2,7 @@ package prak.travelerapp;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,8 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +38,9 @@ import prak.travelerapp.Autocompleter.model.City;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
+import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
+import prak.travelerapp.WeatherAPI.WeatherTask;
+import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
     private LinearLayout secondTripType;
@@ -88,7 +95,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             TravelType type = TravelType.values()[i];
             traveltypeStrings[i] = type.getStringValue();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,traveltypeStrings);
+        String[] onlyRealCategoryStrings = Arrays.copyOfRange(traveltypeStrings,1,traveltypeStrings.length);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,onlyRealCategoryStrings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_category.setAdapter(adapter);
         spinner_category.setOnItemSelectedListener(this);
@@ -171,6 +179,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                             }
                         }
                     }
+
+                    configureTripItems(city,country,startDate,endDate,type1,type2);
                     String s = "(3,0);(4,0)";
                     TripItems items = new TripItems(s);
 
@@ -278,4 +288,48 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+    public void configureTripItems(String city, String country, final DateTime startDate, final DateTime endDate, TravelType type1, TravelType type2){
+
+        WeatherTask weathertask = new WeatherTask();
+        weathertask.delegate = new AsyncWeatherResponse() {
+            @Override
+            public void weatherProcessFinish(Weather output) {
+
+                Weather weather = output;
+
+                int relevantDayStartIndex = -1;
+                int relevantDayEndIndex = -1;
+                for(int i = 0;i < weather.days.length;i++){
+                    DateTime date = weather.days[i].getDate();
+                    if(DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0){
+                        System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
+                        relevantDayStartIndex = i;
+                    }
+                }
+
+                if(relevantDayStartIndex != -1){
+                    for(int z = 0;z < weather.days.length;z++){
+                        DateTime date = weather.days[z].getDate();
+                        if(DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0){
+                            System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
+                            relevantDayEndIndex = z;
+                        }
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void weatherProcessFailed() {
+
+            }
+        };
+        weathertask.execute(new String[]{city,country});
+
+    }
+
 }

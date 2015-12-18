@@ -41,6 +41,7 @@ public class JSONWeatherParser {
                     Day curDay = new Day();
                     JSONObject dayObj = weatherList.getJSONObject(i);
 
+                    curDay.setDate(getLong("dt",dayObj));
                     curDay.setClouds(getInt("clouds", dayObj));
                     curDay.setDeg(getInt("deg", dayObj));
 
@@ -89,6 +90,10 @@ public class JSONWeatherParser {
 
     private static JSONArray getArray(String tagName, JSONObject jObj) throws JSONException {
         return jObj.getJSONArray(tagName);
+    }
+
+    private static long  getLong(String tagName, JSONObject jObj) throws JSONException {
+        return jObj.getLong(tagName);
     }
 
 }

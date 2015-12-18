@@ -1,5 +1,7 @@
 package prak.travelerapp.WeatherAPI.model;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ public class Day implements Serializable{
     public Condition condition = new Condition();
     private int deg;
     private int clouds;
+    private DateTime date;
 
 
     public int getClouds() {
@@ -27,6 +30,16 @@ public class Day implements Serializable{
 
     public void setDeg(int deg) {
         this.deg = deg;
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public void setDate(long timestamp){
+
+        this.date = new DateTime(timestamp * 1000L);
+
     }
 
 
