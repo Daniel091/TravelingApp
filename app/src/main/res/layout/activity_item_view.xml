@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -11,11 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ItemViewFragment"
     android:background="@color/white">
-
-    <FrameLayout
-        android:id="@+id/listContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/button_add_item"
         android:layout_width="wrap_content"
@@ -29,6 +24,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/item_list_view"
         android:layout_gravity="center_horizontal"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:layout_below="@id/button_add_item"/>
 
-</RelativeLayout>
+</LinearLayout>

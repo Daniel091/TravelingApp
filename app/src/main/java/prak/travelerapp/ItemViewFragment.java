@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
@@ -139,10 +141,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
     }
 
-    // Popup zum eingeben eines neue Items
-    public void showPopup(View anchorView) {
+    // Popup zum eingeben eines neuen Items
+    public void showPopup(final View anchorView) {
 
-        View popupView = inflater.inflate(R.layout.add_item_popup, container, false);
+        final View popupView = inflater.inflate(R.layout.add_item_popup, container, false);
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -171,11 +173,17 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
                 customItem = userInput.getText().toString();
-                // TODO: Leeren Input abfangen!
-                Dataset customDataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
-                itemList.add(customDataSet);
-                showAllListEntries(itemList);
-                popupWindow.dismiss();
+
+                // Fängt leeren User Input ab und bringt einen Hinweis
+                if (userInput.length() == 0) {
+                    Toast.makeText(popupView.getContext(), "Bitte Namen des Items eingeben", Toast.LENGTH_SHORT).show();
+                } else {
+                    Dataset customDataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
+                    itemList.add(customDataSet);
+                    showAllListEntries(itemList);
+
+                    popupWindow.dismiss();
+                }
             }
         });
 
