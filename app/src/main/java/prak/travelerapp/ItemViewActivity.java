@@ -38,7 +38,7 @@ import prak.travelerapp.ItemDatabase.ItemDBHelper;
 
 
 /**
- * Fragment, dass uns die Liste anzeigt
+ * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
  */
 public class ItemViewActivity extends Fragment implements AdapterView.OnItemSelectedListener{
 
@@ -184,6 +184,7 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
                 customItem = userInput.getText().toString();
+                // TODO: Leeren Input abfangen!
                 Dataset customDataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                 itemList.add(customDataSet);
                 showAllListEntries(itemList);
@@ -242,7 +243,7 @@ public class ItemViewActivity extends Fragment implements AdapterView.OnItemSele
     // Regelt was passiert, wenn keine Kategorie ausgewählt wurde
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // TODO
+        // Nicht benötigt. Methode muss aber overrided sein.
     }
 
 }
