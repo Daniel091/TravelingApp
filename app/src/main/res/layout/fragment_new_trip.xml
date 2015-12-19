@@ -125,7 +125,6 @@
                     android:paddingStart="28dp"
                     android:paddingLeft="28dp"
                     android:textSize="18sp"
-                    android:text="01.01.2099"
                     android:gravity="center_vertical|start"
                     android:background="#00000000"
                     />
@@ -135,7 +134,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="02.01.2099"
                     android:textSize="18sp"
                     android:paddingEnd="28dp"
                     android:paddingRight="28dp"

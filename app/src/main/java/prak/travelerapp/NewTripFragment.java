@@ -97,6 +97,14 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 
+
+        //Set default values of eddittext field for arrival and departure to currentdate and currentdate+5
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
+        editText_arrival.setText(dateFormatter.format(date.getTime()));
+        date.add(Calendar.DATE, 5);
+        editText_departure.setText(dateFormatter.format(date.getTime()));
+
         setUpArrivalDatePicker();
         setUpDepartureDatePicker();
 
@@ -117,6 +125,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     private void setUpDepartureDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
+        newCalendar.add(Calendar.DATE,5);
         departureDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -136,7 +145,11 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
+                //SET to 0 first -> workaround to be able to update mindate
+                departureDatePickerDialog.getDatePicker().setMinDate(0);
+                departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
                 editText_arrival.setText(dateFormatter.format(newDate.getTime()));
+                System.out.println(newDate.getTimeInMillis());
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
@@ -192,12 +205,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                     }
                 final TravelType type_one = type1;
                 final TravelType type_two = type2;
-                    /*
-                    String s = "(3,0);(4,0)";
-                    TripItems items = new TripItems(s);
-
-                    Log.d("NewTrip","Inserted "+ city + " " + type1 + " " + type2);
-                    */
 
                 WeatherTask weathertask = new WeatherTask();
                 weathertask.delegate = new AsyncWeatherResponse() {
@@ -260,7 +267,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(),"Added youre Trip",Toast.LENGTH_SHORT).show();
     }
 
     @Override
