@@ -1,7 +1,8 @@
 package prak.travelerapp.TripDatabase.model;
 
 public enum TravelType {
-    NO_TYPE("Keine Kategorie"),STAEDTETRIP("Städtetrip"), SKIFAHREN("Skifahren"),FESTIVAL("Festival"),WANDERN("Wandern");
+    NO_TYPE("Keine Kategorie"),STRANDURLAUB("Strandurlaub"), STAEDTETRIP("Städtetrip"), SKIFAHREN("Skifahren"),WANDERN("Wandern"),
+    GESCHAEFTSREISE("Geschäftsreise"),PARTYURLAUB("Partyurlaub"),CAMPING("Camping"),FESTIVAL("Festival");
 
     private final String stringValue;
 

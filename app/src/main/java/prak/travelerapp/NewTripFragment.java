@@ -2,6 +2,8 @@ package prak.travelerapp;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +28,7 @@ import org.joda.time.DateTimeComparator;
 import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +38,7 @@ import java.util.Locale;
 import prak.travelerapp.Autocompleter.CityAutoCompleteView;
 import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Autocompleter.model.City;
+import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
@@ -57,6 +61,12 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     private String[] traveltypeStrings;
     String[] items = new String[] {};
+
+
+    private String city;
+    private String country;
+    private DateTime startDate;
+    private DateTime endDate;
 
     @Nullable
     @Override
@@ -159,13 +169,13 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         String[] separated = autocompleterText.split(",");
         //City was set and is correct format -> City, Country
         if(!autocompleterText.equals(getResources().getString(R.string.city_default)) && separated.length == 2){
-            String city = separated[0].trim();
-            String country= separated[1].trim();
+            final String city = separated[0].trim();
+            final String country= separated[1].trim();
 
             //two dates were selected
             if(!editText_arrival.getText().toString().equals(getResources().getString(R.string.arrival_default)) && !editText_departure.getText().toString().equals(getResources().getString(R.string.departure_default))){
-                DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
-                DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+                final DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
+                final DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
                     //Check which category has been selected
                     TravelType type1 = TravelType.NO_TYPE;
                     TravelType type2 = TravelType.NO_TYPE;
@@ -179,15 +189,69 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                             }
                         }
                     }
-
-                    configureTripItems(city,country,startDate,endDate,type1,type2);
+                final TravelType type_one = type1;
+                final TravelType type_two = type2;
+                    /*
                     String s = "(3,0);(4,0)";
                     TripItems items = new TripItems(s);
 
-                    tripDBAdapter = new TripDBAdapter(getActivity());
-                    tripDBAdapter.open();
-                    tripDBAdapter.insert(items, city, country, startDate, endDate, type1, type2, true);
                     Log.d("NewTrip","Inserted "+ city + " " + type1 + " " + type2);
+                    */
+
+                WeatherTask weathertask = new WeatherTask();
+                weathertask.delegate = new AsyncWeatherResponse() {
+                    @Override
+                    public void weatherProcessFinish(Weather output) {
+
+                        Weather weather = output;
+
+                        int relevantDayStartIndex = -1;
+                        int relevantDayEndIndex = -1;
+                        for(int i = 0;i < weather.days.length;i++){
+                            DateTime date = weather.days[i].getDate();
+                            if(DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0){
+                                System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
+                                relevantDayStartIndex = i;
+                                relevantDayEndIndex = weather.days.length-1;
+                            }
+                        }
+
+                        if(relevantDayStartIndex != -1){
+                            for(int z = 0;z < weather.days.length;z++){
+                                DateTime date = weather.days[z].getDate();
+                                if(DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0){
+                                    System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
+                                    relevantDayEndIndex = z;
+                                }
+                            }
+
+                            weather.days = Arrays.copyOfRange(weather.days, relevantDayStartIndex,relevantDayEndIndex);
+                            //keine relevanten wetterdaten verfügbar
+                        }else{
+
+                            weather = null;
+
+                        }
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        String gender = sharedPref.getString(getString(R.string.saved_gender), "not_selected");
+
+                        TripItems tripItems = configureTripItems(gender, weather, type_one, type_two);
+
+                        tripDBAdapter = new TripDBAdapter(getActivity());
+                        tripDBAdapter.open();
+                        tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
+
+                        Fragment ItemViewFragment = new ItemViewFragment();
+                        ((MainActivity) getActivity()).setUpFragement(ItemViewFragment);
+
+                    }
+
+                    @Override
+                    public void weatherProcessFailed() {
+
+                    }
+                };
+                weathertask.execute(new String[]{city,country});
             }else{
                 Toast.makeText(getActivity(), "Wähle einen Reisezeitraum", Toast.LENGTH_SHORT).show();
             }
@@ -290,46 +354,35 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     }
 
 
-    public void configureTripItems(String city, String country, final DateTime startDate, final DateTime endDate, TravelType type1, TravelType type2){
+    public TripItems configureTripItems(String gender, Weather weather, TravelType type1, TravelType type2){
+        int genderValue = 0;
+        switch (gender){
+            case "male":
+                genderValue=1;
+                break;
+            case "female":
+                genderValue=2;
+                break;
+            case "not_selected":
+                Log.e("ERROR", "Kein Gender festgelegt");
+                break;
+        }
 
-        WeatherTask weathertask = new WeatherTask();
-        weathertask.delegate = new AsyncWeatherResponse() {
-            @Override
-            public void weatherProcessFinish(Weather output) {
+        boolean isRaining = weather.isRaining();
 
-                Weather weather = output;
+        ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
+        itemDB.createDatabase();
+        itemDB.open();
+        ArrayList<Integer> itemIDs  = itemDB.findItemIDs(genderValue,isRaining,type1,type2);
+        TripItems items = new TripItems();
 
-                int relevantDayStartIndex = -1;
-                int relevantDayEndIndex = -1;
-                for(int i = 0;i < weather.days.length;i++){
-                    DateTime date = weather.days[i].getDate();
-                    if(DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0){
-                        System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
-                        relevantDayStartIndex = i;
-                    }
-                }
+        for(Integer id : itemIDs){
+            items.addItem(id);
+        }
 
-                if(relevantDayStartIndex != -1){
-                    for(int z = 0;z < weather.days.length;z++){
-                        DateTime date = weather.days[z].getDate();
-                        if(DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0){
-                            System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
-                            relevantDayEndIndex = z;
-                        }
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void weatherProcessFailed() {
-
-            }
-        };
-        weathertask.execute(new String[]{city,country});
-
+        String itemString = items.makeString();
+        System.out.println(itemString);
+        return items;
     }
 
 }

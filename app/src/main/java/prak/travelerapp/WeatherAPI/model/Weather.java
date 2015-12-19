@@ -12,8 +12,15 @@ public class Weather{
     public Location location;
     public Day[] days = new Day[16];
 
-//    public double getAverageTemperature(){
-//
-//    }
+    public boolean isRaining(){
+
+        for (Day day: days) {
+            if(day.condition.getMain().equals("Rain")){
+                return true;
+            }
+
+        }
+        return false;
+    }
 
 }
