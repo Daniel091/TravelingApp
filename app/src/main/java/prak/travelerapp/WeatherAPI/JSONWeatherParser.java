@@ -57,7 +57,7 @@ public class JSONWeatherParser {
                     curDay.condition.setDescription(getString("description", weath));
                     curDay.condition.setMain(getString("main", weath));
 
-                    weather.days[i] = curDay;
+                    weather.days.add(curDay);
                 }
 
                 return weather;

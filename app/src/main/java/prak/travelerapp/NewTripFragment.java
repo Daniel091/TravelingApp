@@ -44,6 +44,7 @@ import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
+import prak.travelerapp.WeatherAPI.model.Day;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
@@ -207,25 +208,25 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                         int relevantDayStartIndex = -1;
                         int relevantDayEndIndex = -1;
-                        for(int i = 0;i < weather.days.length;i++){
-                            DateTime date = weather.days[i].getDate();
+                        for(int i = 0;i < weather.days.size();i++){
+                            DateTime date = weather.days.get(i).getDate();
                             if(DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0){
                                 System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
                                 relevantDayStartIndex = i;
-                                relevantDayEndIndex = weather.days.length-1;
+                                relevantDayEndIndex = weather.days.size()-1;
                             }
                         }
 
                         if(relevantDayStartIndex != -1){
-                            for(int z = 0;z < weather.days.length;z++){
-                                DateTime date = weather.days[z].getDate();
+                            for(int z = 0;z < weather.days.size();z++){
+                                DateTime date = weather.days.get(z).getDate();
                                 if(DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0){
                                     System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
                                     relevantDayEndIndex = z;
                                 }
                             }
 
-                            weather.days = Arrays.copyOfRange(weather.days, relevantDayStartIndex,relevantDayEndIndex);
+                            weather.days = new ArrayList<Day>(weather.days.subList(relevantDayStartIndex,relevantDayEndIndex));
                             //keine relevanten wetterdaten verfügbar
                         }else{
 
