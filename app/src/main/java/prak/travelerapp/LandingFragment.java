@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
@@ -24,6 +25,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     private Button testQuery;       // Photo Test
     private ImageView imageView;    // ImageView
     private EditText editText;
+    private RelativeLayout relativeLayout;
 
     private int screenheight;
     private int screenwidth;
@@ -55,8 +57,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screenheight = displaymetrics.heightPixels;
         screenwidth = displaymetrics.widthPixels;
-       // Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
-       // getActivity().setSupportActionBar(toolbar);
 
         editText = (EditText)getView().findViewById(R.id.edit_text);
         imageView = (ImageView) getView().findViewById(R.id.imageView);
@@ -106,10 +106,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
-
         Bitmap resizedImage = getResizedBitmap(image, screenheight, screenheight);
         imageView.setImageBitmap(resizedImage);
-
     }
 
     @Override
@@ -119,7 +117,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
         int width = bm.getWidth();
         int height = bm.getHeight();
         float scaleWidth = ((float) newWidth) / width;

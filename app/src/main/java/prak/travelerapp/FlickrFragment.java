@@ -48,7 +48,7 @@ public class FlickrFragment extends Fragment implements AsyncPictureResponse {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_landing, container, false);
+        return inflater.inflate(R.layout.fragment_flickr, container, false);
     }
 
 

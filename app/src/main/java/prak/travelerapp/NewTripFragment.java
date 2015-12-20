@@ -64,12 +64,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private String[] traveltypeStrings;
     String[] items = new String[] {};
 
-
-    private String city;
-    private String country;
-    private DateTime startDate;
-    private DateTime endDate;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

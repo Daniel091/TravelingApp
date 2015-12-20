@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        // Start with Home Screen
+        // Start with Home Screen TODO Start with Landing Fragment if theres a active trip
         Fragment fragment = new StartFragment();
         setUpFragement(fragment);
 
