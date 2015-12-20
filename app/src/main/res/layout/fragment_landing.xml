@@ -3,10 +3,6 @@
     android:layout_height="match_parent"
     android:id="@+id/landingRl">
 
-    <include
-        layout="@layout/button_hamburger"
-        android:id="@+id/button_hamburger"/>
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,15 +10,19 @@
         android:gravity="center"
         android:id="@+id/imageView" />
 
-    <LinearLayout
-        android:layout_below="@id/button_hamburger"
+    <RelativeLayout
         android:id="@+id/transparentOverlay"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_overlay" >
 
+        <include
+            layout="@layout/button_hamburger"
+            android:id="@+id/button_hamburger"/>
+
         <EditText
+            android:layout_below="@id/button_hamburger"
             android:id="@+id/edit_text"
             android:hint="Text"
             android:layout_width="match_parent"
@@ -30,11 +30,12 @@
             android:background="@color/white" />
 
         <Button
+            android:layout_below="@id/edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Query Image"
             android:id="@+id/button"
-            android:layout_gravity="center_horizontal" />
+            android:layout_centerInParent="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

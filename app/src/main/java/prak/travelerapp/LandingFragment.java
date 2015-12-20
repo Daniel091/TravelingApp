@@ -1,7 +1,11 @@
 package prak.travelerapp;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -15,6 +19,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
@@ -26,6 +35,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     private ImageView imageView;    // ImageView
     private EditText editText;
     private RelativeLayout relativeLayout;
+    private String path;
+    private SharedPreferences sharedPref;
 
     private int screenheight;
     private int screenwidth;
@@ -37,8 +48,23 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
+        prepareViews(view);
+        prepareListeners();
+        sharedPref = getActivity().getBaseContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        return view;
+    }
+
+    private void prepareViews(View view) {
         button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.bringToFront();
+        editText = (EditText)view.findViewById(R.id.edit_text);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
+        testQuery = (Button) view.findViewById(R.id.button);
+    }
+
+    private void prepareListeners() {
         button_hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,25 +72,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
             }
         });
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        screenheight = displaymetrics.heightPixels;
-        screenwidth = displaymetrics.widthPixels;
-
-        editText = (EditText)getView().findViewById(R.id.edit_text);
-        imageView = (ImageView) getView().findViewById(R.id.imageView);
-        GetImageURLTask getImageURLTask = new GetImageURLTask();
-        getImageURLTask.delegate = this;
-        getImageURLTask.execute("Muenchen");
-
-        testQuery = (Button) getView().findViewById(R.id.button);
         testQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +96,24 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        screenheight = displaymetrics.heightPixels;
+        screenwidth = displaymetrics.widthPixels;
+
+        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
+        if (!loadImageFromStorage(path_fromPref)) {
+            GetImageURLTask getImageURLTask = new GetImageURLTask();
+            getImageURLTask.delegate = this;
+            getImageURLTask.execute("Muenchen");
+        } else {
+            Log.d("LandingFrag","Image file is there, no need to make http request");
+        }
+    }
+
+    @Override
     public void getURLProcessFinish(String url) {
 
         GetImageFromURLTask getImageFromURLTask = new GetImageFromURLTask();
@@ -107,6 +132,11 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
         Bitmap resizedImage = getResizedBitmap(image, screenheight, screenheight);
+        try {
+            saveToInternalStorage(resizedImage);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         imageView.setImageBitmap(resizedImage);
     }
 
@@ -133,5 +163,50 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
         return resizedBitmap;
 
+    }
+
+    private String saveToInternalStorage(Bitmap bitmapImage) throws Exception{
+        ContextWrapper cw = new ContextWrapper(getActivity().getBaseContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"ActiveTrip.jpg");
+
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.saved_image_path), directory.getAbsolutePath());
+        editor.apply();
+
+        Log.d("Landing","Image saved to " + directory.getAbsolutePath());
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            fos.close();
+        }
+        return directory.getAbsolutePath();
+    }
+
+    private boolean loadImageFromStorage(String path)
+    {
+        try {
+            File f=new File(path, "ActiveTrip.jpg");
+            if (f.exists()) {
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                imageView.setImageBitmap(b);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
