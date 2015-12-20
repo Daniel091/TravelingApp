@@ -188,9 +188,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             final String country= separated[1].trim();
 
             //two dates were selected
-            if(!editText_arrival.getText().toString().equals(getResources().getString(R.string.arrival_default)) && !editText_departure.getText().toString().equals(getResources().getString(R.string.departure_default))){
-                final DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
-                final DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+            final DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
+            final DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+            if (endDate.isAfter(startDate)) {
                     //Check which category has been selected
                     TravelType type1 = TravelType.NO_TYPE;
                     TravelType type2 = TravelType.NO_TYPE;
@@ -262,7 +262,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 };
                 weathertask.execute(new String[]{city,country});
             }else{
-                Toast.makeText(getActivity(), "Wähle einen Reisezeitraum", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Abreise Datum vor Start Datum", Toast.LENGTH_SHORT).show();
             }
 
         }else{

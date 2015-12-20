@@ -24,8 +24,6 @@
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string name="city_default">San Francisco</string>
-    <string name="arrival_default">01.01.2099</string>
-    <string name="departure_default">02.01.2099</string>
     <string name="reiseziel">Reiseziel</string>
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_gender">gender</string>
