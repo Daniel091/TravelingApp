@@ -93,10 +93,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new LandingFragment();
                 setUpFragement(fragment);
                 break;
-            case 8:
-                fragment = new CityAutocompleteFragment();
-                setUpFragement(fragment);
-                break;
         }
 
         // Highlight the selected items, update the title, and close the drawer
@@ -117,8 +113,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         FragmentManager fragmentManager = getFragmentManager();
 
         boolean fragmentPopped = fragmentManager.popBackStackImmediate (fragment.getClass().getName(), 0);
+        Log.d("Main",fragment.getClass().getName() + " is in BackStack " + fragmentPopped);
         if (!fragmentPopped) {
-
+            Log.d("Main","New Add to Back Stack");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.mainContent, fragment);
             fragmentTransaction.addToBackStack(fragment.getClass().getName());

@@ -14,7 +14,7 @@ public class MenueApdapter extends BaseAdapter {
 
     int[] images = {R.mipmap.ic_launcher,R.mipmap.ic_home,R.mipmap.ic_check,R.mipmap.ic_new,
             R.mipmap.ic_clock,R.mipmap.ic_settings,R.mipmap.ic_home,
-            R.mipmap.ic_home,R.mipmap.ic_home};
+            R.mipmap.ic_home};
 
     public MenueApdapter(Context context){
         menue_links=context.getResources().getStringArray(R.array.menue_links);

@@ -59,6 +59,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private SimpleDateFormat dateFormatter;
     private FloatingActionButton button_submit;
     private TripDBAdapter tripDBAdapter;
+    private boolean firstSelect = true;
 
     private String[] traveltypeStrings;
     String[] items = new String[] {};
@@ -335,14 +336,13 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
-        if (position != 0 && spinner.getId() == R.id.spinner_category){
+        if (spinner.getId() == R.id.spinner_category && !firstSelect){
             secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
             secondTripType.setVisibility(LinearLayout.VISIBLE);
             setUpSecondTripType();
         } else {
-            if (secondTripType != null && spinner.getId() == R.id.spinner_category){
-                secondTripType.setVisibility(LinearLayout.GONE);
-            }
+            // User made first select
+            firstSelect = false;
         }
     }
 
