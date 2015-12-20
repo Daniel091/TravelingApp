@@ -25,6 +25,8 @@ import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
+import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.Trip;
 
 /**
  * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
@@ -35,7 +37,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     public static final String LOG_TAG = ItemViewFragment.class.getSimpleName();
 
     // Instanz vom ItemDBAdapter
-    ItemDBAdapter itemDB;
+    ItemDBAdapter itemDBAdapter;
+    TripDBAdapter tripDBAdapter;
 
     // Holt Items aus der DB
     List<Dataset> itemList;
@@ -80,17 +83,22 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onResume() {
         super.onResume();
-        itemDB = new ItemDBAdapter(getActivity());
-        itemDB.createDatabase();
-        itemDB.open();
-        itemList = itemDB.getItems();
+
+        tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        Trip activeTrip = tripDBAdapter.getActiveTrip();
+
+        itemDBAdapter = new ItemDBAdapter(getActivity());
+        itemDBAdapter.createDatabase();
+        itemDBAdapter.open();
+        itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
         showAllListEntries(itemList);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-       itemDB.close();
+       itemDBAdapter.close();
     }
 
     /**
@@ -178,7 +186,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 if (userInput.length() == 0) {
                     Toast.makeText(popupView.getContext(), "Bitte Namen des Items eingeben", Toast.LENGTH_SHORT).show();
                 } else {
-                    Dataset customDataSet = itemDB.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
+                    Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                     itemList.add(customDataSet);
                     showAllListEntries(itemList);
 

@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
 
-        tripDBAdapter.insert(items, "Miami", "US" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
+        tripDBAdapter.insertTrip(items, "Miami", "US" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
         Trip activeTrip = tripDBAdapter.getActiveTrip();
         System.out.println(activeTrip.getName());
     }

@@ -25,10 +25,11 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
+
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_NAME = "NAME";
-    public static final String TABLE_ITEM_LIST = "item_table";
-    public static final String COLUMN_SEX = "GESCHLECHT";
+    public static final String TABLE_NAME = "item_table";
+    public static final String COLUMN_GENDER = "GESCHLECHT";
     public static final String COLUMN_TROCKEN = "TROCKEN";
     public static final String COLUMN_STAEDTETRIP = "STAEDTETRIP";
     public static final String COLUMN_STRANDURLAUB = "STRANDURLAUB";
@@ -43,7 +44,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static String[] columns = {
             COLUMN_ID,
             COLUMN_NAME,
-            COLUMN_SEX,
+            COLUMN_GENDER,
             COLUMN_TROCKEN,
             COLUMN_STAEDTETRIP,
             COLUMN_STRANDURLAUB,

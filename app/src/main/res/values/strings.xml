@@ -28,7 +28,9 @@
     <string name="departure_default">02.01.2099</string>
     <string name="reiseziel">Reiseziel</string>
     <string name="preference_file_key">prak.travelerapp.usergender</string>
-    <string name="saved_gender">not_selected</string>
+    <string name="saved_gender">gender</string>
+    <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
+    <string name="category2_spinner_placeholder">Optional</string>
 
     <string-array name="menue_links">
         <item>TRAVeL</item>

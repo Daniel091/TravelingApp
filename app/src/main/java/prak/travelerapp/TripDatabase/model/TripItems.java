@@ -11,10 +11,9 @@ public class TripItems {
 
     }
 
-/*    public TripItems(List<Tupel> items_list){
-
-        this.items_list = items_list;
-    } */
+    public TripItems(){
+        this.items_list= new ArrayList<>();
+    }
 
     public void addItem(int id){
 

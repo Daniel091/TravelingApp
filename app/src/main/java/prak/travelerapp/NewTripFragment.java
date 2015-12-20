@@ -2,6 +2,9 @@ package prak.travelerapp;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,8 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +38,14 @@ import java.util.Locale;
 import prak.travelerapp.Autocompleter.CityAutoCompleteView;
 import prak.travelerapp.Autocompleter.database.CityDBAdapter;
 import prak.travelerapp.Autocompleter.model.City;
+import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
+import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
+import prak.travelerapp.WeatherAPI.WeatherTask;
+import prak.travelerapp.WeatherAPI.model.Day;
+import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
     private LinearLayout secondTripType;
@@ -50,6 +62,12 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     private String[] traveltypeStrings;
     String[] items = new String[] {};
+
+
+    private String city;
+    private String country;
+    private DateTime startDate;
+    private DateTime endDate;
 
     @Nullable
     @Override
@@ -79,6 +97,14 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 
+
+        //Set default values of eddittext field for arrival and departure to currentdate and currentdate+5
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
+        editText_arrival.setText(dateFormatter.format(date.getTime()));
+        date.add(Calendar.DATE, 5);
+        editText_departure.setText(dateFormatter.format(date.getTime()));
+
         setUpArrivalDatePicker();
         setUpDepartureDatePicker();
 
@@ -88,7 +114,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             TravelType type = TravelType.values()[i];
             traveltypeStrings[i] = type.getStringValue();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,traveltypeStrings);
+        String[] onlyRealCategoryStrings = Arrays.copyOfRange(traveltypeStrings,1,traveltypeStrings.length);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,onlyRealCategoryStrings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_category.setAdapter(adapter);
         spinner_category.setOnItemSelectedListener(this);
@@ -98,6 +125,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
     private void setUpDepartureDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
+        newCalendar.add(Calendar.DATE,5);
         departureDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -117,7 +145,11 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
+                //SET to 0 first -> workaround to be able to update mindate
+                departureDatePickerDialog.getDatePicker().setMinDate(0);
+                departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
                 editText_arrival.setText(dateFormatter.format(newDate.getTime()));
+                System.out.println(newDate.getTimeInMillis());
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
@@ -151,13 +183,13 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         String[] separated = autocompleterText.split(",");
         //City was set and is correct format -> City, Country
         if(!autocompleterText.equals(getResources().getString(R.string.city_default)) && separated.length == 2){
-            String city = separated[0].trim();
-            String country= separated[1].trim();
+            final String city = separated[0].trim();
+            final String country= separated[1].trim();
 
             //two dates were selected
             if(!editText_arrival.getText().toString().equals(getResources().getString(R.string.arrival_default)) && !editText_departure.getText().toString().equals(getResources().getString(R.string.departure_default))){
-                DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
-                DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+                final DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
+                final DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
                     //Check which category has been selected
                     TravelType type1 = TravelType.NO_TYPE;
                     TravelType type2 = TravelType.NO_TYPE;
@@ -171,13 +203,63 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                             }
                         }
                     }
-                    String s = "(3,0);(4,0)";
-                    TripItems items = new TripItems(s);
+                final TravelType type_one = type1;
+                final TravelType type_two = type2;
 
-                    tripDBAdapter = new TripDBAdapter(getActivity());
-                    tripDBAdapter.open();
-                    tripDBAdapter.insert(items, city, country, startDate, endDate, type1, type2, true);
-                    Log.d("NewTrip","Inserted "+ city + " " + type1 + " " + type2);
+                WeatherTask weathertask = new WeatherTask();
+                weathertask.delegate = new AsyncWeatherResponse() {
+                    @Override
+                    public void weatherProcessFinish(Weather output) {
+
+                        Weather weather = output;
+
+                        int relevantDayStartIndex = -1;
+                        int relevantDayEndIndex = -1;
+                        for(int i = 0;i < weather.days.size();i++){
+                            DateTime date = weather.days.get(i).getDate();
+                            if(DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0){
+                                System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
+                                relevantDayStartIndex = i;
+                                relevantDayEndIndex = weather.days.size()-1;
+                            }
+                        }
+
+                        if(relevantDayStartIndex != -1){
+                            for(int z = 0;z < weather.days.size();z++){
+                                DateTime date = weather.days.get(z).getDate();
+                                if(DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0){
+                                    System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
+                                    relevantDayEndIndex = z;
+                                }
+                            }
+
+                            weather.days = new ArrayList<Day>(weather.days.subList(relevantDayStartIndex,relevantDayEndIndex));
+                            //keine relevanten wetterdaten verfügbar
+                        }else{
+
+                            weather = null;
+
+                        }
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        String gender = sharedPref.getString(getString(R.string.saved_gender), "not_selected");
+
+                        TripItems tripItems = configureTripItems(gender, weather, type_one, type_two);
+
+                        tripDBAdapter = new TripDBAdapter(getActivity());
+                        tripDBAdapter.open();
+                        tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
+
+                        Fragment ItemViewFragment = new ItemViewFragment();
+                        ((MainActivity) getActivity()).setUpFragement(ItemViewFragment);
+
+                    }
+
+                    @Override
+                    public void weatherProcessFailed() {
+
+                    }
+                };
+                weathertask.execute(new String[]{city,country});
             }else{
                 Toast.makeText(getActivity(), "Wähle einen Reisezeitraum", Toast.LENGTH_SHORT).show();
             }
@@ -185,7 +267,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(),"Added youre Trip",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -278,4 +359,37 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+    public TripItems configureTripItems(String gender, Weather weather, TravelType type1, TravelType type2){
+        int genderValue = 0;
+        switch (gender){
+            case "male":
+                genderValue=1;
+                break;
+            case "female":
+                genderValue=2;
+                break;
+            case "not_selected":
+                Log.e("ERROR", "Kein Gender festgelegt");
+                break;
+        }
+
+        boolean isRaining = weather.isRaining();
+
+        ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
+        itemDB.createDatabase();
+        itemDB.open();
+        ArrayList<Integer> itemIDs  = itemDB.findItemIDs(genderValue,isRaining,type1,type2);
+        TripItems items = new TripItems();
+
+        for(Integer id : itemIDs){
+            items.addItem(id);
+        }
+
+        String itemString = items.makeString();
+        System.out.println(itemString);
+        return items;
+    }
+
 }

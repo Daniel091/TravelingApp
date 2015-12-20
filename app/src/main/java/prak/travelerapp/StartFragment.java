@@ -80,12 +80,12 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
         switch(checkedId){
             case R.id.radio_male:
                 editor.putString(getString(R.string.saved_gender), "male");
-                editor.commit();
+                editor.apply();
                 Log.d("mw", "male");
                 break;
             case R.id.radio_female:
                 editor.putString(getString(R.string.saved_gender), "female");
-                editor.commit();
+                editor.apply();
                 Log.d("mw", "female");
                 break;
         }

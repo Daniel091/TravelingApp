@@ -76,7 +76,7 @@ public class TripDBAdapter {
     }
 
 
-    public void insert(TripItems list,String name,String country, DateTime startDate,DateTime endDate, TravelType cat1, TravelType cat2, boolean active) {
+    public void insertTrip(TripItems list,String name,String country, DateTime startDate,DateTime endDate, TravelType cat1, TravelType cat2, boolean active) {
 
 
         String startDateString = Utils.dateTimeToString(startDate);
