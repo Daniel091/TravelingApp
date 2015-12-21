@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/airport">
+
+        <RelativeLayout
+            android:id="@+id/transparentOverlay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_overlay" >
+
+            <include layout="@layout/button_hamburger"/>
+
+            <TextView
+                android:id="@+id/textview_newTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vergangene Reisen"
+                android:textColor="@android:color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:layout_marginLeft="28dp"
+                android:textSize="30dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <ListView
+        android:divider="@drawable/history_list_divider"
+        android:dividerHeight="1dp"
+        android:background="#FFF"
+        android:id="@+id/historyList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>
+
+
+

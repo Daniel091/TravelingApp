@@ -85,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new NewTripFragment();
                 setUpFragement(fragment);
                 break;
+            case 4:
+                fragment = new TripHistoryFragment();
+                setUpFragement(fragment);
+                break;
             case 6:
                 fragment = new PlacePickerFragment();
                 setUpFragement(fragment);
@@ -134,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
 
-        tripDBAdapter.insertTrip(items, "Miami", "US" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, true);
+        tripDBAdapter.insertTrip(items, "Moskau", "RU" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, false);
         Trip activeTrip = tripDBAdapter.getActiveTrip();
-        System.out.println(activeTrip.getName());
+        System.out.println(activeTrip.getCity());
     }
 }

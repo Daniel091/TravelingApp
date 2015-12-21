@@ -126,7 +126,7 @@ public class TripDBAdapter {
         return null;
     }
 
-    public List<Trip> getOldTrips(){
+    public ArrayList<Trip> getOldTrips(){
 
         ArrayList<Trip> oldTrips = new ArrayList<Trip>();
         Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null,TripDBHelper.COLUMN_ACTIVE + "=" + 0, null, null, null, null);

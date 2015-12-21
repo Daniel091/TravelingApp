@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 public class Trip {
     private TripItems tripItems;
-    private final String name;
+    private final String city;
     private final String country;
     private final int id;
     private final TravelType type1;
@@ -13,9 +13,9 @@ public class Trip {
     private DateTime endDate;
     private boolean active;
 
-    public Trip(int id,TripItems list,String name,String country, DateTime startDate,DateTime endDate, TravelType cat1, TravelType cat2, boolean active){
+    public Trip(int id,TripItems list,String city,String country, DateTime startDate,DateTime endDate, TravelType cat1, TravelType cat2, boolean active){
         this.id = id;
-        this.name = name;
+        this.city = city;
         this.country = country;
         this.tripItems = list;
         this.startDate = startDate;
@@ -29,8 +29,8 @@ public class Trip {
         this.active = active;
     }
 
-    public String getName() {
-        return name;
+    public String getCity() {
+        return city;
     }
 
     public String getCountry() {
