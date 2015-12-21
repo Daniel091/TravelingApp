@@ -157,7 +157,7 @@ public class TripDBAdapter {
                 return oldTrips;
             }
         }
-        return null;
+        return new ArrayList<Trip>();
 
     }
 }
