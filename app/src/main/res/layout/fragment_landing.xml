@@ -81,24 +81,5 @@
                 android:gravity="right"/>
         </LinearLayout>
 
-        <EditText
-            android:layout_below="@id/subheadline"
-            android:id="@+id/edit_text"
-            android:hint="Text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/white"
-            android:layout_marginTop="28dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"/>
-
-        <Button
-            android:layout_below="@id/edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Query Image"
-            android:id="@+id/button"
-            android:layout_centerInParent="true" />
-
     </RelativeLayout>
 </RelativeLayout>

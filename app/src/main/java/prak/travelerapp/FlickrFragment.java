@@ -63,13 +63,13 @@ public class FlickrFragment extends Fragment implements AsyncPictureResponse {
        // Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
        // getActivity().setSupportActionBar(toolbar);
 
-        editText = (EditText)getView().findViewById(R.id.edit_text);
+        //editText = (EditText)getView().findViewById(R.id.edit_text);
         imageView = (ImageView) getView().findViewById(R.id.imageView);
         GetImageURLTask getImageURLTask = new GetImageURLTask();
         getImageURLTask.delegate = this;
         getImageURLTask.execute("Muenchen");
 
-        sanFrancisco = (Button) getView().findViewById(R.id.button);
+        //sanFrancisco = (Button) getView().findViewById(R.id.button);
         sanFrancisco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

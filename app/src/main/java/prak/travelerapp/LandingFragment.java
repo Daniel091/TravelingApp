@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -28,19 +27,17 @@ import java.io.FileOutputStream;
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
+import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.Trip;
 
 public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
     private ImageButton button_hamburger;
-    private Button testQuery;       // Photo Test
     private ImageView imageView;    // ImageView
-    private EditText editText;
     private TextView city;
     private TextView temperature;
-    private RelativeLayout relativeLayout;
-    private String path;
     private SharedPreferences sharedPref;
-    private String defaultCity = "München";
+    private Trip active_trip;
 
     private int screenheight;
     private int screenwidth;
@@ -53,11 +50,19 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
         prepareViews(view);
+        active_trip = getActiveTrip();
         prepareListeners();
+
         sharedPref = getActivity().getBaseContext().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         return view;
+    }
+
+    private Trip getActiveTrip() {
+        TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        return tripDBAdapter.getActiveTrip();
     }
 
     private void prepareViews(View view) {
@@ -65,9 +70,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         button_hamburger.bringToFront();
         city = (TextView) view.findViewById(R.id.city);
         temperature = (TextView) view.findViewById(R.id.temperature);
-        editText = (EditText) view.findViewById(R.id.edit_text);
         imageView = (ImageView) view.findViewById(R.id.imageView);
-        testQuery = (Button) view.findViewById(R.id.button);
     }
 
     private void prepareListeners() {
@@ -75,29 +78,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openDrawer();
-            }
-        });
-
-        testQuery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String input = editText.getText().toString();
-                city.setText(editText.getText().toString());
-                //searchterm and tag given
-                if (input.contains(",")) {
-                    String[] inputs = input.split(",");
-                    String searchTerm = inputs[0];
-                    String tag = inputs[1];
-                    GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingFragment.this;
-                    getImageURLTask.execute(searchTerm, tag);
-                    //only searchterm given
-                } else {
-                    GetImageURLTask getImageURLTask = new GetImageURLTask();
-                    getImageURLTask.delegate = LandingFragment.this;
-                    getImageURLTask.execute(input);
-
-                }
             }
         });
     }
@@ -110,14 +90,14 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         screenheight = displaymetrics.heightPixels;
         screenwidth = displaymetrics.widthPixels;
 
-        city.setText(defaultCity);
+        city.setText(active_trip.getCity());
         temperature.setText("14°");
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
         if (!loadImageFromStorage(path_fromPref)) {
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
-            getImageURLTask.execute(defaultCity);
+            getImageURLTask.execute(active_trip.getCity());
         } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
         }
@@ -134,26 +114,30 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
 
     @Override
     public void getURLProcessFailed() {
-
-        Log.d("mw", "URL Process failed");
-
+        Log.d("mw", "URL Process failed, now Default Picture");
+        setDefaultPic();
     }
 
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
-        Bitmap resizedImage = getResizedBitmap(image, screenheight, screenheight);
-        try {
-            saveToInternalStorage(resizedImage);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        imageView.setImageBitmap(resizedImage);
+        final Bitmap resizedImage = getResizedBitmap(image, 480, 480);
+            try {
+                imageView.setImageBitmap(resizedImage);
+                saveToInternalStorage(resizedImage);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
     }
 
     @Override
     public void getImageFromURLProcessFailed() {
-        Log.d("mw", "Image Process Failed");
+        Log.d("mw", "Image Process Failed, now Default Picture");
+        setDefaultPic();
+    }
 
+    private void setDefaultPic() {
+        //<-> getDrawable(R.id.airport,getActivty.getTheme()) is for Api 21
+        // TODO set Default Pic here
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -169,10 +153,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         matrix.postScale(scaleWidth, scaleHeight);
 
         // RECREATE THE NEW BITMAP
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        Log.d("Landing Frag",resizedBitmap.getHeight() + "x" + resizedBitmap.getWidth());
         return resizedBitmap;
-
     }
 
     private String saveToInternalStorage(Bitmap bitmapImage) throws Exception{
