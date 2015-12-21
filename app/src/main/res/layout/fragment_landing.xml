@@ -21,13 +21,76 @@
             layout="@layout/button_hamburger"
             android:id="@+id/button_hamburger"/>
 
-        <EditText
+
+        <!-- Stadt und Temperatur -->
+        <LinearLayout
+            android:id="@+id/headline"
             android:layout_below="@id/button_hamburger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".70"
+                android:layout_marginTop="28dp"
+                android:layout_marginLeft="28dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_large"/>
+
+            <TextView
+                android:id="@+id/temperature"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".30"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="28dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_large"
+                android:gravity="right"/>
+        </LinearLayout>
+
+
+        <!-- Unterüberschrift -->
+        <LinearLayout
+            android:id="@+id/subheadline"
+            android:layout_below="@id/headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/city_subline"
+                android:text="in 5 Tagen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50"
+                android:layout_marginLeft="28dp"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/text_small"/>
+
+            <TextView
+                android:id="@+id/temperature_subline"
+                android:text="Wettervorhersage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50"
+                android:layout_marginRight="28dp"
+                android:textColor="@color/darkGrey"
+                android:textSize="@dimen/text_small"
+                android:gravity="right"/>
+        </LinearLayout>
+
+        <EditText
+            android:layout_below="@id/subheadline"
             android:id="@+id/edit_text"
             android:hint="Text"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"/>
 
         <Button
             android:layout_below="@id/edit_text"

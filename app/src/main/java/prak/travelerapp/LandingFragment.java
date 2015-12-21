@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,9 +35,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     private Button testQuery;       // Photo Test
     private ImageView imageView;    // ImageView
     private EditText editText;
+    private TextView city;
+    private TextView temperature;
     private RelativeLayout relativeLayout;
     private String path;
     private SharedPreferences sharedPref;
+    private String defaultCity = "München";
 
     private int screenheight;
     private int screenwidth;
@@ -59,7 +63,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
     private void prepareViews(View view) {
         button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.bringToFront();
-        editText = (EditText)view.findViewById(R.id.edit_text);
+        city = (TextView) view.findViewById(R.id.city);
+        temperature = (TextView) view.findViewById(R.id.temperature);
+        editText = (EditText) view.findViewById(R.id.edit_text);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         testQuery = (Button) view.findViewById(R.id.button);
     }
@@ -76,6 +82,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
             @Override
             public void onClick(View v) {
                 String input = editText.getText().toString();
+                city.setText(editText.getText().toString());
                 //searchterm and tag given
                 if (input.contains(",")) {
                     String[] inputs = input.split(",");
@@ -103,11 +110,14 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         screenheight = displaymetrics.heightPixels;
         screenwidth = displaymetrics.widthPixels;
 
+        city.setText(defaultCity);
+        temperature.setText("14°");
+
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
         if (!loadImageFromStorage(path_fromPref)) {
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
-            getImageURLTask.execute("Muenchen");
+            getImageURLTask.execute(defaultCity);
         } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
         }
