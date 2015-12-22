@@ -13,11 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,13 +29,16 @@ import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
+import prak.travelerapp.WeatherAPI.model.Weather;
 
-public class LandingFragment extends Fragment implements AsyncPictureResponse {
+public class LandingFragment extends Fragment implements AsyncPictureResponse, AsyncWeatherResponse {
 
     private ImageButton button_hamburger;
     private ImageView imageView;    // ImageView
     private TextView city;
     private TextView temperature;
+    private TextView timeToJourney;
     private SharedPreferences sharedPref;
     private Trip active_trip;
 
@@ -69,6 +72,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.bringToFront();
         city = (TextView) view.findViewById(R.id.city);
+        timeToJourney = (TextView) view.findViewById(R.id.city_subline);
         temperature = (TextView) view.findViewById(R.id.temperature);
         imageView = (ImageView) view.findViewById(R.id.imageView);
     }
@@ -90,7 +94,16 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
         screenheight = displaymetrics.heightPixels;
         screenwidth = displaymetrics.widthPixels;
 
+        // Get current Date
+        DateTime currentDate = new DateTime();
+        float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
+        int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
+        Log.d("Aktuelles Datum", currentDate.toString());
+
         city.setText(active_trip.getCity());
+        Log.d("Reisedatum", active_trip.getStartdate().toString());
+        Log.d("Zeit bis Reise", String.valueOf(days));
+        timeToJourney.setText("in " + days + " Tagen");
         temperature.setText("14°");
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
@@ -98,6 +111,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
             getImageURLTask.execute(active_trip.getCity());
+            Log.d("500px loads new image",active_trip.getCity());
         } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
         }
@@ -201,5 +215,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public void weatherProcessFinish(Weather output) {
+
+    }
+
+    @Override
+    public void weatherProcessFailed() {
+
     }
 }
