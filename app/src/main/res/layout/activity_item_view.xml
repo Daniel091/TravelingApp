@@ -19,6 +19,16 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_new" />
 
+
+    <ExpandableListView
+        android:id="@+id/item_list_view"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:stackFromBottom="true"
+        android:layout_below="@id/button_add_item"/>
+
+    <!-->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,5 +37,6 @@
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:layout_below="@id/button_add_item"/>
+    <-->
 
 </LinearLayout>

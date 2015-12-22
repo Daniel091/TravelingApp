@@ -15,12 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
@@ -36,9 +40,19 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     // Log Tag
     public static final String LOG_TAG = ItemViewFragment.class.getSimpleName();
 
-    // Instanz vom ItemDBAdapter
+    // Instanzen
     ItemDBAdapter itemDBAdapter;
     TripDBAdapter tripDBAdapter;
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+
+    // Listenelemente
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    List<String> kleidung;
+    List<String> hygiene;
+    List<String> equipment;
+    List<String> dokumente;
 
     // Holt Items aus der DB
     List<Dataset> itemList;
@@ -106,14 +120,54 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
      * @param items
      */
     private void showAllListEntries (List<Dataset> items) {
-       // List<Dataset> dataSetList = dataSource.getAllDatasets();
 
         ArrayAdapter<Dataset> dataSetArrayAdapter = new ArrayAdapter<> (getActivity(),
                 R.layout.list_item,
                 items);
 
-        ListView dataSetsListView = (ListView) getView().findViewById(R.id.item_list_view);
-        dataSetsListView.setAdapter(dataSetArrayAdapter);
+        expListView = (ExpandableListView) getView().findViewById(R.id.item_list_view);
+
+        // vorbereiten der Liste ----------------------------------
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        listDataHeader.add("Kleidung");
+        listDataHeader.add("Hygiene");
+        listDataHeader.add("Equipment");
+        listDataHeader.add("Dokumente");
+
+        // Unterlisten-Kategorien
+        kleidung = new LinkedList<String>();
+        hygiene = new LinkedList<String>();
+        equipment = new LinkedList<String>();
+        dokumente = new LinkedList<String>();
+
+        // selektiert die items aus dem Array und ordnet sie der passenden Unterliste ein
+        for(int i = 0; i < dataSetArrayAdapter.getCount(); i++){
+            Dataset dataSet = dataSetArrayAdapter.getItem(i);
+            String str = (dataSet.toString());
+            if (dataSet.getKategorie() == 0) {
+                kleidung.add(str);
+            } else if (dataSet.getKategorie() == 1) {
+                hygiene.add(str);
+            } else if (dataSet.getKategorie() == 2) {
+                equipment.add(str);
+            } else if (dataSet.getKategorie() == 3) {
+                dokumente.add(str);
+            }
+        }
+
+        listDataChild.put(listDataHeader.get(0), kleidung);
+        listDataChild.put(listDataHeader.get(1), hygiene);
+        listDataChild.put(listDataHeader.get(2), equipment);
+        listDataChild.put(listDataHeader.get(3), dokumente);
+        // ---------------------------------------------------
+
+        // setting list adapter
+        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+
+        expListView.setAdapter(listAdapter);
+        //expListView.setAdapter(dataSetArrayAdapter);
     }
 
     // Setzt den "+" Button in der Liste aktiv, also zeigt die Popups an
@@ -188,6 +242,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 } else {
                     Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                     itemList.add(customDataSet);
+
                     showAllListEntries(itemList);
 
                     popupWindow.dismiss();
