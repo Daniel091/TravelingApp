@@ -1,7 +1,10 @@
 package prak.travelerapp.WeatherAPI.model;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
+import android.util.Log;
+
+import org.joda.time.DateTime;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +25,24 @@ public class Weather{
 
         }
         return false;
+    }
+
+    public String getTemperature(DateTime dayRequest){
+
+        String temperature = "--";
+
+        Log.d("Weather API. Datum", dayRequest.toDateMidnight().toString());
+
+        for (Day day: days) {
+            if (day.getDate().toDateMidnight().equals(dayRequest.toDateMidnight())) {
+                Log.d("Weather API. Temp", String.valueOf(day.temperature.getDayTemp()));
+                Log.d("Weather API. Wetter", String.valueOf(day.condition.getMain()));
+                float temp = Math.round(day.temperature.getDayTemp());
+                temperature = new DecimalFormat("#").format(temp);
+            }
+        }
+
+        return temperature;
     }
 
 }

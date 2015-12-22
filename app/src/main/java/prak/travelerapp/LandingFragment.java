@@ -30,6 +30,7 @@ import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
+import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class LandingFragment extends Fragment implements AsyncPictureResponse, AsyncWeatherResponse {
@@ -99,12 +100,16 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
         int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
         Log.d("Aktuelles Datum", currentDate.toString());
+        Log.d("Reisedatum", active_trip.getStartdate().toString());
+        Log.d("Tage bis Reise", String.valueOf(days));
+
+        // Get Weather on departing date
+        WeatherTask weathertask = new WeatherTask();
+        weathertask.delegate = LandingFragment.this;
+        weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
 
         city.setText(active_trip.getCity());
-        Log.d("Reisedatum", active_trip.getStartdate().toString());
-        Log.d("Zeit bis Reise", String.valueOf(days));
         timeToJourney.setText("in " + days + " Tagen");
-        temperature.setText("14°");
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
         if (!loadImageFromStorage(path_fromPref)) {
@@ -219,7 +224,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void weatherProcessFinish(Weather output) {
-
+        temperature.setText(output.getTemperature(active_trip.getStartdate()) + "°");
     }
 
     @Override

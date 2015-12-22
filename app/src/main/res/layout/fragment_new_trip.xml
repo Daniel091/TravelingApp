@@ -67,7 +67,7 @@
                 android:singleLine="true"
                 android:inputType="text"
                 android:background="#00000000"
-                android:hint="San Francisco"
+                android:hint="z.B. San Francisco"
                 android:textColor="@color/black">
             </prak.travelerapp.Autocompleter.CityAutoCompleteView>
 
