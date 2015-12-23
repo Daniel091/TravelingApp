@@ -35,11 +35,9 @@
         <item>TRAVeL</item>
         <item>Start</item>
         <item>Aktuelle Packliste</item>
-        <item>Neue Reise</item>
         <item>Vergangene Reisen</item>
         <item>Einstellungen</item>
         <item>Places Test</item>
-        <item>500px Test</item>
     </string-array>
 
         <string-array name="category_array">

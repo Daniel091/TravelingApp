@@ -47,7 +47,6 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
     private LinearLayout secondTripType;
-    private ImageButton button_hamburger;
     private Spinner spinner_category,spinner_category2;
     private CityAutoCompleteView autocompleter;
     private ArrayAdapter<String> autocompleteAdapter;
@@ -66,7 +65,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_trip, container, false);
-
         prepareViews(view);
         setOnClicksListeners();
 
@@ -154,13 +152,11 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
         editText_arrival = (TextView) view.findViewById(R.id.edittext_arrival);
         editText_departure = (TextView) view.findViewById(R.id.edittext_departure);
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
     }
 
     private void setOnClicksListeners() {
-        button_hamburger.setOnClickListener(this);
         editText_arrival.setOnClickListener(this);
         editText_departure.setOnClickListener(this);
         button_submit.setOnClickListener(this);
@@ -243,7 +239,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                         tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
 
                         Fragment ItemViewFragment = new ItemViewFragment();
-                        ((MainActivity) getActivity()).setUpFragement(ItemViewFragment);
+                        ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
 
                     }
 
@@ -260,14 +256,14 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
+
+        // When theres an active trip the menue behaves different
+        ((MainActivity) getActivity()).checkActiveTrip();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_hamburger:
-                ((MainActivity)getActivity()).openDrawer();
-                break;
             case R.id.edittext_arrival:
                 arrivalDatePickerDialog.show();
                 break;
