@@ -2,14 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:text="Test"
         android:id="@+id/lblListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
+        android:textSize="17sp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:layout_alignParentLeft="true"
@@ -19,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
         android:id="@+id/checkBox"
         android:checked="false" />
-
 
 </RelativeLayout>
