@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
 
 import org.joda.time.DateTime;
+
+import java.util.Date;
 
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
@@ -29,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView listView;
     private String[] menue_links;
     private TripDBAdapter tripDBAdapter;
+    private Trip active_trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +53,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        // Start with Home Screen TODO Start with Landing Fragment if theres a active trip
-        Fragment fragment = new StartFragment();
-        setUpFragement(fragment);
-
         //testTripDB();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active_trip = checkActiveTrip();
+
+        if (active_trip != null) {
+            Fragment fragment = new LandingFragment();
+            setUpFragment(fragment);
+        } else {
+            Fragment fragment = new StartFragment();
+            setUpFragment(fragment);
+        }
+    }
+
+    public Trip checkActiveTrip(){
+        TripDBAdapter tripDBAdapter = new TripDBAdapter(this);
+        tripDBAdapter.open();
+        active_trip = tripDBAdapter.getActiveTrip();
+
+
+        if (active_trip != null) {
+            boolean tripIsOver = active_trip.getEnddate().isBeforeNow();
+            if(tripIsOver){
+                Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
+                tripDBAdapter.removeActiveFromTrip();
+                return null;
+            }
+        }
+        return active_trip;
     }
 
     private void prepareViews() {
@@ -74,28 +109,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Fragment fragment;
         switch(position) {
             case 1:
-                fragment = new StartFragment();
-                setUpFragement(fragment);
+                if (active_trip != null) {
+                    fragment = new LandingFragment();
+                    setUpFragment(fragment);
+                } else {
+                    fragment = new StartFragment();
+                    setUpFragment(fragment);
+                }
                 break;
             case 2:
-                fragment = new ItemViewFragment();
-                setUpFragement(fragment);
+                if (active_trip != null) {
+                    fragment = new ItemViewFragment();
+                    setUpFragment(fragment);
+                } else {
+                    Toast.makeText(this, "Du besitzt keine Aktive Reise", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case 3:
-                fragment = new NewTripFragment();
-                setUpFragement(fragment);
-                break;
-            case 4:
                 fragment = new TripHistoryFragment();
-                setUpFragement(fragment);
+                setUpFragment(fragment);
                 break;
-            case 6:
+            case 5:
                 fragment = new PlacePickerFragment();
-                setUpFragement(fragment);
-                break;
-            case 7:
-                fragment = new LandingFragment();
-                setUpFragement(fragment);
+                setUpFragment(fragment);
                 break;
         }
 
@@ -113,10 +149,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    public void setUpFragement(Fragment fragment) {
+    public void setUpFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
 
-        boolean fragmentPopped = fragmentManager.popBackStackImmediate (fragment.getClass().getName(), 0);
+        String frag_name = fragment.getClass().getSimpleName();
+        if (frag_name.equals("NewTripFragment")){
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate(fragment.getClass().getName(), 0);
         Log.d("Main",fragment.getClass().getName() + " is in BackStack " + fragmentPopped);
         if (!fragmentPopped) {
             Log.d("Main","New Add to Back Stack");
@@ -138,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
 
-        tripDBAdapter.insertTrip(items, "Moskau", "RU" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, false);
+        tripDBAdapter.insertTrip(items, "Berlin", "DE" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, false);
         Trip activeTrip = tripDBAdapter.getActiveTrip();
         System.out.println(activeTrip.getCity());
     }

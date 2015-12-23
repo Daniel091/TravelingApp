@@ -47,7 +47,6 @@ import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
     private LinearLayout secondTripType;
-    private ImageButton button_hamburger;
     private Spinner spinner_category,spinner_category2;
     private CityAutoCompleteView autocompleter;
     private ArrayAdapter<String> autocompleteAdapter;
@@ -66,30 +65,25 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_trip, container, false);
-
         prepareViews(view);
-        setOnClicksListeners();
+        setUpArrivalDatePicker();
+        setUpDepartureDatePicker();
 
-        try{
-            // instantiate database handler
-            cityDB = new CityDBAdapter(getActivity());
-            cityDB.createDatabase();
-            cityDB.open();
+        return view;
+    }
 
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void prepareViews(View view) {
 
-        // add the listener so it will tries to suggest while the user types
+        autocompleter = (CityAutoCompleteView) view.findViewById(R.id.autocomplete_destination);
         autocompleter.addTextChangedListener(this);
-        // set our adapter
         autocompleteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, items);
         autocompleter.setAdapter(autocompleteAdapter);
 
+        editText_arrival = (TextView) view.findViewById(R.id.edittext_arrival);
+        editText_arrival.setOnClickListener(this);
+        editText_departure = (TextView) view.findViewById(R.id.edittext_departure);
+        editText_departure.setOnClickListener(this);
         dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
-
 
         //Set default values of eddittext field for arrival and departure to currentdate and currentdate+5
         Calendar date = Calendar.getInstance();
@@ -98,9 +92,10 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         date.add(Calendar.DATE, 5);
         editText_departure.setText(dateFormatter.format(date.getTime()));
 
-        setUpArrivalDatePicker();
-        setUpDepartureDatePicker();
+        button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
+        button_submit.setOnClickListener(this);
 
+        spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
         //Convert Kategorie enum to String values but skip NoType
         traveltypeStrings = new String[TravelType.values().length];
         for(int i = 0; i < TravelType.values().length; i++){
@@ -113,23 +108,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         spinner_category.setAdapter(adapter);
         spinner_category.setOnItemSelectedListener(this);
 
-        return view;
     }
 
-    private void setUpDepartureDatePicker() {
-        Calendar newCalendar = Calendar.getInstance();
-        newCalendar.add(Calendar.DATE,5);
-        departureDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                editText_departure.setText(dateFormatter.format(newDate.getTime()));
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
-    }
 
     private void setUpArrivalDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
@@ -139,36 +119,46 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 //SET to 0 first -> workaround to be able to update mindate
-                //departureDatePickerDialog.getDatePicker().setMinDate(0);
-                //departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
+                departureDatePickerDialog.getDatePicker().setMinDate(0);
+                departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
                 editText_arrival.setText(dateFormatter.format(newDate.getTime()));
                 System.out.println(newDate.getTimeInMillis());
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
     }
 
-    private void prepareViews(View view) {
-        // autocompletetextview is in activity_main.xml
-        autocompleter = (CityAutoCompleteView) view.findViewById(R.id.autocomplete_destination);
+    private void setUpDepartureDatePicker() {
+        Calendar newCalendar = Calendar.getInstance();
+        newCalendar.add(Calendar.DATE, 5);
+        departureDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
-        editText_arrival = (TextView) view.findViewById(R.id.edittext_arrival);
-        editText_departure = (TextView) view.findViewById(R.id.edittext_departure);
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
-        button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
-        spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
-    }
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                editText_departure.setText(dateFormatter.format(newDate.getTime()));
+            }
 
-    private void setOnClicksListeners() {
-        button_hamburger.setOnClickListener(this);
-        editText_arrival.setOnClickListener(this);
-        editText_departure.setOnClickListener(this);
-        button_submit.setOnClickListener(this);
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
     }
 
     @Override
     public void onStart() {
+
         super.onStart();
+
+        try{
+            // instantiate database handler
+            cityDB = new CityDBAdapter(getActivity());
+            cityDB.createDatabase();
+            cityDB.open();
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void submitTrip(){
@@ -243,7 +233,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                         tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
 
                         Fragment ItemViewFragment = new ItemViewFragment();
-                        ((MainActivity) getActivity()).setUpFragement(ItemViewFragment);
+                        ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
 
                     }
 
@@ -260,14 +250,14 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
+
+        // When theres an active trip the menue behaves different
+        ((MainActivity) getActivity()).checkActiveTrip();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_hamburger:
-                ((MainActivity)getActivity()).openDrawer();
-                break;
             case R.id.edittext_arrival:
                 arrivalDatePickerDialog.show();
                 break;

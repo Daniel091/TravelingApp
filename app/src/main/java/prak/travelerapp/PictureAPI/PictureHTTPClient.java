@@ -26,7 +26,7 @@ public class PictureHTTPClient {
     private static String TAG_PARAM = "&tag=";
     private static String SIZE_PARAM = "&image_size=600";
     private static String NUMBER_PARAM = "&rpp=2";
-    private static String CATEGORY_PARAM = "";//"&only=Travel";
+    private static String CATEGORY_PARAM = "&only=Travel";
 
     private static String API_KEY = "&consumer_key=qVFJEFeFoAIoW3yjCb697qJxuYvEbpl5H68lmSQ4";
 

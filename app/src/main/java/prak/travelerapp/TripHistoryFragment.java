@@ -17,13 +17,23 @@ public class TripHistoryFragment extends Fragment {
 
 
     TripDBAdapter tripDBAdapter;
+    private ListView listview;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_history, container, false);
 
-        final ListView listview = (ListView) view.findViewById(R.id.historyList);
+        listview = (ListView) view.findViewById(R.id.historyList);
+
+        return view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
         //get all old Trips
         tripDBAdapter = new TripDBAdapter(getActivity());
@@ -33,16 +43,6 @@ public class TripHistoryFragment extends Fragment {
 
         HistoryListAdapter adapter = new HistoryListAdapter(getActivity(), R.layout.history_list_item,tripArray);
         listview.setAdapter(adapter);
-
-
-
-        return view;
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
 }
