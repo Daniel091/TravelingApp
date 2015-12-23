@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/itemlist_topView"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/airport">
+
+                <include layout="@layout/button_hamburger"/>
+
+                <TextView
+                    android:id="@+id/textview_tripCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="San Francisco"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="60dp"
+                    android:layout_marginLeft="28dp"
+                    android:textSize="30dp"/>
+
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/item_list_view"
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:src="@mipmap/ic_new"
+        app:layout_anchor="@id/itemlist_topView"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

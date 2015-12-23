@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -85,7 +84,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         this.container = container;
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_item_view, container, false);
+        return inflater.inflate(R.layout.fragment_item_view, container, false);
     }
 
     @Override
