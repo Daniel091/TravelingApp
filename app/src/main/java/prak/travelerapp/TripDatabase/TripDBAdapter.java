@@ -97,6 +97,11 @@ public class TripDBAdapter {
         tripDB.insert(TripDBHelper.TABLE_NAME, null, contentValue);
     }
 
+    public void removeActiveFromTrip(){
+        tripDB.execSQL("UPDATE " + TripDBHelper.TABLE_NAME + " SET " + TripDBHelper.COLUMN_ACTIVE + "=" + 0);
+    }
+
+
     public Trip getActiveTrip() {
         Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, null);
         if (cursor != null) {
