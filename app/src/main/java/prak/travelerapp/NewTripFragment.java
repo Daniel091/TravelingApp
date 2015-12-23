@@ -2,6 +2,7 @@ package prak.travelerapp;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -232,9 +232,16 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                         tripDBAdapter.open();
                         tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
 
+                         /* Clear Backstack, so User cant go back after submission, reason to do this here
+                        otherwise fragment is no longer attached to activity, when weather async task finishs*/
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
                         Fragment ItemViewFragment = new ItemViewFragment();
                         ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
 
+                        // When theres an active trip the menue behaves different
+                        ((MainActivity) getActivity()).checkActiveTrip();
                     }
 
                     @Override
@@ -250,9 +257,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
-
-        // When theres an active trip the menue behaves different
-        ((MainActivity) getActivity()).checkActiveTrip();
     }
 
     @Override

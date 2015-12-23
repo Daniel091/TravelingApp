@@ -99,9 +99,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         DateTime currentDate = new DateTime();
         float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
         int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
-        Log.d("Aktuelles Datum", currentDate.toString());
-        Log.d("Reisedatum", active_trip.getStartdate().toString());
-        Log.d("Tage bis Reise", String.valueOf(days));
 
         // Get Weather on departing date
         WeatherTask weathertask = new WeatherTask();
@@ -177,7 +174,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         // RECREATE THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
-        Log.d("Landing Frag",resizedBitmap.getHeight() + "x" + resizedBitmap.getWidth());
         return resizedBitmap;
     }
 

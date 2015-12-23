@@ -7,19 +7,13 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.Frame;
-
 import org.joda.time.DateTime;
-
-import java.util.Date;
 
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
@@ -159,15 +153,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
 
-        boolean fragmentPopped = fragmentManager.popBackStackImmediate(fragment.getClass().getName(), 0);
-        Log.d("Main",fragment.getClass().getName() + " is in BackStack " + fragmentPopped);
-        if (!fragmentPopped) {
-            Log.d("Main","New Add to Back Stack");
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        boolean isFragmentInStack = isFragmentInBackstack(fragmentManager,fragment.getClass().getSimpleName());
+
+        if (isFragmentInStack){
+            Log.d("Main", "Load Fragment with Tag " + fragment.getClass().getSimpleName() + " from Backstack");
+            fragmentManager.popBackStackImmediate(fragment.getClass().getSimpleName(), 0);
+        } else {
+            Log.d("Main", "Load Fragment" + fragment.getClass().getSimpleName() + " not from Backstack" );
             fragmentTransaction.replace(R.id.mainContent, fragment);
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
             fragmentTransaction.commit();
         }
+
+    }
+
+    public static boolean isFragmentInBackstack(final FragmentManager fragmentManager, final String fragmentTagName) {
+        for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++) {
+            if (fragmentTagName.equals(fragmentManager.getBackStackEntryAt(entry).getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void testTripDB(){
