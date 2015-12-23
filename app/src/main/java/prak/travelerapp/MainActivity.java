@@ -19,6 +19,8 @@ import com.google.android.gms.vision.Frame;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
@@ -72,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         TripDBAdapter tripDBAdapter = new TripDBAdapter(this);
         tripDBAdapter.open();
         active_trip = tripDBAdapter.getActiveTrip();
+
+        if (active_trip != null) {
+            active_trip.getEnddate().isBeforeNow();
+            Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
+            tripDBAdapter.removeActiveFromTrip();
+            return null;
+        }
         return active_trip;
     }
 
