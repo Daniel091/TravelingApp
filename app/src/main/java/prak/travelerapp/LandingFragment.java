@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private TextView timeToJourney;
     private SharedPreferences sharedPref;
     private Trip active_trip;
+    private Button cancel_button;
 
     private int screenheight;
     private int screenwidth;
@@ -72,6 +74,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         timeToJourney = (TextView) view.findViewById(R.id.city_subline);
         temperature = (TextView) view.findViewById(R.id.temperature);
         imageView = (ImageView) view.findViewById(R.id.imageView);
+        cancel_button = (Button) view.findViewById(R.id.cancel_button);
     }
 
     private void prepareListeners() {
@@ -79,6 +82,19 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openDrawer();
+            }
+        });
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LandingFrag", "Pressed Cancel trip");
+                TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
+                tripDBAdapter.open();
+                tripDBAdapter.removeActiveFromTrip();
+
+                StartFragment startFragment = new StartFragment();
+                ((MainActivity) getActivity()).checkActiveTrip();
+                ((MainActivity) getActivity()).setUpFragment(startFragment);
             }
         });
     }

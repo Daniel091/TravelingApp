@@ -30,7 +30,7 @@
     <string name="saved_gender">gender</string>
     <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
     <string name="category2_spinner_placeholder">Optional</string>
-
+    <string name="cancel">Reise abbrechen</string>
     <string-array name="menue_links">
         <item>TRAVeL</item>
         <item>Start</item>

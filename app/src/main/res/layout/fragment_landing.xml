@@ -81,5 +81,16 @@
                 android:gravity="right"/>
         </LinearLayout>
 
+        <Button
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_button"
+            android:textColor="#FFF"
+            style="?android:attr/borderlessButtonStyle" />
+
     </RelativeLayout>
 </RelativeLayout>
