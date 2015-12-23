@@ -98,7 +98,7 @@ public class TripDBAdapter {
     }
 
     public Trip getActiveTrip() {
-        Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, null);
+        Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, TripDBHelper.COLUMN_ID + " DESC");
         if (cursor != null) {
             // move cursor to first row
             if (cursor.moveToFirst()) {

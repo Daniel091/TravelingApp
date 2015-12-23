@@ -54,11 +54,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
         prepareViews(view);
-        active_trip = getActiveTrip();
         prepareListeners();
-
-        sharedPref = getActivity().getBaseContext().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         return view;
     }
@@ -90,6 +86,10 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public void onStart() {
         super.onStart();
+        active_trip = getActiveTrip();
+        sharedPref = getActivity().getBaseContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screenheight = displaymetrics.heightPixels;
@@ -112,15 +112,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         timeToJourney.setText("in " + days + " Tagen");
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
-        if (!loadImageFromStorage(path_fromPref)) {
+      //  if (!loadImageFromStorage(path_fromPref)) {
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
 
             getImageURLTask.execute(active_trip.getCity());
             Log.d("500px loads new image ",active_trip.getCity());
-        } else {
+      /*  } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
-        }
+        }*/
     }
 
     @Override
