@@ -23,8 +23,6 @@
             android:layout_height="match_parent"
             android:background="@color/color_overlay" >
 
-        <include layout="@layout/button_hamburger"/>
-
         <TextView
             android:id="@+id/textview_newTrip"
             android:layout_width="match_parent"

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_overlay" >
 
-        <include layout="@layout/button_hamburger"/>
+       <include layout="@layout/button_hamburger"/>
 
         <TextView
             android:id="@+id/textview_opener1"
