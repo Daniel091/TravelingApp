@@ -73,8 +73,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     }
 
     private void prepareViews(View view) {
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
-        button_hamburger.setOnClickListener(this);
 
         autocompleter = (CityAutoCompleteView) view.findViewById(R.id.autocomplete_destination);
         autocompleter.addTextChangedListener(this);

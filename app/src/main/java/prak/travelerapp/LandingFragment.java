@@ -140,7 +140,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
-        final Bitmap resizedImage = getResizedBitmap(image, 480, 480);
+        final Bitmap resizedImage = getResizedBitmap(image, 800, 800);
             try {
                 imageView.setImageBitmap(resizedImage);
                 saveToInternalStorage(resizedImage);

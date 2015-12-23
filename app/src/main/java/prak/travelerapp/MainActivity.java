@@ -75,11 +75,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tripDBAdapter.open();
         active_trip = tripDBAdapter.getActiveTrip();
 
+
         if (active_trip != null) {
-            active_trip.getEnddate().isBeforeNow();
-            Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
-            tripDBAdapter.removeActiveFromTrip();
-            return null;
+            boolean tripIsOver = active_trip.getEnddate().isBeforeNow();
+            if(tripIsOver){
+                Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
+                tripDBAdapter.removeActiveFromTrip();
+                return null;
+            }
         }
         return active_trip;
     }
