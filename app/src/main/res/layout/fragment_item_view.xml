@@ -18,6 +18,13 @@
             android:layout_height="200dp"
             android:background="@drawable/airport">
 
+        <RelativeLayout
+            android:id="@+id/transparentOverlay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_overlay" >
+
                 <include layout="@layout/button_hamburger"/>
 
                 <TextView
@@ -31,6 +38,7 @@
                     android:layout_marginLeft="28dp"
                     android:textSize="30dp"/>
 
+        </RelativeLayout>
         </RelativeLayout>
 
         <ExpandableListView

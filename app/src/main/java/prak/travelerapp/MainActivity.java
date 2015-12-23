@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -47,14 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        //testTripDB();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         active_trip = checkActiveTrip();
-
         if (active_trip != null) {
             Fragment fragment = new LandingFragment();
             setUpFragment(fragment);
@@ -62,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Fragment fragment = new StartFragment();
             setUpFragment(fragment);
         }
+        //testTripDB();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     public Trip checkActiveTrip(){

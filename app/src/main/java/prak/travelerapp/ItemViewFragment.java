@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -70,6 +71,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private Spinner spinner;
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente"};
     private Button finalAddButton;
+    private ImageButton button_hamburger;
 
     // Werte für das vom User hinzugefügte Item
     private String customItem; // Name des manuellen Icons
@@ -78,19 +80,34 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         this.inflater = inflater;
-
         this.container = container;
+        View view = inflater.inflate(R.layout.fragment_item_view, container, false);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item_view, container, false);
+        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+        button_hamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).openDrawer();
+            }
+        });
+
+        FloatingActionButton buttonAddItem = (FloatingActionButton) view.findViewById(R.id.button_add_item);
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                showDummyPopup(v);
+                showPopup(v);
+            }
+        });
+
+        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        activateAddButton();
     }
 
     @Override
@@ -167,22 +184,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         expListView.setAdapter(listAdapter);
         //expListView.setAdapter(dataSetArrayAdapter);
-    }
-
-    // Setzt den "+" Button in der Liste aktiv, also zeigt die Popups an
-    private void activateAddButton() {
-        FloatingActionButton buttonAddItem = (FloatingActionButton) getView().findViewById(R.id.button_add_item);
-
-        buttonAddItem.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-
-                showDummyPopup(v);
-                showPopup(v);
-            }
-        });
-
     }
 
     /**

@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lblListItem"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="17dip"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="s"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:text="Test"
+        android:id="@+id/lblListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dip"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="left"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/checkBox" />
+
+
+</LinearLayout>
