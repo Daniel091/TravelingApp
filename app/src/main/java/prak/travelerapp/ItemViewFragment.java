@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -72,6 +73,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente"};
     private Button finalAddButton;
     private ImageButton button_hamburger;
+    private TextView tripCity;
+    private Trip activeTrip;
 
     // Werte für das vom User hinzugefügte Item
     private String customItem; // Name des manuellen Icons
@@ -101,6 +104,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 showPopup(v);
             }
         });
+        tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
+        activeTrip = ((MainActivity) getActivity()).getActive_trip();
+        tripCity.setText(activeTrip.getCity());
 
         return view;
     }
@@ -114,9 +120,11 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     public void onResume() {
         super.onResume();
 
-        tripDBAdapter = new TripDBAdapter(getActivity());
-        tripDBAdapter.open();
-        Trip activeTrip = tripDBAdapter.getActiveTrip();
+        if (activeTrip == null) {
+            tripDBAdapter = new TripDBAdapter(getActivity());
+            tripDBAdapter.open();
+            activeTrip = tripDBAdapter.getActiveTrip();
+        }
 
         itemDBAdapter = new ItemDBAdapter(getActivity());
         itemDBAdapter.createDatabase();
@@ -143,7 +151,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         expListView = (ExpandableListView) getView().findViewById(R.id.item_list_view);
 
-        // vorbereiten der Liste ----------------------------------
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
@@ -177,13 +184,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listDataChild.put(listDataHeader.get(1), hygiene);
         listDataChild.put(listDataHeader.get(2), equipment);
         listDataChild.put(listDataHeader.get(3), dokumente);
-        // ---------------------------------------------------
 
-        // setting list adapter
         listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
 
         expListView.setAdapter(listAdapter);
-        //expListView.setAdapter(dataSetArrayAdapter);
     }
 
     /**
@@ -203,7 +207,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
     }
 
-    // Popup zum eingeben eines neuen Items
     public void showPopup(final View anchorView) {
 
         final View popupView = inflater.inflate(R.layout.add_item_popup, container, false);
