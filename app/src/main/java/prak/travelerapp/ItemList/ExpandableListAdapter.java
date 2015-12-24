@@ -41,26 +41,29 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition,
+    public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = getChild(groupPosition, childPosition).getName();
+        final ListItem child = getChild(groupPosition, childPosition);
+        final String childText = child.getName();
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
-            CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkBox);
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                                             boolean isChecked) {
-                    System.out.println("Checked" + getChild(groupPosition, childPosition).getId());
-
-                }
-            });
         }
+
+        CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkBox);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                System.out.println("Checked " + child.getId() + " " + child.getName());
+
+            }
+        });
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
