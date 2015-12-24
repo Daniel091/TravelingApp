@@ -21,6 +21,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<ListItem>> _listDataChild;
+    public ItemCheckedListener listener;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -60,13 +61,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
 
-                System.out.println("Checked " + child.getId() + " " + child.getName());
 
+                child.setChecked(isChecked);
+                listener.itemClicked(child);
             }
         });
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
         return convertView;

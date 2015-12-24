@@ -30,6 +30,7 @@ import java.util.List;
 import prak.travelerapp.ItemDatabase.Dataset;
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.ItemList.ExpandableListAdapter;
+import prak.travelerapp.ItemList.ItemCheckedListener;
 import prak.travelerapp.ItemList.ListItem;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
@@ -37,7 +38,7 @@ import prak.travelerapp.TripDatabase.model.Trip;
 /**
  * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
  */
-public class ItemViewFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class ItemViewFragment extends Fragment implements AdapterView.OnItemSelectedListener,ItemCheckedListener{
 
     // Log Tag
     public static final String LOG_TAG = ItemViewFragment.class.getSimpleName();
@@ -107,11 +108,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onStart() {
         super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         if (activeTrip == null) {
             tripDBAdapter = new TripDBAdapter(getActivity());
@@ -124,6 +120,11 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         itemDBAdapter.open();
         itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
         showAllListEntries(itemList);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -197,9 +198,17 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         // setting list adapter
         listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+        listAdapter.listener = this;
 
         expListView.setAdapter(listAdapter);
         //expListView.setAdapter(dataSetArrayAdapter);
+    }
+
+    @Override
+    public void itemClicked(ListItem item) {
+
+        System.out.println(item.getId() + " " + item.getName() + " " + item.isChecked());
+
     }
 
     /**
