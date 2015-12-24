@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
         prepareViews();
-        menueApdapter = new MenueApdapter(this);
+
+        active_trip = checkActiveTrip();
+        menueApdapter = new MenueApdapter(this,active_trip.getTripItems());
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        active_trip = checkActiveTrip();
         if (active_trip != null) {
             Fragment fragment = new LandingFragment();
             setUpFragment(fragment);
@@ -197,6 +198,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public Trip getActive_trip() {
         return active_trip;
+    }
+    public MenueApdapter getMenueApdapter() {
+        return menueApdapter;
     }
 
 }
