@@ -20,11 +20,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
@@ -66,6 +66,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente"};
     private Button finalAddButton;
     private ImageButton button_hamburger;
+    private TextView tripCity;
+    private Trip activeTrip;
 
     // Werte für das vom User hinzugefügte Item
     private String customItem; // Name des manuellen Icons
@@ -95,6 +97,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 showPopup(v);
             }
         });
+        tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
+        activeTrip = ((MainActivity) getActivity()).getActive_trip();
+        tripCity.setText(activeTrip.getCity());
 
         return view;
     }
@@ -108,9 +113,11 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     public void onResume() {
         super.onResume();
 
-        tripDBAdapter = new TripDBAdapter(getActivity());
-        tripDBAdapter.open();
-        Trip activeTrip = tripDBAdapter.getActiveTrip();
+        if (activeTrip == null) {
+            tripDBAdapter = new TripDBAdapter(getActivity());
+            tripDBAdapter.open();
+            activeTrip = tripDBAdapter.getActiveTrip();
+        }
 
         itemDBAdapter = new ItemDBAdapter(getActivity());
         itemDBAdapter.createDatabase();

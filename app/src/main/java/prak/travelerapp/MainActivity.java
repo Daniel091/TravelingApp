@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         boolean isFragmentInStack = isFragmentInBackstack(fragmentManager,fragment.getClass().getSimpleName());
 
         if (isFragmentInStack){
-            Log.d("Main", "Load Fragment with Tag " + fragment.getClass().getSimpleName() + " from Backstack");
+            //Log.d("Main", "Load Fragment with Tag " + fragment.getClass().getSimpleName() + " from Backstack");
             fragmentManager.popBackStackImmediate(fragment.getClass().getSimpleName(), 0);
         } else {
-            Log.d("Main", "Load Fragment" + fragment.getClass().getSimpleName() + " not from Backstack" );
+            //Log.d("Main", "Load Fragment" + fragment.getClass().getSimpleName() + " not from Backstack" );
             fragmentTransaction.replace(R.id.mainContent, fragment);
             fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
             fragmentTransaction.commit();
@@ -190,4 +190,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Trip activeTrip = tripDBAdapter.getActiveTrip();
         System.out.println(activeTrip.getCity());
     }
+
+    public Trip getActive_trip() {
+        return active_trip;
+    }
+
 }
