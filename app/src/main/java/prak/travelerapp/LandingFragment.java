@@ -30,6 +30,7 @@ import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.TripDatabase.model.Tupel;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
@@ -39,8 +40,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageButton button_hamburger;
     private ImageView imageView;    // ImageView
     private TextView city;
-    private TextView temperature;
-    private TextView timeToJourney;
+    private TextView temperature,timeToJourney,missingThings;
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button;
@@ -75,6 +75,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         temperature = (TextView) view.findViewById(R.id.temperature);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
+        missingThings = (TextView) view.findViewById(R.id.missingThings);
     }
 
     private void prepareListeners() {
@@ -122,7 +123,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
 
         city.setText(active_trip.getCity());
-        timeToJourney.setText("in " + days + " Tagen");
+        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip,String.valueOf(days)));
+
+        int number = 0;
+        for(Tupel t : active_trip.getTripItems().getItems()){
+            if (t.getY() == 0){
+                number++;
+            }
+        }
+        missingThings.setText(getActivity().getResources().getString(R.string.missingThings,String.valueOf(number)));
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
       //  if (!loadImageFromStorage(path_fromPref)) {
