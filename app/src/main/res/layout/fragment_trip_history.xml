@@ -9,8 +9,13 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/airport">
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/airport"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:id="@+id/transparentOverlay"

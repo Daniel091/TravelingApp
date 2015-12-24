@@ -15,15 +15,20 @@
             android:id="@+id/itemlist_topView"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/airport">
+            android:layout_height="200dp">
 
-        <RelativeLayout
-            android:id="@+id/transparentOverlay"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_overlay" >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/airport"
+                android:scaleType="centerCrop"/>
+
+            <RelativeLayout
+                android:id="@+id/transparentOverlay"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_overlay" >
 
                 <include layout="@layout/button_hamburger"/>
 
