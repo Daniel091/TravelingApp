@@ -162,7 +162,7 @@ public class ItemDBAdapter {
         int idFestival = cursor.getColumnIndex(ItemDBHelper.COLUMN_FESTIVAL);
         int idKategorie = cursor.getColumnIndex(ItemDBHelper.COLUMN_KATEGORIE);
 
-        long id = cursor.getLong(idIndex);
+        int id = cursor.getInt(idIndex);
         String name = cursor.getString(idName);
         int geschlecht = cursor.getInt(idSex);
         int trocken = cursor.getInt(idTrocken);

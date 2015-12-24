@@ -7,7 +7,7 @@ package prak.travelerapp.ItemDatabase;
  */
 public class Dataset {
 
-    private long itemID;
+    private int itemID;
     private String itemName;
     private int geschlecht; // 0 für "Neutral" , 1 für "Mann", 2 für "Frau"
     private int trocken; // 0 für "Nein", 1 für "Ja"
@@ -21,7 +21,7 @@ public class Dataset {
     private int festival;  // 0 für "Nein", 1 für "Ja"
     private int kategorie; // 0 für "Kleidung", 1 für "Hygiene", 2 für "Equipment", 3 für "Dokumente"
 
-    public Dataset(long itemID, String itemName, int geschlecht, int trocken,
+    public Dataset(int itemID, String itemName, int geschlecht, int trocken,
                    int strandurlaub, int staedtetrip, int skifahren, int wandern,
                    int geschaeftsreise, int partyurlaub, int camping, int festival, int kategorie) {
 
@@ -41,11 +41,11 @@ public class Dataset {
 
     }
 
-    public long getItemID() {
+    public int getItemID() {
         return itemID;
     }
 
-    public void setItemID(long itemID) {
+    public void setItemID(int itemID) {
         this.itemID = itemID;
     }
 
