@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new TripHistoryFragment();
                 setUpFragment(fragment);
                 break;
+            case 4:
+                fragment = new SettingsFragment();
+                setUpFragment(fragment);
+                break;
             case 5:
                 fragment = new PlacePickerFragment();
                 setUpFragment(fragment);

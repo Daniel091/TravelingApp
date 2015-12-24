@@ -23,6 +23,7 @@
 
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
+    <string name="settings">Einstellungen</string>
     <string name="city_default">San Francisco</string>
     <string name="reiseziel">Reiseziel</string>
     <string name="preference_file_key">prak.travelerapp.usergender</string>
