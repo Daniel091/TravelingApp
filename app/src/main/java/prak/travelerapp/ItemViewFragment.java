@@ -29,6 +29,8 @@ import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
+import prak.travelerapp.ItemList.ExpandableListAdapter;
+import prak.travelerapp.ItemList.ListItem;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 
@@ -45,14 +47,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     TripDBAdapter tripDBAdapter;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-
-    // Listenelemente
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
-    List<String> kleidung;
-    List<String> hygiene;
-    List<String> equipment;
-    List<String> dokumente;
 
     // Holt Items aus der DB
     List<Dataset> itemList;
@@ -88,7 +82,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         button_hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).openDrawer();
+                ((MainActivity) getActivity()).openDrawer();
             }
         });
 
@@ -137,39 +131,54 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
      */
     private void showAllListEntries (List<Dataset> items) {
 
-        ArrayAdapter<Dataset> dataSetArrayAdapter = new ArrayAdapter<> (getActivity(),
-                R.layout.list_item,
-                items);
-
         expListView = (ExpandableListView) getView().findViewById(R.id.item_list_view);
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (parent.isGroupExpanded(groupPosition)) {
+                    parent.collapseGroup(groupPosition);
+                } else {
+                    boolean animateExpansion = false;
+                    parent.expandGroup(groupPosition, animateExpansion);
+                }
+                //telling the listView we have handled the group click, and don't want the default actions.
+                return true;
+            }
+        });
 
         // vorbereiten der Liste ----------------------------------
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
+        List<String> listDataHeader  = new ArrayList<String>();
         listDataHeader.add("Kleidung");
         listDataHeader.add("Hygiene");
         listDataHeader.add("Equipment");
         listDataHeader.add("Dokumente");
 
+
+        HashMap<String, List<ListItem>> listDataChild = new HashMap<String, List<ListItem>>();
+
         // Unterlisten-Kategorien
-        kleidung = new LinkedList<String>();
-        hygiene = new LinkedList<String>();
-        equipment = new LinkedList<String>();
-        dokumente = new LinkedList<String>();
+        List<ListItem> kleidung = new ArrayList<ListItem>();
+        List<ListItem> hygiene = new ArrayList<ListItem>();
+        List<ListItem> equipment = new ArrayList<ListItem>();
+        List<ListItem> dokumente = new ArrayList<ListItem>();
 
         // selektiert die items aus dem Array und ordnet sie der passenden Unterliste ein
-        for(int i = 0; i < dataSetArrayAdapter.getCount(); i++){
-            Dataset dataSet = dataSetArrayAdapter.getItem(i);
-            String str = (dataSet.toString());
+        for(int i = 0; i < items.size(); i++){
+            Dataset dataSet = items.get(i);
+            int id = dataSet.getItemID();
+            String name = dataSet.getItemName();
+            //TODO set checked value from TripItems
+            boolean checked = false;
+
+            ListItem item = new ListItem(id,name,checked);
             if (dataSet.getKategorie() == 0) {
-                kleidung.add(str);
+                kleidung.add(item);
             } else if (dataSet.getKategorie() == 1) {
-                hygiene.add(str);
+                hygiene.add(item);
             } else if (dataSet.getKategorie() == 2) {
-                equipment.add(str);
+                equipment.add(item);
             } else if (dataSet.getKategorie() == 3) {
-                dokumente.add(str);
+                dokumente.add(item);
             }
         }
 
