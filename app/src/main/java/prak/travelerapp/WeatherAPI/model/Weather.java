@@ -27,22 +27,39 @@ public class Weather{
         return false;
     }
 
-    public String getTemperature(DateTime dayRequest){
+    public String getTemperatureOnDate(DateTime dayRequest){
 
         String temperature = "--";
 
-        Log.d("Weather API. Datum", dayRequest.toDateMidnight().toString());
+        Log.d("Weather API. Date Temp", dayRequest.toDateMidnight().toString());
 
         for (Day day: days) {
             if (day.getDate().toDateMidnight().equals(dayRequest.toDateMidnight())) {
                 Log.d("Weather API. Temp", String.valueOf(day.temperature.getDayTemp()));
-                Log.d("Weather API. Wetter", String.valueOf(day.condition.getMain()));
                 float temp = Math.round(day.temperature.getDayTemp());
                 temperature = new DecimalFormat("#").format(temp);
             }
         }
 
         return temperature;
+    }
+
+    public String getIconOnDate(DateTime dayRequest){
+
+        String iconSrc = "--";
+
+        Log.d("Weather API. Date Cond", dayRequest.toDateMidnight().toString());
+
+        for (Day day: days) {
+            if (day.getDate().toDateMidnight().equals(dayRequest.toDateMidnight())) {
+                Log.d("Weather API. Cond Main", String.valueOf(day.condition.getMain()));
+                Log.d("Weather API. Cond Desc", String.valueOf(day.condition.getDescription()));
+                Log.d("Weather API. Cond Icon", String.valueOf(day.condition.getIcon()));
+                iconSrc = "weather_" + String.valueOf(day.condition.getIcon());
+            }
+        }
+
+        return iconSrc;
     }
 
 }

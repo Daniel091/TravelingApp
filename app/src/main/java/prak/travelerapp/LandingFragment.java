@@ -41,6 +41,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageView imageView;    // ImageView
     private TextView city;
     private TextView temperature,timeToJourney,missingThings;
+    private ImageView weatherIcon1;
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button;
@@ -76,6 +77,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         imageView = (ImageView) view.findViewById(R.id.imageView);
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
+        weatherIcon1 = (ImageView) view.findViewById(R.id.weatherIcon1);
     }
 
     private void prepareListeners() {
@@ -123,7 +125,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
 
         city.setText(active_trip.getCity());
-        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip,String.valueOf(days)));
+        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)));
 
         int number = 0;
         for(Tupel t : active_trip.getTripItems().getItems()){
@@ -131,7 +133,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 number++;
             }
         }
-        missingThings.setText(getActivity().getResources().getString(R.string.missingThings,String.valueOf(number)));
+        missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
       //  if (!loadImageFromStorage(path_fromPref)) {
@@ -139,7 +141,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             getImageURLTask.delegate = this;
 
             getImageURLTask.execute(active_trip.getCity());
-            Log.d("500px loads new image ",active_trip.getCity());
+            Log.d("500px loads new image ", active_trip.getCity());
       /*  } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
         }*/
@@ -262,7 +264,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void weatherProcessFinish(Weather output) {
-        temperature.setText(output.getTemperature(active_trip.getStartdate()) + "°");
+        temperature.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
+        weatherIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
     }
 
     @Override

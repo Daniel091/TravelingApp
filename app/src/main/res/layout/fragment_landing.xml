@@ -27,24 +27,31 @@
             android:id="@+id/headline"
             android:layout_below="@id/button_hamburger"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="4dp">
 
             <TextView
                 android:id="@+id/city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".70"
-                android:layout_marginTop="28dp"
                 android:layout_marginLeft="28dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_large"/>
+
+            <ImageView
+                android:id="@+id/weatherIcon1"
+                android:layout_width="39dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight=".10"/>
 
             <TextView
                 android:id="@+id/temperature"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".30"
-                android:layout_marginTop="28dp"
+                android:layout_weight=".20"
                 android:layout_marginRight="28dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_large"
@@ -101,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kofferpacken"
-                android:textSize="17sp"
+                android:textSize="@dimen/text_medium"
                 android:textColor="@color/white"
                 />
 

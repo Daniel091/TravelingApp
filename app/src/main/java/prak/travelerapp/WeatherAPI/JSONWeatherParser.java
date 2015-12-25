@@ -55,6 +55,7 @@ public class JSONWeatherParser {
 
                     JSONObject weath = getArray("weather", dayObj).getJSONObject(0);
                     curDay.condition.setDescription(getString("description", weath));
+                    curDay.condition.setIcon(getString("icon", weath));
                     curDay.condition.setMain(getString("main", weath));
 
                     weather.days.add(curDay);

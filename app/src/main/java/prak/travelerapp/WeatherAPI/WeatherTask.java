@@ -31,9 +31,6 @@ public class WeatherTask extends AsyncTask<String, Void, Weather> {
 
     }
 
-
-
-
     @Override
     protected void onPostExecute(Weather weather) {
         super.onPostExecute(weather);
@@ -43,6 +40,4 @@ public class WeatherTask extends AsyncTask<String, Void, Weather> {
             delegate.weatherProcessFailed();
         }
     }
-
-
 }
