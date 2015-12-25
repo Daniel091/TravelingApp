@@ -46,15 +46,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menueApdapter = new MenueApdapter(this,active_trip);
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        if (active_trip != null) {
-            Fragment fragment = new LandingFragment();
-            setUpFragment(fragment);
-        } else {
-            Fragment fragment = new StartFragment();
-            setUpFragment(fragment);
-        }
+        listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
+
         //testTripDB();
     }
 
@@ -131,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setUpFragment(fragment);
                 break;
         }
-
         // Highlight the selected items, update the title, and close the drawer
         listView.setItemChecked(position, true);
         closeDrawer();
@@ -199,8 +192,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public Trip getActive_trip() {
         return active_trip;
     }
-    public MenueApdapter getMenueApdapter() {
-        return menueApdapter;
+
+    public void menueClick(int pos) {
+        if (listView != null){
+            listView.performItemClick(listView.getChildAt(pos), pos, listView.getItemIdAtPosition(pos));
+        }
     }
 
 }

@@ -276,12 +276,10 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        Fragment ItemViewFragment = new ItemViewFragment();
-        ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
-
         // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
         //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
         ((MainActivity) getActivity()).checkActiveTrip();
+        ((MainActivity) getActivity()).menueClick(2);
     }
 
     @Override
