@@ -257,7 +257,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                         Fragment ItemViewFragment = new ItemViewFragment();
                         ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
 
-                        // When theres an active trip the menue behaves different
+                        // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
+                        //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
                         ((MainActivity) getActivity()).checkActiveTrip();
                     }
 

@@ -178,11 +178,23 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     }
 
     private void setDefaultPic() {
-        // Sets Default Activity with Country
-        Log.d("500px","Get image of city failed, now trying to get image of country, "+ active_trip.getCountry());
-        GetImageURLTask getImageURLTask = new GetImageURLTask();
-        getImageURLTask.delegate = this;
-        getImageURLTask.execute(active_trip.getCountry());
+        //TODO find cool creative common images and put them here
+        switch (active_trip.getType1()){
+            case STRANDURLAUB:
+            case STAEDTETRIP:
+            case GESCHAEFTSREISE:
+                imageView.setImageResource(R.drawable.skyline);
+                break;
+            case SKIFAHREN:
+            case CAMPING:
+            case WANDERN:
+            case FESTIVAL:
+                imageView.setImageResource(R.drawable.starry_sky);
+                break;
+            case PARTYURLAUB:
+                imageView.setImageResource(R.drawable.fireworks);
+                break;
+        }
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
