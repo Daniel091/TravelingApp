@@ -66,10 +66,10 @@
                 android:layout_weight="1"
                 android:completionThreshold="2"
                 android:dropDownHeight="200dp"
-                android:singleLine="true"
                 android:inputType="text"
                 android:background="#00000000"
                 android:hint="z.B. San Francisco"
+                android:maxLines="1"
                 android:textColor="@color/black">
             </prak.travelerapp.Autocompleter.CityAutoCompleteView>
 

@@ -11,9 +11,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -76,6 +78,21 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
         autocompleter = (CityAutoCompleteView) view.findViewById(R.id.autocomplete_destination);
         autocompleter.addTextChangedListener(this);
+
+        // Listen for enter an then Close InputWindow
+        autocompleter.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null&& (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         autocompleteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, items);
         autocompleter.setAdapter(autocompleteAdapter);
 
