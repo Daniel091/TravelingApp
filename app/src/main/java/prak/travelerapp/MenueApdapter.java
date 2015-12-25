@@ -8,22 +8,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.TripDatabase.model.Tupel;
 
 public class MenueApdapter extends BaseAdapter {
     private Context context;
-    private TripItems tripItems;
+    private Trip active_trip;
     String[] menue_links;
 
     int[] images = {R.mipmap.ic_launcher,R.mipmap.ic_home,R.mipmap.ic_check,
             R.mipmap.ic_clock,R.mipmap.ic_settings,R.mipmap.ic_home,
             };
 
-    public MenueApdapter(Context context,TripItems tripItems){
+    public MenueApdapter(Context context,Trip active_trip){
         menue_links=context.getResources().getStringArray(R.array.menue_links);
         this.context = context;
-        this.tripItems = tripItems;
+        this.active_trip = active_trip;
     }
 
     @Override
@@ -64,14 +65,16 @@ public class MenueApdapter extends BaseAdapter {
                     row = inflater.inflate(R.layout.custom_row_packliste, parent, false);
                     number_items = (TextView) row.findViewById(R.id.number_items);
 
-                    int number = 0;
-                    for(Tupel t : tripItems.getItems()){
-                        if (t.getY() == 0){
-                            number++;
+                    if (active_trip != null) {
+                        int number = 0;
+                        for (Tupel t : active_trip.getTripItems().getItems()) {
+                            if (t.getY() == 0) {
+                                number++;
+                            }
                         }
-                    }
-                    if (number_items != null) {
-                        number_items.setText(String.valueOf(number));
+                        if (number_items != null) {
+                            number_items.setText(String.valueOf(number));
+                        }
                     }
                 } else {
                     row = inflater.inflate(R.layout.custom_row, parent, false);
@@ -88,7 +91,7 @@ public class MenueApdapter extends BaseAdapter {
         return row;
     }
 
-    public void setTripItems(TripItems tripItems) {
-        this.tripItems = tripItems;
+    public void setActive_trip(Trip active_trip) {
+        this.active_trip = active_trip;
     }
 }

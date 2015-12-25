@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         prepareViews();
 
         active_trip = checkActiveTrip();
-        menueApdapter = new MenueApdapter(this,active_trip.getTripItems());
+        menueApdapter = new MenueApdapter(this,active_trip);
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
