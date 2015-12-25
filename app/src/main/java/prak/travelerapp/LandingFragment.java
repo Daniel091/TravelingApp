@@ -135,6 +135,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         DateTime currentDate = new DateTime();
         float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
         int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
+        String date = active_trip.getStartdate().toString("(dd. MMM yyyy)", Locale.GERMAN);
 
         // Get Weather on departing date
         WeatherTask weathertask = new WeatherTask();
@@ -142,7 +143,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
 
         city.setText(active_trip.getCity());
-        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)));
+        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)) + " " + date);
 
         int number = 0;
         for(Tupel t : active_trip.getTripItems().getItems()){
