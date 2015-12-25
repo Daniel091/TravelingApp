@@ -156,6 +156,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getURLProcessFailed() {
+        // TODO NO SAVE image Path here because no internet connection
         Log.d("mw", "URL Process failed, now Default Picture");
         setDefaultPic();
     }

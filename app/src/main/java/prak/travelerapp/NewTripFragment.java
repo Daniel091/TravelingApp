@@ -240,31 +240,15 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                             weather = null;
 
                         }
-                        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                        String gender = sharedPref.getString(getString(R.string.saved_gender), "not_selected");
 
-                        TripItems tripItems = configureTripItems(gender, weather, type_one, type_two);
-
-                        tripDBAdapter = new TripDBAdapter(getActivity());
-                        tripDBAdapter.open();
-                        tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
-
-                         /* Clear Backstack, so User cant go back after submission, reason to do this here
-                        otherwise fragment is no longer attached to activity, when weather async task finishs*/
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-                        Fragment ItemViewFragment = new ItemViewFragment();
-                        ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
-
-                        // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
-                        //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
-                        ((MainActivity) getActivity()).checkActiveTrip();
+                        putTripInDatabase(weather, type_one, type_two, city, country, startDate, endDate);
                     }
 
                     @Override
                     public void weatherProcessFailed() {
-
+                        Log.d("New Trip Frag","Weather Process Failed");
+                        Toast.makeText(getActivity(),"Cant fetch weather data, no internet connection",Toast.LENGTH_SHORT).show();
+                        putTripInDatabase(null,type_one,type_two,city,country,startDate,endDate);
                     }
                 };
                 weathertask.execute(new String[]{city,country});
@@ -275,6 +259,29 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }else{
             Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void putTripInDatabase(Weather weather,TravelType type_one,TravelType type_two,String city, String country,DateTime startDate,DateTime endDate) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String gender = sharedPref.getString(getString(R.string.saved_gender), "not_selected");
+
+        TripItems tripItems = configureTripItems(gender, weather, type_one, type_two);
+
+        tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
+
+        /* Clear Backstack, so User cant go back after submission, reason to do this here
+        otherwise fragment is no longer attached to activity, when weather async task finishs*/
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        Fragment ItemViewFragment = new ItemViewFragment();
+        ((MainActivity) getActivity()).setUpFragment(ItemViewFragment);
+
+        // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
+        //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
+        ((MainActivity) getActivity()).checkActiveTrip();
     }
 
     @Override
@@ -379,7 +386,10 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 break;
         }
 
-        boolean isRaining = weather.isRaining();
+        boolean isRaining = false;
+        if (weather != null) {
+            isRaining = weather.isRaining();
+        }
 
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
         itemDB.createDatabase();
