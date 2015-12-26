@@ -43,7 +43,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageView imageView;    // ImageView
     private TextView city;
     private TextView timeToJourney,missingThings;
-    private ImageView weatherIcon1,weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
+    private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
     private SharedPreferences sharedPref;
     private Trip active_trip;
@@ -80,7 +80,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         imageView = (ImageView) view.findViewById(R.id.imageView);
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
-        weatherIcon1 = (ImageView) view.findViewById(R.id.weatherIcon1);
         koffer_packen = (LinearLayout) view.findViewById(R.id.koffer_packen);
         weatherForecastIcon1 = (ImageView) view.findViewById(R.id.weatherForecastIcon1);
         weatherForecastIcon2 = (ImageView) view.findViewById(R.id.weatherForecastIcon2);
