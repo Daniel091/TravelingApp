@@ -24,7 +24,9 @@ public class MenueApdapter extends BaseAdapter {
     public MenueApdapter(Context context,Trip active_trip){
         menue_links=context.getResources().getStringArray(R.array.menue_links);
         this.context = context;
-        this.active_trip = active_trip;
+        if(active_trip != null) {
+            this.active_trip = active_trip;
+        }
     }
 
     @Override
