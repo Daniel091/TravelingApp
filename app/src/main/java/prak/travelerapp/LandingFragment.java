@@ -43,12 +43,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageView imageView;    // ImageView
     private TextView city;
     private TextView timeToJourney,missingThings;
-    private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
+    private ImageView weatherIcon1,weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button;
-    LinearLayout koffer_packen;
+    private LinearLayout koffer_packen;
 
     private int screenheight;
     private int screenwidth;
