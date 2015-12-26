@@ -136,13 +136,13 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 //SET to 0 first -> workaround to be able to update mindate
-                //departureDatePickerDialog.getDatePicker().setMinDate(0);
-                //departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
+                departureDatePickerDialog.getDatePicker().setMinDate(0);
+                departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
                 editText_arrival.setText(dateFormatter.format(newDate.getTime()));
                 System.out.println(newDate.getTimeInMillis());
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
     }
 
     private void setUpDepartureDatePicker() {
@@ -157,7 +157,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
     }
 
     @Override

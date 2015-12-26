@@ -1,6 +1,7 @@
 package prak.travelerapp;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
@@ -39,9 +40,9 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
 
     private void changeColor(boolean isChecked){
         if(isChecked){
-            setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         }else{
-            setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
         }
     }
 }

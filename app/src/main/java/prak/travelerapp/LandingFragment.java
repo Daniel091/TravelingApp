@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -47,6 +48,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button;
+    LinearLayout koffer_packen;
 
     private int screenheight;
     private int screenwidth;
@@ -80,6 +82,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
         weatherIcon1 = (ImageView) view.findViewById(R.id.weatherIcon1);
+        koffer_packen = (LinearLayout) view.findViewById(R.id.koffer_packen);
         weatherForecastIcon1 = (ImageView) view.findViewById(R.id.weatherForecastIcon1);
         weatherForecastIcon2 = (ImageView) view.findViewById(R.id.weatherForecastIcon2);
         weatherForecastIcon3 = (ImageView) view.findViewById(R.id.weatherForecastIcon3);
@@ -115,6 +118,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 StartFragment startFragment = new StartFragment();
                 ((MainActivity) getActivity()).checkActiveTrip();
                 ((MainActivity) getActivity()).setUpFragment(startFragment);
+            }
+        });
+        koffer_packen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).menueClick(2);
             }
         });
     }
