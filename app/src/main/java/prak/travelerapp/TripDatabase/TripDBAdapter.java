@@ -101,6 +101,10 @@ public class TripDBAdapter {
         tripDB.execSQL("UPDATE " + TripDBHelper.TABLE_NAME + " SET " + TripDBHelper.COLUMN_ACTIVE + "=" + 0);
     }
 
+    public void removeAllNonActiveTrips(){
+        tripDB.delete(TripDBHelper.TABLE_NAME,TripDBHelper.COLUMN_ACTIVE + "=" + 0,null);
+    }
+
 
     public Trip getActiveTrip() {
         Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, TripDBHelper.COLUMN_ID + " DESC");
@@ -163,6 +167,5 @@ public class TripDBAdapter {
             }
         }
         return new ArrayList<Trip>();
-
     }
 }
