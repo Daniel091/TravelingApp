@@ -38,14 +38,19 @@
                 android:layout_weight=".70"
                 android:layout_marginLeft="28dp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_large"/>
+                android:layout_gravity="start|center_vertical"
+                android:textSize="@dimen/text_large"
+                android:lines="1"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"/>
 
             <ImageView
                 android:id="@+id/weatherIcon1"
                 android:layout_width="39dp"
                 android:layout_height="39dp"
-                android:layout_marginTop="4dp"
-                android:layout_weight=".10"/>
+                android:layout_weight=".10"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/temperature"
@@ -55,7 +60,8 @@
                 android:layout_marginRight="28dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_large"
-                android:gravity="right"/>
+                android:gravity="end"
+                android:layout_gravity="center_vertical|end" />
         </LinearLayout>
 
 

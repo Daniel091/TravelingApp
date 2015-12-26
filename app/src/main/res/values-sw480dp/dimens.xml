@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Font Settings -->
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">17sp</dimen>
+    <dimen name="text_large">36sp</dimen>
+
+</resources>

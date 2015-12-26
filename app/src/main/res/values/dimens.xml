@@ -7,8 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- Font Settings -->
-    <dimen name="text_small">12sp</dimen>
-    <dimen name="text_medium">17sp</dimen>
-    <dimen name="text_large">38sp</dimen>
+    <dimen name="text_small">8sp</dimen>
+    <dimen name="text_medium">10sp</dimen>
+    <dimen name="text_large">24sp</dimen>
 
 </resources>
