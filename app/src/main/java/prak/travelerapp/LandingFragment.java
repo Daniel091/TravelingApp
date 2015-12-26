@@ -42,8 +42,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageButton button_hamburger;
     private ImageView imageView;    // ImageView
     private TextView city;
-    private TextView temperature,timeToJourney,missingThings;
-    private ImageView weatherIcon1, weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
+    private TextView timeToJourney,missingThings;
+    private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
     private SharedPreferences sharedPref;
     private Trip active_trip;
@@ -77,7 +77,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         button_hamburger.bringToFront();
         city = (TextView) view.findViewById(R.id.city);
         timeToJourney = (TextView) view.findViewById(R.id.city_subline);
-        temperature = (TextView) view.findViewById(R.id.temperature);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
@@ -144,7 +143,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         DateTime currentDate = new DateTime();
         float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
         int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
-        String date = active_trip.getStartdate().toString("(dd. MMM yyyy)", Locale.GERMAN);
+        String date = "(" + active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN) + ", " + active_trip.getStartdate().toString("dd. MMM yyyy", Locale.GERMAN) + ")";
 
         // Get Weather on departing date
         WeatherTask weathertask = new WeatherTask();
@@ -152,7 +151,18 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
 
         city.setText(active_trip.getCity());
-        timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)) + " " + date);
+
+        switch (days) {
+            case 0:
+                timeToJourney.setText("heute");
+                break;
+            case 1:
+                timeToJourney.setText("morgen");
+                break;
+            default:
+                timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)) + " " + date);
+                break;
+        }
 
         int number = 0;
         for(Tupel t : active_trip.getTripItems().getItems()){
@@ -291,28 +301,25 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void weatherProcessFinish(Weather output) {
-        temperature.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
-        weatherIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
-
         weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(1)), "mipmap", "prak.travelerapp"));
-        weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(1)) + "°");
-        weatherForecastDay1.setText(active_trip.getStartdate().plusDays(1).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+        weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
+        weatherForecastDay1.setText(active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
 
         weatherForecastIcon2.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(2)), "mipmap", "prak.travelerapp"));
-        weatherForecastTemp2.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(2)) + "°");
-        weatherForecastDay2.setText(active_trip.getStartdate().plusDays(2).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+        weatherForecastTemp2.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(1)) + "°");
+        weatherForecastDay2.setText(active_trip.getStartdate().plusDays(1).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
 
         weatherForecastIcon3.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(3)), "mipmap", "prak.travelerapp"));
-        weatherForecastTemp3.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(3)) + "°");
-        weatherForecastDay3.setText(active_trip.getStartdate().plusDays(3).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+        weatherForecastTemp3.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(2)) + "°");
+        weatherForecastDay3.setText(active_trip.getStartdate().plusDays(2).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
 
         weatherForecastIcon4.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(4)), "mipmap", "prak.travelerapp"));
-        weatherForecastTemp4.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4)) + "°");
-        weatherForecastDay4.setText(active_trip.getStartdate().plusDays(4).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+        weatherForecastTemp4.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(3)) + "°");
+        weatherForecastDay4.setText(active_trip.getStartdate().plusDays(3).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
 
         weatherForecastIcon5.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(5)), "mipmap", "prak.travelerapp"));
-        weatherForecastTemp5.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(5)) + "°");
-        weatherForecastDay5.setText(active_trip.getStartdate().plusDays(5).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+        weatherForecastTemp5.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4)) + "°");
+        weatherForecastDay5.setText(active_trip.getStartdate().plusDays(4).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
     }
 
     @Override
