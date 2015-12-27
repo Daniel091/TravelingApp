@@ -3,6 +3,7 @@ package prak.travelerapp;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -47,9 +48,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         active_trip = checkActiveTrip();
 
         menueApdapter = new MenueApdapter(this);
-        updateMenueRemainingItems(active_trip);
+        if(active_trip != null){
+            updateMenueRemainingItems(active_trip);
+        }
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
 
@@ -129,8 +133,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setUpFragment(fragment);
                 break;
         }
-        // Highlight the selected items, update the title, and close the drawer
-        listView.setItemChecked(position, true);
         closeDrawer();
     }
 
@@ -201,6 +203,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (listView != null){
             listView.performItemClick(listView.getChildAt(pos), pos, listView.getItemIdAtPosition(pos));
         }
+    }
+
+    public void uncheckMenuAt(int pos){
+
+        ListView listView = (ListView) findViewById(R.id.drawerList);
+        listView.clearChoices();
+        listView.requestLayout();
+
     }
 
 
