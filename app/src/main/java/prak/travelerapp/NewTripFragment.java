@@ -131,18 +131,15 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private void setUpArrivalDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
         arrivalDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                //SET to 0 first -> workaround to be able to update mindate
-                //departureDatePickerDialog.getDatePicker().setMinDate(0);
-                //departureDatePickerDialog.getDatePicker().setMinDate(newDate.getTimeInMillis());
-                editText_arrival.setText(dateFormatter.format(newDate.getTime()));
-                System.out.println(newDate.getTimeInMillis());
+                Date newDate = new Date(year, monthOfYear, dayOfMonth - 1);
+                departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
+                editText_arrival.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                Log.d("Min Date", dateFormatter.format(new Date().getTime() - 10000));
+                Log.d("Set Date", dayOfMonth + "." + (monthOfYear + 1) + "." + year);
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
     }
 
     private void setUpDepartureDatePicker() {
@@ -246,7 +243,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                     @Override
                     public void weatherProcessFailed() {
-                        Log.d("New Trip Frag","Weather Process Failed");
+                        Log.d("New Trip Frag", "Weather Process Failed");
                         Toast.makeText(getActivity(),"Cant fetch weather data, no internet connection",Toast.LENGTH_SHORT).show();
                         putTripInDatabase(null,type_one,type_two,city,country,startDate,endDate);
                     }
