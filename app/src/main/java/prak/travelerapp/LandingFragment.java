@@ -208,8 +208,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
 
-            getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", ""));
-            Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s",""));
+            getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
+            Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
       /*  } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
         }*/
