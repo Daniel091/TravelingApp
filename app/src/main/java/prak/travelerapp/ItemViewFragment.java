@@ -268,6 +268,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         // Eingabefeld
         userInput = (EditText) popupView.findViewById(R.id.userInput);
+        userInput.setHint("z.B. Flugticket");
         userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
