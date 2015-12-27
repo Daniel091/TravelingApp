@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:src="@mipmap/ic_new"
+        android:src="@mipmap/ic_newthin"
         app:layout_anchor="@id/itemlist_topView"
         app:layout_anchorGravity="bottom|right|end"/>
 
