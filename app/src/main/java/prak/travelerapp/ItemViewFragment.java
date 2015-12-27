@@ -123,6 +123,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         itemDBAdapter.createDatabase();
         itemDBAdapter.open();
 
+        //update die anzahl der verbleibenden Items im Menü
+        ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+
         //sort the tripitems with ID ascending
         ArrayList<Tupel> tripitems = activeTrip.getTripItems().getItems();
         Collections.sort(tripitems);
@@ -231,8 +234,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
 
         //update die anzahl der verbleibenden Items im Menü
-        MainActivity activity = (MainActivity)getActivity();
-        activity.updateMenueRemainingItems(activeTrip);
+        ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
     }
 
     /**
