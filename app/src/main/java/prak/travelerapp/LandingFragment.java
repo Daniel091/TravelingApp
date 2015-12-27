@@ -307,7 +307,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     }
 
     private void setDefaultPic() {
-        //TODO find cool creative common images and put them here
         switch (active_trip.getType1()){
             case STRANDURLAUB:
                 imageView.setImageResource(R.drawable.beach);
