@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -111,7 +112,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 Log.d("LandingFrag", "Pressed Cancel trip");
                 TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
                 tripDBAdapter.open();
-                tripDBAdapter.removeActiveFromTrip();
+                tripDBAdapter.setAllTripsInactive();
 
                 StartFragment startFragment = new StartFragment();
                 ((MainActivity) getActivity()).checkActiveTrip();
@@ -122,6 +123,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).menueClick(2);
+                ListView listView = (ListView) getActivity().findViewById(R.id.drawerList);
+                listView.setItemChecked(1, false);
             }
         });
     }

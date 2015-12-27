@@ -41,36 +41,45 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+    static class ViewHolder {
+        protected TextView text;
+        protected CheckBox checkbox;
+    }
+
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final ListItem child = getChild(groupPosition, childPosition);
-        final String childText = child.getName();
-
+        View view = null;
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
+            view = layoutInflater.inflate(R.layout.list_item, null);
+            final ViewHolder viewHolder = new ViewHolder();
+            viewHolder.checkbox = (CheckBox) view.findViewById(R.id.checkBox);
+            viewHolder.text = (TextView) view.findViewById(R.id.lblListItem);
+            viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+
+                    ListItem item = (ListItem) viewHolder.checkbox.getTag();
+                    item.setChecked(buttonView.isChecked());
+                    listener.itemClicked(item);
+                }
+            });
+            view.setTag(viewHolder);
+            viewHolder.checkbox.setTag(getChild(groupPosition, childPosition));
+        }else{
+
+            view = convertView;((ViewHolder) view.getTag()).checkbox.setTag(getChild(groupPosition, childPosition));
         }
 
-        CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkBox);
-        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-
-
-                child.setChecked(isChecked);
-                listener.itemClicked(child);
-            }
-        });
-
-        TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
-
-        txtListChild.setText(childText);
-        return convertView;
+        ViewHolder holder = (ViewHolder) view.getTag();
+        holder.text.setText(getChild(groupPosition, childPosition).getName());
+        holder.checkbox.setChecked(getChild(groupPosition, childPosition).isChecked());
+        return view;
     }
 
     @Override

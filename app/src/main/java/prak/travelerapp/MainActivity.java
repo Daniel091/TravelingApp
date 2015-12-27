@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
+import prak.travelerapp.TripDatabase.model.Tupel;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         prepareViews();
 
         active_trip = checkActiveTrip();
-        menueApdapter = new MenueApdapter(this,active_trip);
+
+        menueApdapter = new MenueApdapter(this);
+        updateMenueRemainingItems(active_trip);
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
 
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             boolean tripIsOver = active_trip.getEnddate().isBeforeNow();
             if(tripIsOver){
                 Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
-                tripDBAdapter.removeActiveFromTrip();
+                tripDBAdapter.setAllTripsInactive();
                 return null;
             }
         }
@@ -197,6 +201,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (listView != null){
             listView.performItemClick(listView.getChildAt(pos), pos, listView.getItemIdAtPosition(pos));
         }
+    }
+
+
+    //Update die anzahl der verbleibenden Items im Menü
+    public void updateMenueRemainingItems(Trip trip){
+        int remainingItems = 0;
+        for (Tupel t : trip.getTripItems().getItems()) {
+            if (t.getY() == 0) {
+                remainingItems++;
+            }
+        }
+        menueApdapter.setRemainingItems(remainingItems);
     }
 
 }
