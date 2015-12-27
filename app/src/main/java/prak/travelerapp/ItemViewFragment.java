@@ -226,6 +226,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         //update checked state of tripitems
         activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
+
+        //update die anzahl der verbleibenden Items im Menü
+        MainActivity activity = (MainActivity)getActivity();
+        activity.updateMenueRemainingItems(activeTrip);
     }
 
     /**

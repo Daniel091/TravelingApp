@@ -14,19 +14,16 @@ import prak.travelerapp.TripDatabase.model.Tupel;
 
 public class MenueApdapter extends BaseAdapter {
     private Context context;
-    private Trip active_trip;
     String[] menue_links;
+    private int remainingItems = 0;
 
     int[] images = {R.mipmap.ic_launcher,R.mipmap.ic_home,R.mipmap.ic_check,
             R.mipmap.ic_clock,R.mipmap.ic_settings,R.mipmap.ic_home,
             };
 
-    public MenueApdapter(Context context,Trip active_trip){
+    public MenueApdapter(Context context){
         menue_links=context.getResources().getStringArray(R.array.menue_links);
         this.context = context;
-        if(active_trip != null) {
-            this.active_trip = active_trip;
-        }
     }
 
     @Override
@@ -66,17 +63,8 @@ public class MenueApdapter extends BaseAdapter {
                 if (position == 2) {
                     row = inflater.inflate(R.layout.custom_row_packliste, parent, false);
                     number_items = (TextView) row.findViewById(R.id.number_items);
-
-                    if (active_trip != null) {
-                        int number = 0;
-                        for (Tupel t : active_trip.getTripItems().getItems()) {
-                            if (t.getY() == 0) {
-                                number++;
-                            }
-                        }
-                        if (number_items != null) {
-                            number_items.setText(String.valueOf(number));
-                        }
+                    if (number_items != null) {
+                        number_items.setText(String.valueOf(remainingItems));
                     }
                 } else {
                     row = inflater.inflate(R.layout.custom_row, parent, false);
@@ -84,6 +72,12 @@ public class MenueApdapter extends BaseAdapter {
             }
         } else {
             row = convertView;
+            if(position == 2){
+                number_items = (TextView) row.findViewById(R.id.number_items);
+                if (number_items != null) {
+                    number_items.setText(String.valueOf(remainingItems));
+                }
+            }
         }
         TextView textView = (TextView) row.findViewById(R.id.textView_Row);
         ImageView imageView = (ImageView) row.findViewById(R.id.imageView_Row);
@@ -93,7 +87,8 @@ public class MenueApdapter extends BaseAdapter {
         return row;
     }
 
-    public void setActive_trip(Trip active_trip) {
-        this.active_trip = active_trip;
+    public void setRemainingItems(int remainingItems) {
+        this.remainingItems = remainingItems;
+        notifyDataSetChanged();
     }
 }
