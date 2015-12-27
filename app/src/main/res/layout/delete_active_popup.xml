@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Möchtest du die Aktuelle Reise abbrechen?"
+        android:id="@+id/textView"
+        android:textSize="@dimen/text_medium"
+        android:textColor="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    <Button
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/button_remove"
+        android:textColor="@color/black"
+        style="?android:attr/borderlessButtonStyle"/>
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abbrechen"
+        android:id="@+id/button_cancel_popup"
+        android:textColor="@color/black"
+        style="?android:attr/borderlessButtonStyle"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

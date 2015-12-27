@@ -330,8 +330,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         anchorView.getLocationOnScreen(location);
 
         // zeigt das popup window unter der anchor view an
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER,
-                0, 0);
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
 
     }
 

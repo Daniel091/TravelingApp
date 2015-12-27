@@ -7,9 +7,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -47,8 +50,11 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
     private SharedPreferences sharedPref;
     private Trip active_trip;
-    private Button cancel_button;
+    private Button cancel_button,cancel_popup,ok_cancel_button;
     private LinearLayout koffer_packen;
+    private PopupWindow dummyPopup;
+    private LayoutInflater inflater;
+    private ViewGroup container;
 
     private int screenheight;
     private int screenwidth;
@@ -56,7 +62,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        this.inflater = inflater;
+        this.container = container;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
@@ -109,13 +116,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             @Override
             public void onClick(View v) {
                 Log.d("LandingFrag", "Pressed Cancel trip");
-                TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
-                tripDBAdapter.open();
-                tripDBAdapter.setAllTripsInactive();
-
-                StartFragment startFragment = new StartFragment();
-                ((MainActivity) getActivity()).checkActiveTrip();
-                ((MainActivity) getActivity()).setUpFragment(startFragment);
+                showDummyPopup(v);
+                showPopup(v);
             }
         });
         koffer_packen.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +126,63 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 ((MainActivity) getActivity()).menueClick(2);
             }
         });
+    }
+
+    private void showDummyPopup(View anchorView) {
+
+        final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int windowHeight = displaymetrics.heightPixels;
+        int windowWidth = displaymetrics.widthPixels;
+
+        dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
+        dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
+    }
+
+    private void showPopup(View anchorView) {
+        final View popupView = inflater.inflate(R.layout.delete_active_popup, container, false);
+
+        final PopupWindow popupWindow = new PopupWindow(popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ok_cancel_button = (Button) popupView.findViewById(R.id.button_remove);
+        ok_cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
+                tripDBAdapter.open();
+                tripDBAdapter.setAllTripsInactive();
+
+                popupWindow.dismiss();
+                dummyPopup.dismiss();
+
+                StartFragment startFragment = new StartFragment();
+                ((MainActivity) getActivity()).checkActiveTrip();
+                ((MainActivity) getActivity()).setUpFragment(startFragment);
+            }
+        });
+
+        cancel_popup = (Button) popupView.findViewById(R.id.button_cancel_popup);
+        cancel_popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                dummyPopup.dismiss();
+            }
+        });
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        int location[] = new int[2];
+        anchorView.getLocationOnScreen(location);
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
+
     }
 
     @Override
