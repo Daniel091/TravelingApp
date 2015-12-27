@@ -104,9 +104,12 @@ public class TripDBAdapter {
     public void updateTripItems(Trip trip){
         ContentValues contentValue = new ContentValues();
         contentValue.put(TripDBHelper.COLUMN_ITEMS, trip.getTripItems().makeString());
-        tripDB.update(TripDBHelper.TABLE_NAME,contentValue,TripDBHelper.COLUMN_ID + "=" + trip.getId(),null);
+        tripDB.update(TripDBHelper.TABLE_NAME, contentValue, TripDBHelper.COLUMN_ID + "=" + trip.getId(), null);
     }
 
+    public void removeAllNonActiveTrips(){
+        tripDB.delete(TripDBHelper.TABLE_NAME,TripDBHelper.COLUMN_ACTIVE + "=" + 0,null);
+    }
 
     public Trip getActiveTrip() {
         Cursor cursor = tripDB.query(TripDBHelper.TABLE_NAME, null, TripDBHelper.COLUMN_ACTIVE + "=" + 1, null, null, null, TripDBHelper.COLUMN_ID + " DESC");
