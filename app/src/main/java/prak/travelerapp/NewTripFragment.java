@@ -133,10 +133,11 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         arrivalDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Date newDate = new Date();
+                Date newDate = new Date(year, monthOfYear, dayOfMonth - 1);
                 departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
-                editText_arrival.setText(dateFormatter.format(newDate.getTime()));
-                Log.d("Min Date",dateFormatter.format(newDate.getTime()));
+                editText_arrival.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                Log.d("Min Date", dateFormatter.format(new Date().getTime() - 10000));
+                Log.d("Set Date", dayOfMonth + "." + (monthOfYear + 1) + "." + year);
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
