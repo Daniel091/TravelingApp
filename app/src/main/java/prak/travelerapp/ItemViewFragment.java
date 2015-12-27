@@ -321,8 +321,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 } else {
                     Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                     itemList.add(customDataSet);
+                    activeTrip.getTripItems().addItem(customDataSet.getItemID());
 
-                    //showAllListEntries(itemList);
+                    showAllListEntries(itemList,activeTrip.getTripItems().getItems());
 
                     popupWindow.dismiss();
                 }
