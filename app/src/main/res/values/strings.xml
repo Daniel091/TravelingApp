@@ -20,7 +20,9 @@
     <string name="title_activity_landing">LandingActivity</string>
 
     <string name="title_add_item_popup"></string>
-
+    <string name="button_loeschen">Löschen</string>
+    <string name="einstellung_vergangene">Vergangene Reisen</string>
+    <string name="custom_items_delete">Selbst Hinzugefügte Items</string>
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string name="missingThings">es fehlen noch %1$s Dinge</string>

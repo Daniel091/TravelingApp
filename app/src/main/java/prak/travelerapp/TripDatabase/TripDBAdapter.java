@@ -169,6 +169,5 @@ public class TripDBAdapter {
             }
         }
         return new ArrayList<Trip>();
-
     }
 }

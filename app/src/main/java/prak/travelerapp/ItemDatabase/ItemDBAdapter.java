@@ -254,6 +254,5 @@ public class ItemDBAdapter {
                 break;
         }
         return columName;
-
     }
 }
