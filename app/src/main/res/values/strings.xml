@@ -27,6 +27,7 @@
     <string name="neueReise">Neue Reise</string>
     <string name="missingThings">es fehlen noch %1$s Dinge</string>
     <string name="daysToTrip">in %1$s Tagen</string>
+    <string name="daysToReturn"> zurück in %1$s Tagen</string>
     <string name="kofferpacken">Koffer packen</string>
     <string name="settings">Einstellungen</string>
     <string name="city_default">San Francisco</string>
