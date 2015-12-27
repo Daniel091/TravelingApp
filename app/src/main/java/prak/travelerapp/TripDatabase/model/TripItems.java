@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripItems {
-    private List<Tupel> items_list;
+    private ArrayList<Tupel> items_list;
 
     public TripItems(String items){
         this.items_list = parseItems(items);
@@ -22,7 +22,17 @@ public class TripItems {
 
     }
 
-    public List<Tupel> getItems(){
+    public Tupel getItem(int id){
+
+        for(Tupel item : items_list){
+            if(id == item.getX()){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Tupel> getItems(){
         return this.items_list;
     }
 
@@ -38,7 +48,7 @@ public class TripItems {
         return s;
     }
 
-    private List<Tupel> parseItems(String items) {
+    private ArrayList<Tupel> parseItems(String items) {
         items_list = new ArrayList<>();
         String[] array = items.split(";");
 

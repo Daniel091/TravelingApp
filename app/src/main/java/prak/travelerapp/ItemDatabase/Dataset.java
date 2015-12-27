@@ -5,7 +5,7 @@ package prak.travelerapp.ItemDatabase;
  *
  * Entspricht dem Aufbau eines Datensatzes der Tabelle
  */
-public class Dataset {
+public class Dataset implements Comparable<Dataset> {
 
     private int itemID;
     private String itemName;
@@ -148,4 +148,8 @@ public class Dataset {
         return output;
     }
 
+    @Override
+    public int compareTo(Dataset another) {
+        return Integer.compare(this.itemID,another.getItemID());
+    }
 }

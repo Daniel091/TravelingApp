@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,6 +35,8 @@ import prak.travelerapp.ItemList.ItemCheckedListener;
 import prak.travelerapp.ItemList.ListItem;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.TripDatabase.model.TripItems;
+import prak.travelerapp.TripDatabase.model.Tupel;
 
 /**
  * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
@@ -50,7 +53,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     ExpandableListView expListView;
 
     // Holt Items aus der DB
-    List<Dataset> itemList;
+    ArrayList<Dataset> itemList;
 
     // Layout
     private LayoutInflater inflater;
@@ -109,17 +112,20 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     public void onStart() {
         super.onStart();
 
-        if (activeTrip == null) {
-            tripDBAdapter = new TripDBAdapter(getActivity());
-            tripDBAdapter.open();
-            activeTrip = tripDBAdapter.getActiveTrip();
-        }
+        tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        activeTrip = tripDBAdapter.getActiveTrip();
 
         itemDBAdapter = new ItemDBAdapter(getActivity());
         itemDBAdapter.createDatabase();
         itemDBAdapter.open();
+
+        //sort the tripitems with ID ascending
+        ArrayList<Tupel> tripitems = activeTrip.getTripItems().getItems();
+        Collections.sort(tripitems);
         itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
-        showAllListEntries(itemList);
+        Collections.sort(itemList);
+        showAllListEntries(itemList,tripitems);
     }
 
     @Override
@@ -130,16 +136,26 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onPause() {
         super.onPause();
-       itemDBAdapter.close();
+        tripDBAdapter.updateTripItems(activeTrip);
+        itemDBAdapter.close();
+
+        if(tripDBAdapter != null){
+            tripDBAdapter.close();
+        }
+
+
     }
 
     /**
      * Methode zum anzeigen der Datenbankeinträge in der Liste
      * @param items
+     *
      */
-    private void showAllListEntries (List<Dataset> items) {
+    private void showAllListEntries (ArrayList<Dataset> items,ArrayList<Tupel> tripitems) {
 
         expListView = (ExpandableListView) getView().findViewById(R.id.item_list_view);
+
+        //prevent default scrolling action on Group toggle
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -170,13 +186,12 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         List<ListItem> equipment = new ArrayList<ListItem>();
         List<ListItem> dokumente = new ArrayList<ListItem>();
 
-        // selektiert die items aus dem Array und ordnet sie der passenden Unterliste ein
+        // erstellt Listitems aus den daten der ItemList und den tripitems
         for(int i = 0; i < items.size(); i++){
             Dataset dataSet = items.get(i);
             int id = dataSet.getItemID();
             String name = dataSet.getItemName();
-            //TODO set checked value from TripItems
-            boolean checked = false;
+            boolean checked = tripitems.get(i).getY() == 1;
 
             ListItem item = new ListItem(id,name,checked);
             if (dataSet.getKategorie() == 0) {
@@ -205,10 +220,12 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     @Override
-    public void itemClicked(ListItem item) {
+    public void itemClicked(ListItem clickedItem) {
 
-        System.out.println(item.getId() + " " + item.getName() + " " + item.isChecked());
+        System.out.println(clickedItem.getId() + " " + clickedItem.getName() + " " + clickedItem.isChecked());
 
+        //update checked state of tripitems
+        activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
     }
 
     /**
@@ -268,7 +285,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                     itemList.add(customDataSet);
 
-                    showAllListEntries(itemList);
+                    //showAllListEntries(itemList);
 
                     popupWindow.dismiss();
                 }

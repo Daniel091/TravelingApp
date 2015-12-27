@@ -69,7 +69,7 @@ public class ItemDBAdapter {
     }
 
 
-    public List<Dataset> getItems(TripItems items)
+    public ArrayList<Dataset> getItems(TripItems items)
     {
         String itemIDArrayString = tripItemsToIDArrayString(items);
 
@@ -78,7 +78,7 @@ public class ItemDBAdapter {
             String sql ="SELECT * FROM item_table WHERE " + ItemDBHelper.COLUMN_ID + " IN " + itemIDArrayString;
 
             Cursor cursor = itemDb.rawQuery(sql, null);
-            List<Dataset> dataSetList = new ArrayList<>();
+            ArrayList<Dataset> dataSetList = new ArrayList<>();
             if (cursor!=null)
             {
                 // move cursor to first row

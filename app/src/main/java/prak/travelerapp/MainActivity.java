@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             boolean tripIsOver = active_trip.getEnddate().isBeforeNow();
             if(tripIsOver){
                 Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
-                tripDBAdapter.removeActiveFromTrip();
+                tripDBAdapter.setAllTripsInactive();
                 return null;
             }
         }

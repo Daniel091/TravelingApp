@@ -111,7 +111,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 Log.d("LandingFrag", "Pressed Cancel trip");
                 TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
                 tripDBAdapter.open();
-                tripDBAdapter.removeActiveFromTrip();
+                tripDBAdapter.setAllTripsInactive();
 
                 StartFragment startFragment = new StartFragment();
                 ((MainActivity) getActivity()).checkActiveTrip();
