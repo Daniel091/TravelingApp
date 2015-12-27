@@ -220,15 +220,25 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         //TODO find cool creative common images and put them here
         switch (active_trip.getType1()){
             case STRANDURLAUB:
+                imageView.setImageResource(R.drawable.beach);
+                break;
             case STAEDTETRIP:
+                imageView.setImageResource(R.drawable.city);
+                break;
             case GESCHAEFTSREISE:
-                imageView.setImageResource(R.drawable.skyline);
+                imageView.setImageResource(R.drawable.skyline2);
                 break;
             case SKIFAHREN:
+                imageView.setImageResource(R.drawable.ski);
+                break;
             case CAMPING:
+                imageView.setImageResource(R.drawable.camping);
+                break;
             case WANDERN:
+                imageView.setImageResource(R.drawable.hiking);
+                break;
             case FESTIVAL:
-                imageView.setImageResource(R.drawable.starry_sky);
+                imageView.setImageResource(R.drawable.festival);
                 break;
             case PARTYURLAUB:
                 imageView.setImageResource(R.drawable.fireworks);
