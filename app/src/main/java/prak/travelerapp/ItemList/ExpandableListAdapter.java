@@ -69,6 +69,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     listener.itemClicked(item);
                 }
             });
+
+
+            //verhindere, dass die view den longclick empfängt-> liste empfängt longclick
+            view.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v) {
+                    return false;
+                }
+
+                });
             view.setTag(viewHolder);
             viewHolder.checkbox.setTag(getChild(groupPosition, childPosition));
         }else{

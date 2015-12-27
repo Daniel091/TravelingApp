@@ -40,6 +40,7 @@ import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.TripDatabase.model.Tupel;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
@@ -108,6 +109,37 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         activeTrip = ((MainActivity) getActivity()).getActive_trip();
         tripCity.setText(activeTrip.getCity());
 
+        expListView = (ExpandableListView) view.findViewById(R.id.item_list_view);
+
+        expListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // When clicked on child, function longClick is executed
+                if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                    int childPosition = ExpandableListView.getPackedPositionChild(id);
+                    ListItem listItem = listAdapter.getChild(groupPosition, childPosition);
+                    System.out.print("dhcoiufhefouhuoehw");
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+        //prevent default scrolling action on Group toggle
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (parent.isGroupExpanded(groupPosition)) {
+                    parent.collapseGroup(groupPosition);
+                } else {
+                    boolean animateExpansion = false;
+                    parent.expandGroup(groupPosition, animateExpansion);
+                }
+                //telling the listView we have handled the group click, and don't want the default actions.
+                return true;
+            }
+        });
         return view;
     }
 
@@ -131,6 +163,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         Collections.sort(tripitems);
         itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
         Collections.sort(itemList);
+
         showAllListEntries(itemList,tripitems);
     }
 
@@ -139,7 +172,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         super.onResume();
     }
 
-    @Override
+        @Override
     public void onPause() {
         super.onPause();
         tripDBAdapter.updateTripItems(activeTrip);
@@ -158,23 +191,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
      *
      */
     private void showAllListEntries (ArrayList<Dataset> items,ArrayList<Tupel> tripitems) {
-
-        expListView = (ExpandableListView) getView().findViewById(R.id.item_list_view);
-
-        //prevent default scrolling action on Group toggle
-        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (parent.isGroupExpanded(groupPosition)) {
-                    parent.collapseGroup(groupPosition);
-                } else {
-                    boolean animateExpansion = false;
-                    parent.expandGroup(groupPosition, animateExpansion);
-                }
-                //telling the listView we have handled the group click, and don't want the default actions.
-                return true;
-            }
-        });
 
         // vorbereiten der Liste ----------------------------------
         List<String> listDataHeader  = new ArrayList<String>();
