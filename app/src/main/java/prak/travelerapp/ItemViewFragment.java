@@ -323,9 +323,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     itemList.add(customDataSet);
                     activeTrip.getTripItems().addItem(customDataSet.getItemID());
 
-                    showAllListEntries(itemList,activeTrip.getTripItems().getItems());
+                    showAllListEntries(itemList, activeTrip.getTripItems().getItems());
 
                     popupWindow.dismiss();
+                    Toast.makeText(popupView.getContext(), "Gegenstand hinzugefügt", Toast.LENGTH_SHORT).show();
                 }
             }
         });

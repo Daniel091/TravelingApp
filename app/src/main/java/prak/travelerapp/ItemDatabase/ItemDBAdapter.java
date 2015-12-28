@@ -9,7 +9,6 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
@@ -123,7 +122,7 @@ public class ItemDBAdapter {
         ContentValues values = new ContentValues();
         values.put(ItemDBHelper.COLUMN_NAME, itemName);
         values.put(ItemDBHelper.COLUMN_GENDER, geschlecht);
-        values.put(ItemDBHelper.COLUMN_TROCKEN, trocken);
+        values.put(ItemDBHelper.COLUMN_NASS, trocken);
         values.put(ItemDBHelper.COLUMN_STRANDURLAUB, strandurlaub);
         values.put(ItemDBHelper.COLUMN_STAEDTETRIP, staedtetrip);
         values.put(ItemDBHelper.COLUMN_SKIFAHREN, skifahren);
@@ -151,7 +150,7 @@ public class ItemDBAdapter {
         int idIndex = cursor.getColumnIndex(ItemDBHelper.COLUMN_ID);
         int idName = cursor.getColumnIndex(ItemDBHelper.COLUMN_NAME);
         int idSex = cursor.getColumnIndex(ItemDBHelper.COLUMN_GENDER);
-        int idTrocken = cursor.getColumnIndex(ItemDBHelper.COLUMN_TROCKEN);
+        int idTrocken = cursor.getColumnIndex(ItemDBHelper.COLUMN_NASS);
         int idStrandurlaub = cursor.getColumnIndex(ItemDBHelper.COLUMN_STRANDURLAUB);
         int idStaedtetrip = cursor.getColumnIndex(ItemDBHelper.COLUMN_STAEDTETRIP);
         int idSkifahren = cursor.getColumnIndex(ItemDBHelper.COLUMN_SKIFAHREN);

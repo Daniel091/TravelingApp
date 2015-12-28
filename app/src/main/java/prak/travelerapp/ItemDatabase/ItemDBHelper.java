@@ -30,7 +30,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "NAME";
     public static final String TABLE_NAME = "item_table";
     public static final String COLUMN_GENDER = "GESCHLECHT";
-    public static final String COLUMN_TROCKEN = "TROCKEN";
+    public static final String COLUMN_NASS = "NASS";
     public static final String COLUMN_STAEDTETRIP = "STAEDTETRIP";
     public static final String COLUMN_STRANDURLAUB = "STRANDURLAUB";
     public static final String COLUMN_SKIFAHREN = "SKIFAHREN";
@@ -45,7 +45,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
             COLUMN_ID,
             COLUMN_NAME,
             COLUMN_GENDER,
-            COLUMN_TROCKEN,
+            COLUMN_NASS,
             COLUMN_STAEDTETRIP,
             COLUMN_STRANDURLAUB,
             COLUMN_SKIFAHREN,

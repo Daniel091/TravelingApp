@@ -262,15 +262,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
-      //  if (!loadImageFromStorage(path_fromPref)) {
+        if (!loadImageFromStorage(path_fromPref)) {
             GetImageURLTask getImageURLTask = new GetImageURLTask();
             getImageURLTask.delegate = this;
 
             getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
             Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
-      /*  } else {
+        } else {
             Log.d("LandingFrag","Image file is there, no need to make http request");
-        }*/
+        }
     }
 
     @Override

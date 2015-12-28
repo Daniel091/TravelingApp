@@ -27,7 +27,7 @@
                 android:id="@+id/textview_newTrip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Neues Item"
+                android:text="Neuer Gegenstand"
                 android:textColor="@color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp"
@@ -117,7 +117,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Item hinzufügen"
+        android:text="Gegenstand hinzufügen"
         android:textStyle="bold"
         android:id="@+id/button_final_add"
         android:layout_gravity="center_horizontal"

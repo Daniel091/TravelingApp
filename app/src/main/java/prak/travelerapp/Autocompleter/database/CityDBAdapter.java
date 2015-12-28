@@ -86,7 +86,7 @@ public class CityDBAdapter {
             sql += "SELECT * FROM " + tableName;
             sql += " WHERE " + fieldObjectName + " LIKE '" + searchTerm + "%'";
             sql += " ORDER BY " + fieldObjectId + " DESC";
-            sql += " LIMIT 0,5";
+            sql += " LIMIT 0,15";
         }else{
             Log.d("mw", searchTerm);
             String searchTermWithoutUmlaute = searchTerm;
@@ -98,7 +98,7 @@ public class CityDBAdapter {
             sql += "SELECT * FROM " + tableName;
             sql += " WHERE " + fieldObjectName + " LIKE '" + searchTerm + "%' OR " + fieldObjectName + " LIKE '"  + searchTermWithoutUmlaute + "%'";
             sql += " ORDER BY " + fieldObjectId + " DESC";
-            sql += " LIMIT 0,5";
+            sql += " LIMIT 0,15";
         }
 
         // execute the query
