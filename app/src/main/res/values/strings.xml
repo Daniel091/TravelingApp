@@ -40,6 +40,7 @@
     <string name="cancel">Reise abbrechen</string>
     <string name="popup_text">Aktuelle Reise abbrechen?</string>
     <string name="popup_cancel">Abbrechen</string>
+    <string name="Items_remaining">Es fehlen noch</string>
     <string name="popup_ok">Ok</string>
     <string-array name="menue_links">
         <item>TRAVeL</item>
