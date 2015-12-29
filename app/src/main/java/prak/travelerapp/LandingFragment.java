@@ -169,6 +169,11 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 popupWindow.dismiss();
                 dummyPopup.dismiss();
 
+                // Remove path of loaded image (image gets overwritten when a new trip is started)
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.saved_image_path), "default");
+                editor.apply();
+
                 StartFragment startFragment = new StartFragment();
                 ((MainActivity) getActivity()).checkActiveTrip();
                 ((MainActivity) getActivity()).clearBackstack();
@@ -262,25 +267,27 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         }
         missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
 
-        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"");
-        if (!loadImageFromStorage(path_fromPref)) {
-            GetImageURLTask getImageURLTask = new GetImageURLTask();
-            getImageURLTask.delegate = this;
-
-            getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
-            Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
+        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"default");
+        if (path_fromPref.equals("image_by_categorie")){
+            setDefaultPic();
         } else {
-            Log.d("LandingFrag","Image file is there, no need to make http request");
+            if (!loadImageFromStorage(path_fromPref)) {
+                GetImageURLTask getImageURLTask = new GetImageURLTask();
+                getImageURLTask.delegate = this;
+
+                getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
+                Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
+            } else {
+                Log.d("LandingFrag","Image file is there, no need to make http request");
+            }
         }
     }
 
     @Override
     public void getURLProcessFinish(String url) {
-
         GetImageFromURLTask getImageFromURLTask = new GetImageFromURLTask();
         getImageFromURLTask.delegate = this;
         getImageFromURLTask.execute(url);
-
     }
 
     @Override
@@ -334,6 +341,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 imageView.setImageResource(R.drawable.fireworks);
                 break;
         }
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
+        editor.apply();
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
