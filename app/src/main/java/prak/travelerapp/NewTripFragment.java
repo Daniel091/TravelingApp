@@ -41,6 +41,7 @@ import prak.travelerapp.Autocompleter.model.City;
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
+import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
 import prak.travelerapp.WeatherAPI.WeatherTask;
@@ -57,7 +58,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private DatePickerDialog arrivalDatePickerDialog,departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
     private FloatingActionButton button_submit;
-    private TripDBAdapter tripDBAdapter;
     private boolean firstSelect = true;
 
     private String[] traveltypeStrings;
@@ -264,19 +264,21 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
         TripItems tripItems = configureTripItems(gender, weather, type_one, type_two);
 
-        tripDBAdapter = new TripDBAdapter(getActivity());
+        TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
         tripDBAdapter.open();
         tripDBAdapter.insertTrip(tripItems, city, country, startDate, endDate, type_one, type_one, true);
+        tripDBAdapter.close();
 
         /* Clear Backstack, so User cant go back after submission, reason to do this here
         otherwise fragment is no longer attached to activity, when weather async task finishs*/
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        ((MainActivity) getActivity()).clearBackstack();
 
         // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
         //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
-        ((MainActivity) getActivity()).checkActiveTrip();
-        ((MainActivity) getActivity()).menueClick(2);
+        Trip activeTrip = ((MainActivity) getActivity()).checkActiveTrip();
+        //update die anzahl der verbleibenden Items im Menü
+        ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+        ((MainActivity) getActivity()).menueClick(1);
     }
 
     @Override

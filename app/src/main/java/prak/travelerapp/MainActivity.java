@@ -106,31 +106,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 1:
                 if (active_trip != null) {
                     fragment = new LandingFragment();
-                    setUpFragment(fragment);
+                    setUpFragment(fragment,true);
                 } else {
                     fragment = new StartFragment();
-                    setUpFragment(fragment);
+                    setUpFragment(fragment,true);
                 }
                 break;
             case 2:
                 if (active_trip != null) {
                     fragment = new ItemViewFragment();
-                    setUpFragment(fragment);
+                    setUpFragment(fragment,true);
                 } else {
                     Toast.makeText(this, "Du besitzt keine Aktive Reise", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 3:
                 fragment = new TripHistoryFragment();
-                setUpFragment(fragment);
+                setUpFragment(fragment,true);
                 break;
             case 4:
                 fragment = new SettingsFragment();
-                setUpFragment(fragment);
+                setUpFragment(fragment,true);
                 break;
             case 5:
                 fragment = new PlacePickerFragment();
-                setUpFragment(fragment);
+                setUpFragment(fragment,true);
                 break;
         }
         closeDrawer();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    public void setUpFragment(Fragment fragment) {
+    public void setUpFragment(Fragment fragment,boolean takeFromBackstack) {
         FragmentManager fragmentManager = getFragmentManager();
 
         String frag_name = fragment.getClass().getSimpleName();
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         boolean isFragmentInStack = isFragmentInBackstack(fragmentManager,fragment.getClass().getSimpleName());
 
-        if (isFragmentInStack){
+        if (isFragmentInStack && takeFromBackstack){
             //Log.d("Main", "Load Fragment with Tag " + fragment.getClass().getSimpleName() + " from Backstack");
             fragmentManager.popBackStackImmediate(fragment.getClass().getSimpleName(), 0);
         } else {
@@ -177,6 +177,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
         return false;
+    }
+
+    public void clearBackstack(){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void testTripDB(){

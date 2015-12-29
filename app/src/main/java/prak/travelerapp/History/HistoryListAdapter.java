@@ -1,4 +1,4 @@
-package prak.travelerapp;
+package prak.travelerapp.History;
 
 
 import android.content.Context;
@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import prak.travelerapp.R;
 import prak.travelerapp.TripDatabase.model.Trip;
+import prak.travelerapp.Utils;
 
 public class HistoryListAdapter extends ArrayAdapter<Trip> {
 

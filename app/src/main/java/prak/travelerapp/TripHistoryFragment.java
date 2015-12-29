@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import prak.travelerapp.History.HistoryListAdapter;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 
@@ -49,10 +51,23 @@ public class TripHistoryFragment extends Fragment {
         tripDBAdapter = new TripDBAdapter(getActivity());
         tripDBAdapter.open();
         ArrayList<Trip> oldTrips = tripDBAdapter.getOldTrips();
-        Trip[] tripArray = oldTrips.toArray(new Trip[oldTrips.size()]);
+        final Trip[] tripArray = oldTrips.toArray(new Trip[oldTrips.size()]);
 
         HistoryListAdapter adapter = new HistoryListAdapter(getActivity(), R.layout.history_list_item,tripArray);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                System.out.println(tripArray[position].getCity());
+                TripHistoryListFragment fragment = new TripHistoryListFragment();
+                fragment.trip = tripArray[position];
+                ((MainActivity) getActivity()).setUpFragment(fragment,false);
+
+
+            }
+        });
     }
 
 }

@@ -69,7 +69,7 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
                 break;
             case R.id.button_newTrip:
                 Fragment newTripFragment = new NewTripFragment();
-                ((MainActivity) getActivity()).setUpFragment(newTripFragment);
+                ((MainActivity) getActivity()).setUpFragment(newTripFragment,false);
                 break;
         }
     }

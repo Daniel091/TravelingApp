@@ -171,7 +171,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
                 StartFragment startFragment = new StartFragment();
                 ((MainActivity) getActivity()).checkActiveTrip();
-                ((MainActivity) getActivity()).setUpFragment(startFragment);
+                ((MainActivity) getActivity()).clearBackstack();
+                ((MainActivity) getActivity()).setUpFragment(startFragment,false);
             }
         });
 

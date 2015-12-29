@@ -238,7 +238,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listAdapter.listener = this;
 
         expListView.setAdapter(listAdapter);
-        //expListView.setAdapter(dataSetArrayAdapter);
     }
 
     @Override
