@@ -90,6 +90,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Prepare youre views
     }
 
+    public void setUpMenu(){
+        menue_links = getResources().getStringArray(R.array.menue_links);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        listView = (ListView) findViewById(R.id.drawerList);
+        menueApdapter = new MenueApdapter(this);
+        if(active_trip != null){
+            updateMenueRemainingItems(active_trip);
+        }
+        listView.setAdapter(menueApdapter);
+        listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.performItemClick(listView.getChildAt(2), 2, listView.getItemIdAtPosition(2));
+
+    }
+
     public void openDrawer(){
         drawerLayout.openDrawer(listView);
     }
@@ -206,16 +221,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void menueClick(int pos) {
         if (listView != null){
-            listView.performItemClick(listView.getChildAt(pos), pos, listView.getItemIdAtPosition(pos));
+            listView.performItemClick(listView.getAdapter().getView(pos, null, null), pos, listView.getAdapter().getItemId(pos));
+            listView.clearChoices();
+            menueApdapter.notifyDataSetChanged();
         }
-    }
-
-    public void uncheckMenuAt(int pos){
-
-        ListView listView = (ListView) findViewById(R.id.drawerList);
-        listView.clearChoices();
-        listView.requestLayout();
-
     }
 
 
