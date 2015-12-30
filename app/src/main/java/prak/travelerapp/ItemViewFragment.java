@@ -71,7 +71,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private int windowHeight;
     private EditText userInput;
     private Spinner spinner;
-    private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente"};
+    private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente", "Sonstiges"};
     private Button finalAddButton;
     private ImageButton button_hamburger;
     private TextView tripCity;
@@ -198,6 +198,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listDataHeader.add("Hygiene");
         listDataHeader.add("Equipment");
         listDataHeader.add("Dokumente");
+        listDataHeader.add("Sonstiges");
 
 
         HashMap<String, List<ListItem>> listDataChild = new HashMap<String, List<ListItem>>();
@@ -207,6 +208,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         List<ListItem> hygiene = new ArrayList<ListItem>();
         List<ListItem> equipment = new ArrayList<ListItem>();
         List<ListItem> dokumente = new ArrayList<ListItem>();
+        List<ListItem> sonstiges = new ArrayList<ListItem>();
 
         // erstellt Listitems aus den daten der ItemList und den tripitems
         for(int i = 0; i < items.size(); i++){
@@ -224,6 +226,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 equipment.add(item);
             } else if (dataSet.getKategorie() == 3) {
                 dokumente.add(item);
+            } else if (dataSet.getKategorie() == 4) {
+                sonstiges.add(item);
             }
         }
 
@@ -231,6 +235,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listDataChild.put(listDataHeader.get(1), hygiene);
         listDataChild.put(listDataHeader.get(2), equipment);
         listDataChild.put(listDataHeader.get(3), dokumente);
+        listDataChild.put(listDataHeader.get(4), sonstiges);
         // ---------------------------------------------------
 
         // setting list adapter
@@ -373,6 +378,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             case 3:
                 // Was passiert wenn "Dokumente" ausgewählt wird
                 customCat = 3;
+                break;
+            case 4:
+                // Was passiert wenn "Sonstiges" ausgewählt wird
+                customCat = 4;
                 break;
         }
     }
