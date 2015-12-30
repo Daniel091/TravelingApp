@@ -3,6 +3,7 @@ package prak.travelerapp;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -77,6 +78,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private TextView tripCity;
     private Trip activeTrip;
 
+    private Button delete_final_button;
+    private Button delete_for_trip;
+
     // Werte für das vom User hinzugefügte Item
     private String customItem; // Name des manuellen Icons
     private int customCat;  // Gewählte Kategorie des ausgewählten Icons
@@ -118,7 +122,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     int groupPosition = ExpandableListView.getPackedPositionGroup(id);
                     int childPosition = ExpandableListView.getPackedPositionChild(id);
                     ListItem listItem = listAdapter.getChild(groupPosition, childPosition);
-                    System.out.print("dhcoiufhefouhuoehw");
+
+                    showDummyPopup(view);
+                    showDeletePopup(view);
+
                     return true;
                 }
                 return false;
@@ -164,7 +171,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
         Collections.sort(itemList);
 
-        showAllListEntries(itemList,tripitems);
+        showAllListEntries(itemList, tripitems);
     }
 
     @Override
@@ -359,6 +366,55 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
     }
 
+    // Popup zum löschen eines Items
+    private void showDeletePopup(View anchorView) {
+        final View popupView = inflater.inflate(R.layout.delete_item_popup, container, false);
+
+        final PopupWindow popupWindow = new PopupWindow(popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        delete_for_trip = (Button) popupView.findViewById(R.id.button_delete_for_trip);
+        delete_for_trip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO wenn Item nur für aktuelle Reise gelöscht wird
+
+                popupWindow.dismiss();
+
+                Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        delete_final_button = (Button) popupView.findViewById(R.id.button_delete_final);
+        delete_final_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //TODO wenn Item für immer gelöscht wird
+
+                popupWindow.dismiss();
+                Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        // Listener, der abfängt sobald das popup window geschlossen wird und damit automatisch
+        // das dummy popup mitschliesst
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                dummyPopup.dismiss();
+            }
+        });
+
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        int location[] = new int[2];
+        anchorView.getLocationOnScreen(location);
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
+
+    }
     // Regelt was passiert, wenn eine Kategorie im Spinner gewählt wurde
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 

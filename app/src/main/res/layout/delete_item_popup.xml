@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gegenstand löschen"
+        android:textStyle="bold"
+        android:id="@+id/textView"
+        android:textSize="@dimen/text_medium"
+
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/landing_divider"/>
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Für aktuelle Reise löschen"
+        android:textStyle="bold"
+        android:id="@+id/button_delete_for_trip"
+        android:textColor="@color/white" />
+
+    <Button
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Für immer löschen"
+        android:id="@+id/button_delete_final"
+        android:textColor="@color/white" />
+
+</LinearLayout>
