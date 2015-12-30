@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
@@ -124,7 +125,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     ListItem listItem = listAdapter.getChild(groupPosition, childPosition);
 
                     showDummyPopup(view);
-                    showDeletePopup(view);
+                    showDeletePopup(view,listItem);
 
                     return true;
                 }
@@ -367,7 +368,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     // Popup zum löschen eines Items
-    private void showDeletePopup(View anchorView) {
+    private void showDeletePopup(View anchorView,ListItem listItem) {
+        final ListItem item = listItem;
         final View popupView = inflater.inflate(R.layout.delete_item_popup, container, false);
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
@@ -378,7 +380,25 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
 
-                // TODO wenn Item nur für aktuelle Reise gelöscht wird
+                //remove item from itemlist
+                for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
+                    Dataset dataset = it.next();
+                    if (dataset.getItemID() == item.getId()) {
+                        it.remove();
+                        break;
+                    }
+                }
+
+                //remove item from tripitems
+                for (Iterator<Tupel> it = activeTrip.getTripItems().getItems().iterator(); it.hasNext(); ) {
+                    Tupel tupel = it.next();
+                    if (tupel.getX() == item.getId()) {
+                        it.remove();
+                        break;
+                    }
+                }
+
+                showAllListEntries(itemList, activeTrip.getTripItems().getItems());
 
                 popupWindow.dismiss();
 
@@ -391,7 +411,26 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
 
-                //TODO wenn Item für immer gelöscht wird
+                //remove item from itemlist
+                for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
+                    Dataset dataset = it.next();
+                    if (dataset.getItemID() == item.getId()) {
+                        it.remove();
+                        break;
+                    }
+                }
+
+                //remove item from tripitems
+                for (Iterator<Tupel> it = activeTrip.getTripItems().getItems().iterator(); it.hasNext(); ) {
+                    Tupel tupel = it.next();
+                    if (tupel.getX() == item.getId()) {
+                        it.remove();
+                        break;
+                    }
+                }
+
+                itemDBAdapter.deleteItem(item.getId());
+                showAllListEntries(itemList, activeTrip.getTripItems().getItems());
 
                 popupWindow.dismiss();
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();

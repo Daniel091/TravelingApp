@@ -217,6 +217,10 @@ public class ItemDBAdapter {
         return null;
     }
 
+    public void deleteItem(int id){
+        itemDb.delete(ItemDBHelper.TABLE_NAME,ItemDBHelper.COLUMN_ID + "=" + id,null);
+    }
+
     /**
      * Matche von TravelType auf die entsprechende Spalte in der DB
      * @param type Typ
