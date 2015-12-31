@@ -1,14 +1,15 @@
 package prak.travelerapp;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import prak.travelerapp.Notifications.NotificationReceiver;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.TravelType;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private String[] menue_links;
     private TripDBAdapter tripDBAdapter;
     private Trip active_trip;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
 
-        //testTripDB();
+        if (active_trip != null) {
+            setUpNotificationService(active_trip.getStartdate().minusDays(2));
+        }
     }
 
     @Override
@@ -239,4 +244,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menueApdapter.setRemainingItems(remainingItems);
     }
 
+    public void setUpNotificationService(DateTime date) {
+            //Calendar calender = Calendar.getInstance();
+            Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
+            // To test notification set date.getMillis to calender.getTimeInMillis
+    }
 }

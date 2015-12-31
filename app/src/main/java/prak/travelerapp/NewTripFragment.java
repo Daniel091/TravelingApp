@@ -276,9 +276,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         // TODO CHECK this error, maybe better to just call a setActiveTrip Method in MainActivity
         //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
         Trip activeTrip = ((MainActivity) getActivity()).checkActiveTrip();
-        //update die anzahl der verbleibenden Items im Menü
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
         ((MainActivity) getActivity()).menueClick(1);
+        ((MainActivity) getActivity()).setUpNotificationService(activeTrip.getStartdate().minusDays(2));
     }
 
     @Override

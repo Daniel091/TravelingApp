@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- PlacePicker also requires OpenGL ES version 2 -->
     <uses-feature
@@ -34,14 +35,12 @@
             </intent-filter>
         </activity>
 
-
         <activity android:name=".PlaceApi.AutocompleteActivity" />
 
-        <activity
-            android:name=".LandingFragment"
-            android:label="@string/title_activity_landing"
-            android:theme="@style/Basic.NoActionBar" >
-        </activity>
+        <service android:name=".Notifications.NotificationService"
+            android:enabled="true" />
+
+        <receiver android:name=".Notifications.NotificationReceiver"/>
 
     </application>
 
