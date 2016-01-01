@@ -23,6 +23,7 @@
     <string name="button_loeschen">Löschen</string>
     <string name="einstellung_vergangene">Vergangene Reisen</string>
     <string name="custom_items_delete">Selbst Hinzugefügte Items</string>
+    <string name="notifications">Benachrichtigungen</string>
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string name="missingThings">es fehlen noch %1$s Dinge</string>
@@ -35,7 +36,7 @@
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_image_path"></string>
     <string name="saved_gender">gender</string>
-    <string name="saved_notification_var">1</string>
+    <integer name="saved_notification_var">1</integer>
     <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
     <string name="category2_spinner_placeholder">Optional</string>
     <string name="cancel">Reise abbrechen</string>

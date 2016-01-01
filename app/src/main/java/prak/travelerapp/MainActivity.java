@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,9 +23,7 @@ import org.joda.time.DateTime;
 import prak.travelerapp.Notifications.NotificationReceiver;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
-import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
-import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.TripDatabase.model.Tupel;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -231,19 +228,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void setUpNotificationService(DateTime date) {
-            //Calendar calender = Calendar.getInstance();
-            Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+        //Calendar calender = Calendar.getInstance();
+        Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
-            // Always cancel alarm before resetting it
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        // Always cancel alarm before resetting it
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
         SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String notification_var = sharedPref.getString(getString(R.string.saved_notification_var), "1");
+        int notification_var = sharedPref.getInt(String.valueOf(R.integer.saved_notification_var),1);
         Log.d("Main","Value of minutes " + notification_var);
             // 0 means notification was pushed already, 1 not pushed and enabled, 2 notification disabled
-            switch (Integer.valueOf(notification_var)){
+            switch (notification_var){
                 case 0:
                         break;
                 case 1:

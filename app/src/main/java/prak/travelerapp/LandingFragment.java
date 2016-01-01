@@ -172,6 +172,13 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 // Remove path of loaded image (image gets overwritten when a new trip is started)
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(getString(R.string.saved_image_path), "default");
+
+                int notification_var = sharedPref.getInt(String.valueOf(R.integer.saved_notification_var), -1);
+                if (notification_var == 0 || notification_var == 1){
+                    editor.putInt(String.valueOf(R.integer.saved_notification_var), 1);
+                } else {
+                    editor.putInt(String.valueOf(R.integer.saved_notification_var), 0);
+                }
                 editor.apply();
 
                 StartFragment startFragment = new StartFragment();

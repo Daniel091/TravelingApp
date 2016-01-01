@@ -64,7 +64,7 @@ public class NotificationService extends Service{
             // Put in sharedPref that Push Notification has been fired
             SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.saved_notification_var),"0");
+            editor.putInt(String.valueOf(R.integer.saved_notification_var),0);
             editor.apply();
 
             return remainingItems;
@@ -99,6 +99,7 @@ public class NotificationService extends Service{
 
             Notification notification = builder.build();
             NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
             manager.notify(0, notification);
 
             stopSelf();
