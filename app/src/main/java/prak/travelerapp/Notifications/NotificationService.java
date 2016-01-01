@@ -5,13 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.NotificationCompat;
 
 import prak.travelerapp.MainActivity;
 import prak.travelerapp.R;
@@ -31,19 +34,48 @@ public class NotificationService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        Trip active_trip = getActiveTrip();
+        NotificationTask task = new NotificationTask(getBaseContext());
+        task.execute();
+        return START_NOT_STICKY;
+    }
 
-        if (active_trip != null) {
+    private class NotificationTask extends AsyncTask<Void, Void, Integer> {
+        private Context context;
+        public NotificationTask(Context context){
+            this.context = context;
+        }
+        @Override
+        protected Integer doInBackground(Void... params) {
+            // get Active Trip
+            TripDBAdapter tripDBAdapter = new TripDBAdapter(context);
+            tripDBAdapter.open();
+            Trip active_trip = tripDBAdapter.getActiveTrip();
+            tripDBAdapter.close();
+
             int remainingItems = 0;
-            for (Tupel t : active_trip.getTripItems().getItems()) {
-                if (t.getY() == 0) {
-                    remainingItems++;
+            if (active_trip != null) {
+                for (Tupel t : active_trip.getTripItems().getItems()) {
+                    if (t.getY() == 0) {
+                        remainingItems++;
+                    }
                 }
             }
-            Bitmap icon = BitmapFactory.decodeResource(getBaseContext().getResources(),
-                    R.mipmap.ic_launcher);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            // Put in sharedPref that Push Notification has been fired
+            SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.saved_notification_var),"0");
+            editor.apply();
+
+            return remainingItems;
+        }
+
+
+        @Override
+        protected void onPostExecute(Integer remainingItems) {
+            Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             builder.setAutoCancel(true);
             builder.setContentTitle("TRAVeL");
             builder.setContentText("Es fehlen noch " + remainingItems + " Dinge");
@@ -52,9 +84,9 @@ public class NotificationService extends Service{
             builder.setSmallIcon(R.mipmap.ic_check);
             builder.setLargeIcon(icon);
 
-            Intent resultIntent = new Intent(this, MainActivity.class);
+            Intent resultIntent = new Intent(context, MainActivity.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                 stackBuilder.addParentStack(MainActivity.class);
                 stackBuilder.addNextIntent(resultIntent);
                 PendingIntent resultPendingIntent =
@@ -66,18 +98,10 @@ public class NotificationService extends Service{
             }
 
             Notification notification = builder.build();
-            NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             manager.notify(0, notification);
+
+            stopSelf();
         }
-        return START_NOT_STICKY;
     }
-
-    public Trip getActiveTrip(){
-        TripDBAdapter tripDBAdapter = new TripDBAdapter(this);
-        tripDBAdapter.open();
-        Trip active_trip = tripDBAdapter.getActiveTrip();
-        tripDBAdapter.close();
-        return active_trip;
-    }
-
 }

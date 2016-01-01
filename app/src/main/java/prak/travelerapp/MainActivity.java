@@ -5,8 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -60,14 +63,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
 
-        if (active_trip != null) {
-            setUpNotificationService(active_trip.getStartdate().minusDays(2));
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        if (active_trip != null) {
+            setUpNotificationService(active_trip.getStartdate().minusDays(2));
+        }
     }
 
     public Trip checkActiveTrip(){
@@ -107,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.performItemClick(listView.getChildAt(2), 2, listView.getItemIdAtPosition(2));
-
     }
 
     public void openDrawer(){
@@ -204,22 +206,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    public void testTripDB(){
-
-        String s = "(3,0);(4,0)";
-        TripItems items = new TripItems(s);
-        DateTime startDate = new DateTime(2016,01,12,0,0);
-        DateTime endDate = new DateTime(2016,01,15,0,0);
-
-
-        tripDBAdapter = new TripDBAdapter(this);
-        tripDBAdapter.open();
-
-        tripDBAdapter.insertTrip(items, "Berlin", "DE" ,startDate,endDate, TravelType.WANDERN, TravelType.SKIFAHREN, false);
-        Trip activeTrip = tripDBAdapter.getActiveTrip();
-        System.out.println(activeTrip.getCity());
-    }
-
     public Trip getActive_trip() {
         return active_trip;
     }
@@ -249,8 +235,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
+            // Always cancel alarm before resetting it
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
-            // To test notification set date.getMillis to calender.getTimeInMillis
+        alarmManager.cancel(pendingIntent);
+
+        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String notification_var = sharedPref.getString(getString(R.string.saved_notification_var), "1");
+        Log.d("Main","Value of minutes " + notification_var);
+            // 0 means notification was pushed already, 1 not pushed and enabled, 2 notification disabled
+            switch (Integer.valueOf(notification_var)){
+                case 0:
+                        break;
+                case 1:
+                        alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
+                        break;
+                case 2:
+                        break;
+            }
     }
 }

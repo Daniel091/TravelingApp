@@ -35,6 +35,7 @@
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_image_path"></string>
     <string name="saved_gender">gender</string>
+    <string name="saved_notification_var">1</string>
     <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
     <string name="category2_spinner_placeholder">Optional</string>
     <string name="cancel">Reise abbrechen</string>
@@ -51,10 +52,10 @@
         <item>Places Test</item>
     </string-array>
 
-        <string-array name="category_array">
-            <item>Städtetrip</item>
-            <item>Wandern</item>
-            <item>Skifahren</item>
-            <item>Festival</item>
-        </string-array>
+    <string-array name="category_array">
+        <item>Städtetrip</item>
+        <item>Wandern</item>
+        <item>Skifahren</item>
+        <item>Festival</item>
+    </string-array>
 </resources>
