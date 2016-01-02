@@ -58,6 +58,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
 
+    int[] openedSections = new int[5];
+
     // Holt Items aus der DB
     ArrayList<Dataset> itemList;
 
@@ -140,9 +142,11 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 if (parent.isGroupExpanded(groupPosition)) {
                     parent.collapseGroup(groupPosition);
+                    openedSections[groupPosition] = 0;
                 } else {
                     boolean animateExpansion = false;
                     parent.expandGroup(groupPosition, animateExpansion);
+                    openedSections[groupPosition] = 1;
                 }
                 //telling the listView we have handled the group click, and don't want the default actions.
                 return true;
@@ -251,6 +255,13 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listAdapter.listener = this;
 
         expListView.setAdapter(listAdapter);
+
+        //open previous opened sections
+        for(int i = 0;i < openedSections.length;i++){
+            if(openedSections[i] == 1){
+                expListView.expandGroup(i,false);
+            }
+        }
     }
 
     @Override
