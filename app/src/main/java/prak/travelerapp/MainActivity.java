@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Prepare youre views
     }
 
-    public void setUpMenu(){
+    public void setUpMenu(int checkedItem){
         menue_links = getResources().getStringArray(R.array.menue_links);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         listView = (ListView) findViewById(R.id.drawerList);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setAdapter(menueApdapter);
         listView.setOnItemClickListener(this);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        listView.performItemClick(listView.getChildAt(2), 2, listView.getItemIdAtPosition(2));
+        listView.performItemClick(listView.getChildAt(checkedItem), checkedItem, listView.getItemIdAtPosition(checkedItem));
     }
 
     public void openDrawer(){
@@ -159,6 +159,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1){
             getFragmentManager().popBackStack();
+            System.out.println(getFragmentManager().getBackStackEntryCount());
+            if(getFragmentManager().getBackStackEntryCount() == 2){
+                //going back ti Landingfragment-> setUpTheMenu
+                setUpMenu(1);
+            }
         } else {
             super.onBackPressed();
         }

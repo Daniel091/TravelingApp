@@ -134,7 +134,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         koffer_packen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).setUpMenu();
+                ((MainActivity) getActivity()).setUpMenu(2);
             }
         });
     }
