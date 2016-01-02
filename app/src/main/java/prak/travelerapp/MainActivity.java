@@ -159,10 +159,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1){
             getFragmentManager().popBackStack();
-            System.out.println(getFragmentManager().getBackStackEntryCount());
-            if(getFragmentManager().getBackStackEntryCount() == 2){
-                //going back ti Landingfragment-> setUpTheMenu
-                setUpMenu(1);
+            String fragmentTag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 2).getName();
+            System.out.println(fragmentTag);
+            switch (fragmentTag){
+                case "LandingFragment":
+                    setUpMenu(1);
+                    break;
+                case "ItemViewFragment":
+                    setUpMenu(2);
+                    break;
+                case "TripHistoryFragment":
+                    setUpMenu(3);
+                    break;
+                case "TripHistoryListFragment":
+                    setUpMenu(3);
+                    break;
+                case "SettingsFragment":
+                    setUpMenu(4);
             }
         } else {
             super.onBackPressed();
