@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
-
     }
 
     @Override
@@ -81,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(tripIsOver){
                 Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
                 tripDBAdapter.setAllTripsInactive();
+                // TODO Reset Shared Notifications Shared Preferences
                 return null;
             }
         }

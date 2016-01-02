@@ -56,9 +56,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private LayoutInflater inflater;
     private ViewGroup container;
 
-    private int screenheight;
-    private int screenwidth;
-
     DateTime currentDate = new DateTime();
     private int daysToTrip;
 
@@ -218,8 +215,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        screenheight = displaymetrics.heightPixels;
-        screenwidth = displaymetrics.widthPixels;
 
         // Get remaining days to trip
         float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
