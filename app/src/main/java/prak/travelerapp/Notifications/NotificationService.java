@@ -79,11 +79,10 @@ public class NotificationService extends Service{
                 Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher);
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                 builder.setAutoCancel(true);
-                builder.setContentTitle("TRAVeL");
+                builder.setContentTitle("TRAVeL Packliste");
                 builder.setContentText("Es fehlen noch " + remainingItems + " Dinge");
 
-                //TODO Better icon than checkmark ;)
-                builder.setSmallIcon(R.mipmap.ic_check);
+                builder.setSmallIcon(R.mipmap.ic_notification);
                 builder.setLargeIcon(icon);
 
                 Intent resultIntent = new Intent(context, MainActivity.class);
