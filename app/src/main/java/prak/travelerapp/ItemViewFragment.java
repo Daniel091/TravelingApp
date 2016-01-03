@@ -135,7 +135,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     ListItem listItem = listAdapter.getChild(groupPosition, childPosition);
 
                     showDummyPopup(view);
-                    showDeletePopup(view,listItem);
+                    showDeletePopup(view,listItem, groupPosition,childPosition);
 
                     return true;
                 }
@@ -356,6 +356,11 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
                     showAllListEntries(itemList, activeTrip.getTripItems().getItems());
 
+                    //get position of the new item -> scroll to position
+                    int groupPosition = listAdapter.getGroupPositionForItem(customDataSet.getItemID());
+                    int childPosition = listAdapter.getChildPositionForItem(customDataSet.getItemID());
+                    expListView.setSelectedChild(groupPosition,childPosition,true);
+
                     popupWindow.dismiss();
                     Toast.makeText(popupView.getContext(), "Gegenstand hinzugefügt", Toast.LENGTH_SHORT).show();
                 }
@@ -387,7 +392,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     // Popup zum löschen eines Items
-    private void showDeletePopup(View anchorView,ListItem listItem) {
+    private void showDeletePopup(View anchorView,ListItem listItem, final int groupPosition, final int childPosition) {
         final ListItem item = listItem;
         final View popupView = inflater.inflate(R.layout.delete_item_popup, container, false);
 
@@ -418,7 +423,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 }
 
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
-
+                expListView.setSelectedChild(groupPosition,childPosition-1,false);
                 popupWindow.dismiss();
 
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
@@ -430,6 +435,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onClick(View v) {
 
+                int groupOfDeletedItem = 0;
                 //remove item from itemlist
                 for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
                     Dataset dataset = it.next();
@@ -450,7 +456,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
                 itemDBAdapter.deleteItem(item.getId());
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
-
+                expListView.setSelectedChild(groupPosition,childPosition-1,false);
                 popupWindow.dismiss();
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
             }

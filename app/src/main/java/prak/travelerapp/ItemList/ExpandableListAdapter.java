@@ -11,7 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import prak.travelerapp.R;
 
@@ -44,6 +46,40 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     static class ViewHolder {
         protected TextView text;
         protected CheckBox checkbox;
+    }
+
+    public int getGroupPositionForItem(int id){
+        String groupName = "";
+        Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, List<ListItem>> pair = it.next();
+            List<ListItem> childs = pair.getValue();
+            for(ListItem child : childs){
+                if(child.getId() == id){
+                    groupName=pair.getKey();
+                }
+            }
+            for(int i = 0; i< _listDataHeader.size(); i++){
+                if(groupName.equals(_listDataHeader.get(i))){
+                    return i;
+                }
+            }
+            }
+        return -1;
+    }
+
+    public int getChildPositionForItem(int id){
+        Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, List<ListItem>> pair = it.next();
+            List<ListItem> childs = pair.getValue();
+            for(int i= 0; i<childs.size();i++){
+                if(childs.get(i).getId() == id){
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
