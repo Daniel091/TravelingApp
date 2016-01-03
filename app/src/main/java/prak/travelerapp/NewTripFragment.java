@@ -278,7 +278,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         Trip activeTrip = ((MainActivity) getActivity()).checkActiveTrip();
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
         ((MainActivity) getActivity()).menueClick(1);
-        ((MainActivity) getActivity()).setUpNotificationService(activeTrip.getStartdate().minusDays(2));
+        ((MainActivity) getActivity()).setUpNotificationService(activeTrip.getStartdate());
     }
 
     @Override

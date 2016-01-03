@@ -36,7 +36,8 @@
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_image_path"></string>
     <string name="saved_gender">gender</string>
-    <integer name="saved_notification_var">1</integer>
+    <bool name="day_before_notification">false</bool>
+    <bool name="push_notifications">true</bool>
     <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
     <string name="category2_spinner_placeholder">Optional</string>
     <string name="cancel">Reise abbrechen</string>

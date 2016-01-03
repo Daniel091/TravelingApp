@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import prak.travelerapp.MainActivity;
 import prak.travelerapp.R;
@@ -46,6 +47,7 @@ public class NotificationService extends Service{
         }
         @Override
         protected Integer doInBackground(Void... params) {
+            Log.d("Started Task", "Started");
             // get Active Trip
             TripDBAdapter tripDBAdapter = new TripDBAdapter(context);
             tripDBAdapter.open();
@@ -61,10 +63,10 @@ public class NotificationService extends Service{
                 }
             }
 
-            // Put in sharedPref that Push Notification has been fired
+            // Put in sharedPref that Push Notification will be fired
             SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt(String.valueOf(R.integer.saved_notification_var),0);
+            editor.putBoolean(String.valueOf(R.bool.day_before_notification), true);
             editor.apply();
 
             return remainingItems;
@@ -73,35 +75,39 @@ public class NotificationService extends Service{
 
         @Override
         protected void onPostExecute(Integer remainingItems) {
-            Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher);
+            if (remainingItems>0) {
+                Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                builder.setAutoCancel(true);
+                builder.setContentTitle("TRAVeL");
+                builder.setContentText("Es fehlen noch " + remainingItems + " Dinge");
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setAutoCancel(true);
-            builder.setContentTitle("TRAVeL");
-            builder.setContentText("Es fehlen noch " + remainingItems + " Dinge");
+                //TODO Better icon than checkmark ;)
+                builder.setSmallIcon(R.mipmap.ic_check);
+                builder.setLargeIcon(icon);
 
-            //TODO Better icon than checkmark ;)
-            builder.setSmallIcon(R.mipmap.ic_check);
-            builder.setLargeIcon(icon);
+                Intent resultIntent = new Intent(context, MainActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                    stackBuilder.addParentStack(MainActivity.class);
+                    stackBuilder.addNextIntent(resultIntent);
+                    PendingIntent resultPendingIntent =
+                            stackBuilder.getPendingIntent(
+                                    0,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                            );
+                    builder.setContentIntent(resultPendingIntent);
+                }
 
-            Intent resultIntent = new Intent(context, MainActivity.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                stackBuilder.addParentStack(MainActivity.class);
-                stackBuilder.addNextIntent(resultIntent);
-                PendingIntent resultPendingIntent =
-                        stackBuilder.getPendingIntent(
-                                0,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
-                builder.setContentIntent(resultPendingIntent);
+                Notification notification = builder.build();
+                NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                notification.defaults|= Notification.DEFAULT_SOUND;
+                notification.defaults|= Notification.DEFAULT_LIGHTS;
+                notification.defaults|= Notification.DEFAULT_VIBRATE;
+                notification.flags = Notification.FLAG_AUTO_CANCEL;
+                manager.notify(0, notification);
             }
-
-            Notification notification = builder.build();
-            NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
-            manager.notify(0, notification);
-
+            Log.d("Pushed Notification", "Successfully");
             stopSelf();
         }
     }

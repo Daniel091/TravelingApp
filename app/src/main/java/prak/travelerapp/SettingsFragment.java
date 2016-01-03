@@ -32,33 +32,15 @@ public class SettingsFragment extends Fragment {
 
         aSwitch = (Switch) view.findViewById(R.id.switchNotifications);
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        int notification_var = sharedPref.getInt(String.valueOf(R.integer.saved_notification_var), -1);
-        // 0 means notification was pushed already, 1 not pushed and enabled, 2 notification disabled
-        switch (notification_var){
-            case 0:
-            case 1:
-                aSwitch.setChecked(true);
-                break;
-            case 2:
-                aSwitch.setChecked(false);
-                break;
-        }
+        boolean push_enabled = sharedPref.getBoolean(String.valueOf(R.bool.push_notifications), true);
+        aSwitch.setChecked(push_enabled);
+
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                int notification_var = sharedPref.getInt(String.valueOf(R.integer.saved_notification_var), -1);
                 SharedPreferences.Editor editor = sharedPref.edit();
-
-                if (isChecked) {
-                    if (notification_var == 0){
-                        editor.putInt(String.valueOf(R.integer.saved_notification_var),0);
-                    } else {
-                        editor.putInt(String.valueOf(R.integer.saved_notification_var),1);
-                    }
-                } else {
-                    editor.putInt(String.valueOf(R.integer.saved_notification_var),2);
-                }
+                editor.putBoolean(String.valueOf(R.bool.push_notifications),isChecked);
                 editor.apply();
             }
         });

@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import prak.travelerapp.Notifications.NotificationReceiver;
 import prak.travelerapp.PlaceApi.PlacePickerFragment;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onStart() {
         super.onStart();
         if (active_trip != null) {
-            setUpNotificationService(active_trip.getStartdate().minusDays(2));
+            setUpNotificationService(active_trip.getStartdate());
         }
     }
 
@@ -119,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(LOG_TAG,"Selected: " + menue_links[position] + " at " + position);
         Fragment fragment;
         switch(position) {
             case 1:
@@ -250,26 +251,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void setUpNotificationService(DateTime date) {
-        //Calendar calender = Calendar.getInstance();
-        Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
-
-        // Always cancel alarm before resetting it
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-
         SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        int notification_var = sharedPref.getInt(String.valueOf(R.integer.saved_notification_var),1);
-        Log.d("Main","Value of minutes " + notification_var);
-            // 0 means notification was pushed already, 1 not pushed and enabled, 2 notification disabled
-            switch (notification_var){
-                case 0:
-                        break;
-                case 1:
-                        alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
-                        break;
-                case 2:
-                        break;
+
+        boolean push_enabled = sharedPref.getBoolean(String.valueOf(R.bool.push_notifications), true);
+        boolean day_before_pushed = sharedPref.getBoolean(String.valueOf(R.bool.day_before_notification),false);
+
+        date = date.minusDays(1);
+        date = date.plusHours(13);
+        date = date.plusMinutes(50);
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss");
+
+        Log.d("Main","Push: " + push_enabled +" ,"+ " day before pushed " + day_before_pushed);
+        Log.d("Main", " Push Date: " + date.toString(fmt) + " " + active_trip.getCity() + " start date: " + active_trip.getStartdate().toString(fmt));
+        if (push_enabled){
+            if (!day_before_pushed){
+                Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
+                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                //alarmManager.cancel(pendingIntent);
+                alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
             }
+        }
     }
 }
