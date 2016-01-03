@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class TripHistoryListFragment extends Fragment {
     private ExpandableListView listview;
     private ImageButton hamburger_button;
     public Trip trip;
+    private ImageView imageView_traveltype;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,9 +62,13 @@ public class TripHistoryListFragment extends Fragment {
         hamburger_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).openDrawer();
+                ((MainActivity) getActivity()).openDrawer();
             }
         });
+
+        imageView_traveltype = (ImageView) view.findViewById(R.id.traveltypeImage);
+        int resID = Utils.getDefaultPicResID(trip.getType1());
+        imageView_traveltype.setImageResource(resID);
 
         return view;
     }

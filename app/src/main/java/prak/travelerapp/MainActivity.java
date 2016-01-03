@@ -245,6 +245,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menueApdapter.setRemainingItems(remainingItems);
     }
 
+    public void resetRemainingItems(){
+        menueApdapter.setRemainingItems(0);
+    }
+
     public void setUpNotificationService(DateTime date) {
         //Calendar calender = Calendar.getInstance();
         Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
