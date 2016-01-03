@@ -4,11 +4,13 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -38,6 +41,7 @@ import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.ItemList.ExpandableListAdapter;
 import prak.travelerapp.ItemList.ItemCheckedListener;
 import prak.travelerapp.ItemList.ListItem;
+import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
@@ -78,6 +82,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente", "Sonstiges"};
     private Button finalAddButton;
     private ImageButton button_hamburger;
+    private ImageView imageView_location;
     private TextView tripCity;
     private Trip activeTrip;
 
@@ -115,6 +120,9 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
         activeTrip = ((MainActivity) getActivity()).getActive_trip();
         tripCity.setText(activeTrip.getCity());
+
+        imageView_location = (ImageView) view.findViewById(R.id.locationImage);
+        setLocationImage();
 
         expListView = (ExpandableListView) view.findViewById(R.id.item_list_view);
 
@@ -496,6 +504,26 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Nicht benötigt. Methode muss aber overrided sein.
+    }
+
+    public void setLocationImage(){
+        SharedPreferences sharedPref = getActivity().getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path), "default");
+
+        //check if default pic or API picture is used for this trip
+        if (path_fromPref.equals("image_by_categorie")){
+            int resID = Utils.getDefaultPicResID(activeTrip.getType1());
+            imageView_location.setImageResource(resID);
+        } else {
+            Bitmap image = Utils.loadImageFromStorage(path_fromPref);
+            //if loading API image fails -> use default pic
+            if (image == null) {
+                int resID = Utils.getDefaultPicResID(activeTrip.getType1());
+                imageView_location.setImageResource(resID);
+            } else {
+                imageView_location.setImageBitmap(image);
+            }
+        }
     }
 
 }

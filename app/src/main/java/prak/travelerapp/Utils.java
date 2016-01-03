@@ -1,7 +1,10 @@
 package prak.travelerapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.graphics.Typeface;
@@ -11,6 +14,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 
 import java.io.IOException;
@@ -95,6 +101,47 @@ public class Utils {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
         return date.toString(fmt);
 
+    }
+
+    public static Bitmap loadImageFromStorage(String path)
+    {
+        try {
+            File f=new File(path, "ActiveTrip.jpg");
+            if (f.exists()) {
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                return b;
+            } else {
+                return null;
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int getDefaultPicResID(TravelType type) {
+        switch (type){
+            case STRANDURLAUB:
+                return R.drawable.beach;
+            case STAEDTETRIP:
+                return R.drawable.city;
+            case GESCHAEFTSREISE:
+                return R.drawable.skyline2;
+            case SKIFAHREN:
+                return R.drawable.ski;
+            case CAMPING:
+                return R.drawable.camping;
+            case WANDERN:
+                return R.drawable.hiking;
+            case FESTIVAL:
+                return R.drawable.festival;
+            case PARTYURLAUB:
+                return R.drawable.fireworks;
+        }
+
+        return 0;
     }
 
 }

@@ -250,7 +250,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 };
                 weathertask.execute(new String[]{city,country});
             }else{
-                Toast.makeText(getActivity(), "Abreise Datum vor Start Datum", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Abreise Datum vor Anreise Datum", Toast.LENGTH_SHORT).show();
             }
 
         }else{

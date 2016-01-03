@@ -34,6 +34,7 @@ import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.Tupel;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
@@ -276,16 +277,18 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"default");
         if (path_fromPref.equals("image_by_categorie")){
-            setDefaultPic();
+            int resID = Utils.getDefaultPicResID(active_trip.getType1());
+            imageView.setImageResource(resID);
         } else {
-            if (!loadImageFromStorage(path_fromPref)) {
+            Bitmap image = Utils.loadImageFromStorage(path_fromPref);
+            if (image == null) {
                 GetImageURLTask getImageURLTask = new GetImageURLTask();
                 getImageURLTask.delegate = this;
 
                 getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
                 Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
             } else {
-                Log.d("LandingFrag","Image file is there, no need to make http request");
+                imageView.setImageBitmap(image);
             }
         }
     }
@@ -301,7 +304,13 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     public void getURLProcessFailed() {
         // TODO NO SAVE image Path here because no internet connection
         Log.d("mw", "URL Process failed, now Default Picture");
-        setDefaultPic();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
+        editor.apply();
+
+        int resID = Utils.getDefaultPicResID(active_trip.getType1());
+        imageView.setImageResource(resID);
+
     }
 
     @Override
@@ -318,39 +327,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public void getImageFromURLProcessFailed() {
         Log.d("mw", "Image Process Failed, now Default Picture");
-        setDefaultPic();
-    }
-
-    private void setDefaultPic() {
-        switch (active_trip.getType1()){
-            case STRANDURLAUB:
-                imageView.setImageResource(R.drawable.beach);
-                break;
-            case STAEDTETRIP:
-                imageView.setImageResource(R.drawable.city);
-                break;
-            case GESCHAEFTSREISE:
-                imageView.setImageResource(R.drawable.skyline2);
-                break;
-            case SKIFAHREN:
-                imageView.setImageResource(R.drawable.ski);
-                break;
-            case CAMPING:
-                imageView.setImageResource(R.drawable.camping);
-                break;
-            case WANDERN:
-                imageView.setImageResource(R.drawable.hiking);
-                break;
-            case FESTIVAL:
-                imageView.setImageResource(R.drawable.festival);
-                break;
-            case PARTYURLAUB:
-                imageView.setImageResource(R.drawable.fireworks);
-                break;
-        }
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
         editor.apply();
+
+        int resID = Utils.getDefaultPicResID(active_trip.getType1());
+        imageView.setImageResource(resID);
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
@@ -394,25 +376,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             fos.close();
         }
         return directory.getAbsolutePath();
-    }
-
-    private boolean loadImageFromStorage(String path)
-    {
-        try {
-            File f=new File(path, "ActiveTrip.jpg");
-            if (f.exists()) {
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                imageView.setImageBitmap(b);
-                return true;
-            } else {
-                return false;
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     @Override
