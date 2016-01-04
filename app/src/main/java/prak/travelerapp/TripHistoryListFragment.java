@@ -8,22 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import prak.travelerapp.History.HistoryItemListAdapter;
 import prak.travelerapp.ItemDatabase.Dataset;
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
-import prak.travelerapp.ItemList.ExpandableListAdapter;
-import prak.travelerapp.ItemList.ListItem;
-import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
-import prak.travelerapp.TripDatabase.model.Tupel;
 
 public class TripHistoryListFragment extends Fragment {
 
