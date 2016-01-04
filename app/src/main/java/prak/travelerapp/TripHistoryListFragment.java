@@ -91,6 +91,7 @@ public class TripHistoryListFragment extends Fragment {
         listDataHeader.add("Hygiene");
         listDataHeader.add("Equipment");
         listDataHeader.add("Dokumente");
+        listDataHeader.add("Sonstiges");
 
         HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>();
 
@@ -99,6 +100,7 @@ public class TripHistoryListFragment extends Fragment {
         List<String> hygiene = new ArrayList<String>();
         List<String> equipment = new ArrayList<String>();
         List<String> dokumente = new ArrayList<String>();
+        List<String> sonstiges = new ArrayList<String>();
 
 
 
@@ -115,6 +117,8 @@ public class TripHistoryListFragment extends Fragment {
                 equipment.add(dataSet.getItemName());
             } else if (dataSet.getKategorie() == 3) {
                 dokumente.add(dataSet.getItemName());
+            } else if (dataSet.getKategorie() == 4) {
+                sonstiges.add(dataSet.getItemName());
             }
         }
 
@@ -122,6 +126,7 @@ public class TripHistoryListFragment extends Fragment {
         listDataChild.put(listDataHeader.get(1), hygiene);
         listDataChild.put(listDataHeader.get(2), equipment);
         listDataChild.put(listDataHeader.get(3), dokumente);
+        listDataChild.put(listDataHeader.get(4), sonstiges);
 
         HistoryItemListAdapter listAdapter = new HistoryItemListAdapter(getActivity(), listDataHeader, listDataChild);
         listview.setAdapter(listAdapter);
