@@ -38,6 +38,65 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/text_medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="System"
+        android:gravity="left"
+        android:id="@+id/textView1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="@dimen/text_medium"
+            android:text="@string/notifications"
+            android:id="@+id/textViewNotifications" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="35dp"
+            android:layout_alignParentRight="true"
+            android:textOff="AUS"
+            android:textOn="AN"
+            android:id="@+id/switchNotifications"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/landing_divider"/>
+
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/text_medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Inhalte"
+        android:gravity="left"
+        android:id="@+id/textView2" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,11 +122,6 @@
             android:id="@+id/checkBoxVergangene" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/landing_divider"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +136,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:textSize="@dimen/text_medium"
-            android:text="@string/custom_items_delete"
+            android:text="Eigene Gegenstände"
             android:id="@+id/textViewCustomItems" />
 
         <CheckBox
@@ -93,43 +147,19 @@
             android:id="@+id/checkBoxCustomItems" />
     </RelativeLayout>
 
+    <Button
+        android:text="Zurücksetzen"
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@drawable/landing_divider"/>
-
-    <Button
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_loeschen"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        style="?android:attr/borderlessButtonStyle" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp">
-
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="@dimen/text_medium"
-            android:text="@string/notifications"
-            android:id="@+id/textViewNotifications" />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:id="@+id/switchNotifications"/>
-    </RelativeLayout>
 
 
 </LinearLayout>
