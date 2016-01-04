@@ -148,10 +148,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new SettingsFragment();
                 setUpFragment(fragment,true);
                 break;
-            case 5:
-                fragment = new PlacePickerFragment();
-                setUpFragment(fragment,true);
-                break;
         }
         closeDrawer();
     }
