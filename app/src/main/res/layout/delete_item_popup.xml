@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     android:background="@color/white">
 
     <TextView
@@ -15,8 +14,7 @@
         android:textStyle="bold"
         android:id="@+id/textView"
         android:textSize="@dimen/text_medium"
-
-        android:textColor="@color/black"
+        android:gravity="center"
         android:textAlignment="center"/>
 
     <View
@@ -27,7 +25,7 @@
     <Button
         android:layout_alignParentRight="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="Für aktuelle Reise löschen"
         android:textStyle="bold"
         android:id="@+id/button_delete_for_trip"
@@ -36,7 +34,7 @@
     <Button
         android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:textStyle="bold"
         android:text="Für immer löschen"
         android:id="@+id/button_delete_final"
