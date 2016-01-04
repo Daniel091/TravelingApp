@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="28dp"
+    android:paddingRight="28dp" >
 
-    <TextView
-        android:id="@+id/textview_cityName"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="28dp"
-        android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_gravity="start">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/trip_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="28dp"
+            android:layout_gravity="start"
+            android:src="@mipmap/ic_home"/>
+
+        <TextView
+            android:id="@+id/textview_cityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:layout_gravity="start">
+        </TextView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +45,6 @@
             android:id="@+id/textview_arrivalDate"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="28dp"
             android:textSize="16sp"
             android:gravity="center_vertical"
             android:textColor="@color/black"
@@ -36,10 +55,10 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textSize="16sp"
-            android:textColor="@android:color/darker_gray"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/darkGrey"
             android:text="bis">
         </TextView>
 
@@ -48,12 +67,10 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center_vertical"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_medium"
             android:textColor="@color/black">
         </TextView>
 
-
     </LinearLayout>
-
 
 </LinearLayout>

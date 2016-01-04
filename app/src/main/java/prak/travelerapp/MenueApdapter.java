@@ -8,10 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import prak.travelerapp.TripDatabase.model.Trip;
-import prak.travelerapp.TripDatabase.model.TripItems;
-import prak.travelerapp.TripDatabase.model.Tupel;
-
 public class MenueApdapter extends BaseAdapter {
     private Context context;
     String[] menue_links;
