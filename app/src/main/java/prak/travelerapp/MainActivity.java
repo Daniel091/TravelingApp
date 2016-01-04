@@ -23,7 +23,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import prak.travelerapp.Notifications.NotificationReceiver;
-import prak.travelerapp.PlaceApi.PlacePickerFragment;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.Tupel;
@@ -82,7 +81,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(tripIsOver){
                 Toast.makeText(this, "Aktive Reise is beendet", Toast.LENGTH_LONG).show();
                 tripDBAdapter.setAllTripsInactive();
-                // TODO Reset Shared Notifications Shared Preferences
+
+                SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.saved_image_path), "default");
+                editor.putBoolean(String.valueOf(R.bool.day_before_notification), false);
+                editor.apply();
                 return null;
             }
         }
