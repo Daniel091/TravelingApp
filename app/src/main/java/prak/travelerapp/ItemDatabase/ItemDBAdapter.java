@@ -131,12 +131,19 @@ public class ItemDBAdapter {
         values.put(ItemDBHelper.COLUMN_PARTYURLAUB, partyurlaub);
         values.put(ItemDBHelper.COLUMN_CAMPING, camping);
         values.put(ItemDBHelper.COLUMN_FESTIVAL, festival);
+        values.put(ItemDBHelper.COLUMN_TEMP_STRANDURLAUB, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_STAEDTETRIP, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_SKIFAHREN, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_WANDERN, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_GESCHAEFTSREISE, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_PARTYURLAUB, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_CAMPING, 0);
+        values.put(ItemDBHelper.COLUMN_TEMP_FESTIVAL, 0);
         values.put(ItemDBHelper.COLUMN_KATEGORIE, kategorie);
 
         long insertId = itemDb.insert(ItemDBHelper.TABLE_NAME, null, values);
 
-        Cursor cursor = itemDb.query(ItemDBHelper.TABLE_NAME,
-                ItemDBHelper.columns, ItemDBHelper.COLUMN_ID + "=" + insertId,
+        Cursor cursor = itemDb.query(ItemDBHelper.TABLE_NAME, new String[]{ItemDBHelper.COLUMN_ID,ItemDBHelper.COLUMN_NAME,ItemDBHelper.COLUMN_KATEGORIE}, ItemDBHelper.COLUMN_ID + "=" + insertId,
                 null, null, null, null);
 
         cursor.moveToFirst();
@@ -149,35 +156,13 @@ public class ItemDBAdapter {
     public Dataset cursorToDataset(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(ItemDBHelper.COLUMN_ID);
         int idName = cursor.getColumnIndex(ItemDBHelper.COLUMN_NAME);
-        int idSex = cursor.getColumnIndex(ItemDBHelper.COLUMN_GENDER);
-        int idTrocken = cursor.getColumnIndex(ItemDBHelper.COLUMN_NASS);
-        int idStrandurlaub = cursor.getColumnIndex(ItemDBHelper.COLUMN_STRANDURLAUB);
-        int idStaedtetrip = cursor.getColumnIndex(ItemDBHelper.COLUMN_STAEDTETRIP);
-        int idSkifahren = cursor.getColumnIndex(ItemDBHelper.COLUMN_SKIFAHREN);
-        int idWandern = cursor.getColumnIndex(ItemDBHelper.COLUMN_WANDERN);
-        int idGeschaeftsreise = cursor.getColumnIndex(ItemDBHelper.COLUMN_GESCHAEFTSREISE);
-        int idPartyurlaub = cursor.getColumnIndex(ItemDBHelper.COLUMN_PARTYURLAUB);
-        int idCamping = cursor.getColumnIndex(ItemDBHelper.COLUMN_CAMPING);
-        int idFestival = cursor.getColumnIndex(ItemDBHelper.COLUMN_FESTIVAL);
         int idKategorie = cursor.getColumnIndex(ItemDBHelper.COLUMN_KATEGORIE);
 
         int id = cursor.getInt(idIndex);
         String name = cursor.getString(idName);
-        int geschlecht = cursor.getInt(idSex);
-        int trocken = cursor.getInt(idTrocken);
-        int strandurlaub = cursor.getInt(idStrandurlaub);
-        int staedtetrip = cursor.getInt(idStaedtetrip);
-        int skifahren = cursor.getInt(idSkifahren);
-        int wandern = cursor.getInt(idWandern);
-        int geschaeftsreise = cursor.getInt(idGeschaeftsreise);
-        int partyurlaub = cursor.getInt(idPartyurlaub);
-        int camping = cursor.getInt(idCamping);
-        int festival = cursor.getInt(idFestival);
         int kategorie = cursor.getInt(idKategorie);
 
-        Dataset dataSet = new Dataset(id, name, geschlecht, trocken, strandurlaub,
-                staedtetrip, skifahren, wandern, geschaeftsreise,
-                partyurlaub, camping, festival, kategorie);
+        Dataset dataSet = new Dataset(id, name, kategorie);
 
         return dataSet;
     }
@@ -185,20 +170,36 @@ public class ItemDBAdapter {
 
     //QUERY STRUKTUR --> VORLÄUFIG
     //SELECT * FROM item_table WHERE ((GESCHLECHT = 0 OR GESCHLECHT=1) AND (STAEDTETRIP=1 OR WANDERN=1)) OR TROCKEN=1;
-    public ArrayList<Integer> findItemIDs(int gender,boolean isRaining,TravelType type1,TravelType type2){
+    public ArrayList<Integer> findItemIDs(int gender,boolean isRaining,int tempValue,TravelType type1,TravelType type2){
 
         ArrayList<Integer> itemIDs = new ArrayList<Integer>();
         String COLUMN_TYPE1 = travelTypeToColumnName(type1);
         String COLUMN_TYPE2 = travelTypeToColumnName(type2);
+        String COLUMN_TEMP_TYPE1 = "TEMP_" + COLUMN_TYPE1;
+        String COLUMN_TEMP_TYPE2 = "TEMP_" + COLUMN_TYPE2;
 
         String selector = "";
         selector += "(" +ItemDBHelper.COLUMN_GENDER + "=" + 0 + " OR " + ItemDBHelper.COLUMN_GENDER + "=" + gender + ") ";
         //nur ein Reisetyp wurde festgelegt
         if(COLUMN_TYPE2 == ""){
-            selector += "AND " + COLUMN_TYPE1 + "=" + 1;
+            if(tempValue == 0){
+                selector += "AND " + COLUMN_TYPE1 + "=" + 1;
+            }else{
+                selector += "AND " + COLUMN_TYPE1 + "=" + 1 + " AND (" + COLUMN_TEMP_TYPE1 + "=" + 0 + " OR " + COLUMN_TEMP_TYPE1 + "=" + tempValue + ") ";
+            }
+
         //es wurden zwei reisetypendefiniert
         }else{
-            selector += "AND (" + COLUMN_TYPE1 + "=" + 1 + " OR " + COLUMN_TYPE2 + "=" + 1 + ")";
+            if(tempValue == 0){
+                selector += "AND (" + COLUMN_TYPE1 + "=" + 1 + " OR " + COLUMN_TYPE2 + "=" + 1 + ")";
+            }else{
+                selector += "AND (" + COLUMN_TYPE1 + "=" + 1 + " OR " + COLUMN_TYPE2 + "=" + 1 + ") AND (" + COLUMN_TEMP_TYPE1 + "=" + 0 + " OR " + COLUMN_TEMP_TYPE1 + "=" + tempValue + " OR " + COLUMN_TEMP_TYPE2 + "=" + 0 + " OR "+ COLUMN_TEMP_TYPE2 + "=" + tempValue + ") ";
+            }
+        }
+
+        //items mit nass = 1 werden nur selektiert, wenn es regnet
+        if(!isRaining){
+            selector+= "AND " + ItemDBHelper.COLUMN_NASS + "=" + 0;
         }
 
         Cursor cursor = itemDb.query(ItemDBHelper.TABLE_NAME, new String[]{ItemDBHelper.COLUMN_ID},selector, null, null, null, null);

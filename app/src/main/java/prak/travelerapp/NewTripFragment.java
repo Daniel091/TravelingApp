@@ -388,10 +388,13 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             isRaining = weather.isRaining();
         }
 
+        //value for temprature -> 0 if normal, 1 if warm, -1 if cold
+        int tempValue = -1;
+
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
         itemDB.createDatabase();
         itemDB.open();
-        ArrayList<Integer> itemIDs  = itemDB.findItemIDs(genderValue,isRaining,type1,type2);
+        ArrayList<Integer> itemIDs  = itemDB.findItemIDs(genderValue,isRaining,tempValue,type1,type2);
         TripItems items = new TripItems();
 
         for(Integer id : itemIDs){

@@ -30,6 +30,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "NAME";
     public static final String TABLE_NAME = "item_table";
     public static final String COLUMN_GENDER = "GESCHLECHT";
+    public static final String COLUMN_KATEGORIE = "KATEGORIE";
     public static final String COLUMN_NASS = "NASS";
     public static final String COLUMN_STAEDTETRIP = "STAEDTETRIP";
     public static final String COLUMN_STRANDURLAUB = "STRANDURLAUB";
@@ -39,23 +40,14 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PARTYURLAUB = "PARTYURLAUB";
     public static final String COLUMN_CAMPING = "CAMPING";
     public static final String COLUMN_FESTIVAL = "FESTIVAL";
-    public static final String COLUMN_KATEGORIE = "KATEGORIE";
-
-    public static String[] columns = {
-            COLUMN_ID,
-            COLUMN_NAME,
-            COLUMN_GENDER,
-            COLUMN_NASS,
-            COLUMN_STAEDTETRIP,
-            COLUMN_STRANDURLAUB,
-            COLUMN_SKIFAHREN,
-            COLUMN_WANDERN,
-            COLUMN_GESCHAEFTSREISE,
-            COLUMN_PARTYURLAUB,
-            COLUMN_CAMPING,
-            COLUMN_FESTIVAL,
-            COLUMN_KATEGORIE
-    };
+    public static final String COLUMN_TEMP_STAEDTETRIP = "TEMP_STAEDTETRIP";
+    public static final String COLUMN_TEMP_STRANDURLAUB = "TEMP_STRANDURLAUB";
+    public static final String COLUMN_TEMP_SKIFAHREN = "TEMP_SKIFAHREN";
+    public static final String COLUMN_TEMP_WANDERN = "TEMP_WANDERN";
+    public static final String COLUMN_TEMP_GESCHAEFTSREISE = "TEMP_GESCHAEFTSREISE";
+    public static final String COLUMN_TEMP_PARTYURLAUB = "TEMP_PARTYURLAUB";
+    public static final String COLUMN_TEMP_CAMPING = "TEMP_CAMPING";
+    public static final String COLUMN_TEMP_FESTIVAL = "TEMP_FESTIVAL";
 
     public ItemDBHelper(Context context)
     {
