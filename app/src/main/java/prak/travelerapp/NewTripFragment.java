@@ -2,7 +2,6 @@ package prak.travelerapp;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -389,7 +388,23 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }
 
         //value for temprature -> 0 if normal, 1 if warm, -1 if cold
-        int tempValue = -1;
+        int tempValue = 0;  // default
+
+        DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
+        DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
+
+        int averageTemp = weather.getAverageTemp(startDate, endDate);
+
+        // Setup list for cold temperature
+        if (averageTemp < 6) {
+            tempValue = -1;
+        }
+        // Setup list for warm temperature
+        if (averageTemp > 19) {
+            tempValue = 1;
+        }
+
+        Log.d("Temp Value", String.valueOf(tempValue));
 
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
         itemDB.createDatabase();

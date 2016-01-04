@@ -3,6 +3,7 @@ package prak.travelerapp.WeatherAPI.model;
 import android.util.Log;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -60,6 +61,24 @@ public class Weather{
         }
 
         return iconSrc;
+    }
+
+    public Integer getAverageTemp(DateTime startDate, DateTime endDate) {
+        int travellingdays = Days.daysBetween(startDate.toLocalDate(), endDate.toLocalDate()).getDays() + 1;
+
+        int factor = 0;
+        int tempSum = 0;
+        for (int i = 0; i < travellingdays; i++) {
+            if (getTemperatureOnDate(startDate.plusDays(i)) != "--") {
+                Log.d("Tag " + i, getTemperatureOnDate(startDate.plusDays(i)));
+                tempSum += Integer.valueOf(getTemperatureOnDate(startDate.plusDays(i)));
+                factor++;
+            }
+        }
+        int averageTemp = tempSum / factor;
+        Log.d("Temperatur Durchschnitt", String.valueOf(averageTemp));
+
+        return averageTemp;
     }
 
 }
