@@ -29,7 +29,8 @@
         android:text="@string/final_cancel"
         android:textStyle="bold"
         android:id="@+id/button_remove"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:layout_marginBottom="-5dp"/>
 
     <Button
         android:id="@+id/button_cancel_popup"

@@ -27,7 +27,8 @@
         android:text="@string/delete_for_current_trip"
         android:textStyle="bold"
         android:id="@+id/button_delete_for_trip"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginBottom="-5dp"/>
 
     <Button
         android:layout_width="match_parent"
