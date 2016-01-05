@@ -154,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragment = new SettingsFragment();
                 setUpFragment(fragment,true);
                 break;
+            case 5:
+                fragment = new HelpFragment();
+                setUpFragment(fragment,true);
+                break;
         }
         closeDrawer();
     }
@@ -183,6 +187,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
                 case "SettingsFragment":
                     setUpMenu(4);
+                    break;
+                case "HelpFragment":
+                    setUpMenu(5);
+                    break;
             }
         } else {
             super.onBackPressed();

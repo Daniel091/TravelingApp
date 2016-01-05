@@ -51,6 +51,7 @@
         <item>Aktuelle Packliste</item>
         <item>Vergangene Reisen</item>
         <item>Einstellungen</item>
+        <item>Hilfe</item>
     </string-array>
 
     <string-array name="category_array">
@@ -77,5 +78,9 @@
     <string name="content">Inhalte</string>
     <string name="personal_items">Eigene Gegenstände</string>
     <string name="set_back">Gewählte Inhalte zurücksetzen</string>
+
+    <string name="trip_history">Vergangene Reisen</string>
+
+    <string name="help">Hilfe</string>
 
 </resources>

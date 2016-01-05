@@ -30,7 +30,7 @@
                 android:id="@+id/textview_newTrip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/trip_history"
+                android:text="@string/help"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp"
@@ -39,15 +39,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
-    <ListView
-        android:divider="@drawable/history_list_divider"
-        android:dividerHeight="1dp"
-        android:background="#FFF"
-        android:id="@+id/historyList"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
 
 </LinearLayout>
-
-
-
