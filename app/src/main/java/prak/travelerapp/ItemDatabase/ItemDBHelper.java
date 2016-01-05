@@ -44,7 +44,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TEMP_STRANDURLAUB = "TEMP_STRANDURLAUB";
     public static final String COLUMN_TEMP_SKIFAHREN = "TEMP_SKIFAHREN";
     public static final String COLUMN_TEMP_WANDERN = "TEMP_WANDERN";
-    public static final String COLUMN_TEMP_GESCHAEFTSREISE = "TEMP_GESCHAEFTSREISE";
+    public static final String COLUMN_TEMP_GESCHAEFTSREISE = "TEMP_GESCHÄFTSREISE";
     public static final String COLUMN_TEMP_PARTYURLAUB = "TEMP_PARTYURLAUB";
     public static final String COLUMN_TEMP_CAMPING = "TEMP_CAMPING";
     public static final String COLUMN_TEMP_FESTIVAL = "TEMP_FESTIVAL";
