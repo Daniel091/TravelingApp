@@ -22,6 +22,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Calendar;
+
 import prak.travelerapp.Notifications.NotificationReceiver;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
@@ -251,26 +253,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void setUpNotificationService(DateTime date) {
-        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        boolean push_enabled = sharedPref.getBoolean(String.valueOf(R.bool.push_notifications), true);
-        boolean day_before_pushed = sharedPref.getBoolean(String.valueOf(R.bool.day_before_notification),false);
-
         date = date.minusDays(1);
         date = date.plusHours(13);
         date = date.plusMinutes(50);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss");
 
-        Log.d("Main","Push: " + push_enabled +" ,"+ " day before pushed " + day_before_pushed);
-        Log.d("Main", " Push Date: " + date.toString(fmt) + " " + active_trip.getCity() + " start date: " + active_trip.getStartdate().toString(fmt));
-        if (push_enabled){
-            if (!day_before_pushed){
-                Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+        if (!date.isBeforeNow()) {
+            SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            boolean push_enabled = sharedPref.getBoolean(String.valueOf(R.bool.push_notifications), true);
+            boolean day_before_pushed = sharedPref.getBoolean(String.valueOf(R.bool.day_before_notification), false);
 
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                //alarmManager.cancel(pendingIntent);
-                alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss");
+            Log.d("Main", "Push: " + push_enabled + " ," + " day before pushed " + day_before_pushed);
+            Log.d("Main", " Push Date: " + date.toString(fmt) + " " + active_trip.getCity() + " start date: " + active_trip.getStartdate().toString(fmt));
+            if (push_enabled) {
+                if (!day_before_pushed) {
+                    Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    //alarmManager.cancel(pendingIntent);
+                    alarmManager.set(AlarmManager.RTC, date.getMillis(), pendingIntent);
+                }
             }
         }
     }
