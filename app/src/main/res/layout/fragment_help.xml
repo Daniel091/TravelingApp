@@ -40,4 +40,155 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal">
+
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/first_steps"
+                android:gravity="left"
+                android:id="@+id/textView1" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/first_steps_text"
+                android:gravity="left"
+                android:id="@+id/textView2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/landing_divider"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/faq"
+                android:gravity="left"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/faq_text"
+                android:gravity="left"
+                android:id="@+id/textView4" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/frage1"
+                android:gravity="left"
+                android:id="@+id/frage1" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/antwort1"
+                android:gravity="left"
+                android:id="@+id/antwort1" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/frage2"
+                android:gravity="left"
+                android:id="@+id/frage2" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/antwort2"
+                android:gravity="left"
+                android:id="@+id/antwort2" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/frage3"
+                android:gravity="left"
+                android:id="@+id/frage3" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/antwort3"
+                android:gravity="left"
+                android:id="@+id/antwort3" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 </LinearLayout>
