@@ -165,6 +165,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             String fragmentTag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 2).getName();
             System.out.println(fragmentTag);
             switch (fragmentTag){
+                case "StartFragment":
+                    // unlock Drawer when you go back from NewTripFragment
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    break;
                 case "LandingFragment":
                     setUpMenu(1);
                     break;
