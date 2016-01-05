@@ -59,4 +59,23 @@
         <item>Skifahren</item>
         <item>Festival</item>
     </string-array>
+
+    <string name="delete_item">Gegenstand löschen</string>
+    <string name="delete_for_current_trip">Für aktuelle Reise löschen</string>
+    <string name="delete_forever">Für immer löschen</string>
+
+    <string name="new_item">Neuer Gegenstand</string>
+    <string name="item_name">Name</string>
+    <string name="item_hint">z.B. Flugticket</string>
+    <string name="item_category">Kategorie</string>
+    <string name="add_item">Gegenstand hinzufügen</string>
+
+    <string name="final_cancel">Endgültig abbrechen</string>
+    <string name="dont_cancel">Doch nicht abbrechen</string>
+
+    <string name="system">System</string>
+    <string name="content">Inhalte</string>
+    <string name="personal_items">Eigene Gegenstände</string>
+    <string name="set_back">Zurücksetzen</string>
+
 </resources>

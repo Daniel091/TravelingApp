@@ -47,7 +47,7 @@
         android:textSize="@dimen/text_medium"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="System"
+        android:text="@string/system"
         android:gravity="left"
         android:id="@+id/textView1" />
 
@@ -93,7 +93,7 @@
         android:textSize="@dimen/text_medium"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Inhalte"
+        android:text="@string/content"
         android:gravity="left"
         android:id="@+id/textView2" />
 
@@ -136,7 +136,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:textSize="@dimen/text_medium"
-            android:text="Eigene Gegenstände"
+            android:text="@string/personal_items"
             android:id="@+id/textViewCustomItems" />
 
         <CheckBox
@@ -148,7 +148,7 @@
     </RelativeLayout>
 
     <Button
-        android:text="Zurücksetzen"
+        android:text="@string/set_back"
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -27,7 +27,7 @@
                 android:id="@+id/textview_newTrip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Neuer Gegenstand"
+                android:text="@string/new_item"
                 android:textColor="@color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp"
@@ -50,7 +50,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:textSize="@dimen/text_medium"
-            android:text="Name"
+            android:text="@string/item_name"
             android:id="@+id/textViewName" />
 
         <EditText
@@ -59,7 +59,7 @@
             android:layout_toRightOf="@id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="z.B. Flugticket"
+            android:hint="@string/item_hint"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
@@ -117,7 +117,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Gegenstand hinzufügen"
+        android:text="@string/add_item"
         android:textStyle="bold"
         android:id="@+id/button_final_add"
         android:layout_gravity="center_horizontal"
