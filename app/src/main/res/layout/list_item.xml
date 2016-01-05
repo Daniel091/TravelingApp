@@ -6,22 +6,24 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/checkBox"
+        android:checked="false" />
+
     <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lblListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
-        android:id="@+id/checkBox"
-        android:checked="false" />
+        android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"/>
 
 </RelativeLayout>
