@@ -19,23 +19,18 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
     private SharedPreferences sharedPref;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
-
         Context context = getActivity();
-        sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        prepareViews(view);
+        prepareListeners();
+        return view;
+    }
 
-        button_newTrip = (Button) view.findViewById(R.id.button_newTrip);
+    private void prepareListeners() {
         button_newTrip.setOnClickListener(this);
-
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.setOnClickListener(this);
-
-        radioGroup_gender = (RadioGroup) view.findViewById(R.id.radioGroup_gender);
-
         String gender_fromPref = sharedPref.getString(getString(R.string.saved_gender),"not_selected");
         if (gender_fromPref == "not_selected") {
             radioGroup_gender.setOnCheckedChangeListener(this);
@@ -48,17 +43,13 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
             radioGroup_gender.setOnCheckedChangeListener(this);
             Log.d("StartFrag","Got gender from SharedPref " + gender_fromPref);
         }
-
-        button_newTrip = (Button) view.findViewById(R.id.button_newTrip);
-        button_newTrip.setOnClickListener(this);
-
-        return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
+    private void prepareViews(View view) {
+        button_newTrip = (Button) view.findViewById(R.id.button_newTrip);
+        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+        radioGroup_gender = (RadioGroup) view.findViewById(R.id.radioGroup_gender);
+        button_newTrip = (Button) view.findViewById(R.id.button_newTrip);
     }
 
     @Override
@@ -81,14 +72,11 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
             case R.id.radio_male:
                 editor.putString(getString(R.string.saved_gender), "male");
                 editor.apply();
-                Log.d("mw", "male");
                 break;
             case R.id.radio_female:
                 editor.putString(getString(R.string.saved_gender), "female");
                 editor.apply();
-                Log.d("mw", "female");
                 break;
         }
-
     }
 }
