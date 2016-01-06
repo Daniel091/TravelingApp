@@ -28,7 +28,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:text="@string/delete_for_current_trip"
             android:textStyle="bold"
@@ -38,7 +38,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:textStyle="bold"
             android:text="@string/delete_forever"

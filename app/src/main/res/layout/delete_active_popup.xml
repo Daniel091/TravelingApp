@@ -30,7 +30,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:text="@string/final_cancel"
             android:textStyle="bold"
             android:id="@+id/button_remove"
@@ -41,7 +41,7 @@
             android:id="@+id/button_cancel_popup"
             android:layout_toRightOf="@id/button_remove"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:textStyle="bold"
             android:text="@string/dont_cancel"
