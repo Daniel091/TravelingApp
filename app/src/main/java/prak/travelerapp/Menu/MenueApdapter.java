@@ -1,4 +1,4 @@
-package prak.travelerapp;
+package prak.travelerapp.Menu;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import prak.travelerapp.R;
 
 public class MenueApdapter extends BaseAdapter {
     private Context context;
@@ -54,7 +56,7 @@ public class MenueApdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (position == 0){
-                row = inflater.inflate(R.layout.custom_row_first,parent,false);
+                row = inflater.inflate(R.layout.custom_row_first_menu,parent,false);
             } else {
                 if (position == 2) {
                     row = inflater.inflate(R.layout.custom_row_packliste, parent, false);
@@ -63,7 +65,7 @@ public class MenueApdapter extends BaseAdapter {
                         number_items.setText(String.valueOf(remainingItems));
                     }
                 } else {
-                    row = inflater.inflate(R.layout.custom_row, parent, false);
+                    row = inflater.inflate(R.layout.custom_row_menu, parent, false);
                 }
             }
         } else {

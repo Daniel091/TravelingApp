@@ -22,8 +22,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.Calendar;
-
+import prak.travelerapp.Menu.MenueApdapter;
 import prak.travelerapp.Notifications.NotificationReceiver;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
 import prak.travelerapp.TripDatabase.model.Trip;
@@ -36,16 +35,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
-    private String[] menue_links;
-    private TripDBAdapter tripDBAdapter;
     private Trip active_trip;
     private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
         Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/Avenir-Book.ttf");
@@ -53,13 +49,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         active_trip = checkActiveTrip();
 
-        menueApdapter = new MenueApdapter(this);
         if(active_trip != null){
             updateMenueRemainingItems(active_trip);
         }
-        listView.setAdapter(menueApdapter);
-        listView.setOnItemClickListener(this);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 
         listView.performItemClick(listView.getChildAt(1), 1, listView.getItemIdAtPosition(1));
     }
@@ -96,15 +89,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void prepareViews() {
-        menue_links = getResources().getStringArray(R.array.menue_links);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         listView = (ListView) findViewById(R.id.drawerList);
-
-        // Prepare youre views
+        menueApdapter = new MenueApdapter(this);
+        listView.setAdapter(menueApdapter);
+        listView.setOnItemClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     public void setUpMenu(int checkedItem){
-        menue_links = getResources().getStringArray(R.array.menue_links);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         listView = (ListView) findViewById(R.id.drawerList);
         menueApdapter = new MenueApdapter(this);
@@ -125,6 +118,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         drawerLayout.closeDrawer(listView);
     }
 
+    /**
+     * Callback from  Menu if Menuitem was clicked
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Fragment fragment;
@@ -162,6 +163,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         closeDrawer();
     }
 
+    /**
+     * Fires when android backbutton was pressed
+     */
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1){
@@ -200,10 +204,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
+    /**
+     * Initialisiere ein Fragment
+     *
+     * @param fragment
+     * @param takeFromBackstack boolean ob das Fragment falls vorhanden vom Backstack genommen wedern soll
+     */
     public void setUpFragment(Fragment fragment,boolean takeFromBackstack) {
         FragmentManager fragmentManager = getFragmentManager();
 
         String frag_name = fragment.getClass().getSimpleName();
+
+        //Newtripfragment wird ohne menü dargestellt
         if (frag_name.equals("NewTripFragment")){
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         } else {
@@ -214,10 +227,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         boolean isFragmentInStack = isFragmentInBackstack(fragmentManager,fragment.getClass().getSimpleName());
 
         if (isFragmentInStack && takeFromBackstack){
-            //Log.d("Main", "Load Fragment with Tag " + fragment.getClass().getSimpleName() + " from Backstack");
             fragmentManager.popBackStackImmediate(fragment.getClass().getSimpleName(), 0);
         } else {
-            //Log.d("Main", "Load Fragment" + fragment.getClass().getSimpleName() + " not from Backstack" );
             fragmentTransaction.replace(R.id.mainContent, fragment);
             fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
             fragmentTransaction.commit();
@@ -225,7 +236,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public static boolean isFragmentInBackstack(final FragmentManager fragmentManager, final String fragmentTagName) {
+    /**
+     * Check if a Fragment is in Backstack
+     * @param fragmentManager
+     * @param fragmentTagName simplename of the Fragment
+     * @return
+     */
+    public boolean isFragmentInBackstack(FragmentManager fragmentManager,String fragmentTagName) {
         for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++) {
             if (fragmentTagName.equals(fragmentManager.getBackStackEntryAt(entry).getName())) {
                 return true;
@@ -234,6 +251,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return false;
     }
 
+    /**
+     * Clear the Backstack
+     */
     public void clearBackstack(){
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -243,16 +263,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return active_trip;
     }
 
-    public void menueClick(int pos) {
-        if (listView != null){
-            listView.performItemClick(listView.getAdapter().getView(pos, null, null), pos, listView.getAdapter().getItemId(pos));
-            listView.clearChoices();
-            menueApdapter.notifyDataSetChanged();
-        }
-    }
 
-
-    //Update die anzahl der verbleibenden Items im Menü
+    /**
+     * Update die anzahl der verbleibenden items im Menü
+     * @param trip
+     */
     public void updateMenueRemainingItems(Trip trip){
         int remainingItems = 0;
         for (Tupel t : trip.getTripItems().getItems()) {

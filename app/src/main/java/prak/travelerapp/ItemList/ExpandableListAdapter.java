@@ -48,6 +48,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         protected CheckBox checkbox;
     }
 
+    /**
+     * Liefert index der Gruppe in der sich ein item befindet
+     * @param id id des gesuchten items
+     * @return
+     */
     public int getGroupPositionForItem(int id){
         String groupName = "";
         Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
@@ -68,6 +73,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return -1;
     }
 
+    /**
+     * Liefert child index innerhalb einer Gruppe für ein item
+     * @param id id des gesuchten items
+     * @return
+     */
     public int getChildPositionForItem(int id){
         Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
         while (it.hasNext()) {
@@ -118,7 +128,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             view.setTag(viewHolder);
             viewHolder.checkbox.setTag(getChild(groupPosition, childPosition));
         }else{
-
             view = convertView;((ViewHolder) view.getTag()).checkbox.setTag(getChild(groupPosition, childPosition));
         }
 

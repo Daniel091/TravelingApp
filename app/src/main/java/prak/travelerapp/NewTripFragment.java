@@ -48,7 +48,6 @@ import prak.travelerapp.WeatherAPI.model.Day;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class NewTripFragment extends Fragment implements View.OnClickListener,TextWatcher,AdapterView.OnItemSelectedListener {
-    private LinearLayout secondTripType;
     private Spinner spinner_category,spinner_category2;
     private CityAutoCompleteView autocompleter;
     private ArrayAdapter<String> autocompleteAdapter;
@@ -56,7 +55,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private TextView editText_arrival, editText_departure;
     private DatePickerDialog arrivalDatePickerDialog,departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
-    private FloatingActionButton button_submit;
     private boolean firstSelect = true;
 
     private String[] traveltypeStrings;
@@ -108,9 +106,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         date.add(Calendar.DATE, 5);
         editText_departure.setText(dateFormatter.format(date.getTime()));
 
-        button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
-        button_submit.setOnClickListener(this);
-
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
         //Convert Kategorie enum to String values but skip NoType
         traveltypeStrings = new String[TravelType.values().length];
@@ -124,6 +119,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         spinner_category.setAdapter(adapter);
         spinner_category.setOnItemSelectedListener(this);
 
+        FloatingActionButton button_submit = (FloatingActionButton)view.findViewById(R.id.button_submit);
+        button_submit.setOnClickListener(this);
+
     }
 
 
@@ -134,8 +132,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 Date newDate = new Date(year, monthOfYear, dayOfMonth - 1);
                 departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
                 editText_arrival.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
-                Log.d("Min Date", dateFormatter.format(new Date().getTime() - 10000));
-                Log.d("Set Date", dayOfMonth + "." + (monthOfYear + 1) + "." + year);
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
@@ -174,6 +170,11 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }
     }
 
+
+    /**
+     * Nach klick auf den submitbutton werden alle daten des Formulars gesammelt, geprüft
+     * und ein neuer Trip wird in die Datenbank eingefügt
+     */
     public void submitTrip(){
         String autocompleterText = autocompleter.getText().toString();
         String[] separated = autocompleterText.split(",");
@@ -276,7 +277,8 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         //java.lang.NullPointerException: Attempt to invoke virtual method 'prak.travelerapp.TripDatabase.model.Trip prak.travelerapp.MainActivity.checkActiveTrip()' on a null object reference
         Trip activeTrip = ((MainActivity) getActivity()).checkActiveTrip();
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
-        ((MainActivity) getActivity()).menueClick(1);
+        Fragment landingFragment = new LandingFragment();
+        ((MainActivity) getActivity()).setUpFragment(landingFragment,false);
         ((MainActivity) getActivity()).setUpNotificationService(activeTrip.getStartdate());
     }
 
@@ -344,7 +346,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
         if (spinner.getId() == R.id.spinner_category && !firstSelect){
-            secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
+            LinearLayout secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
             secondTripType.setVisibility(LinearLayout.VISIBLE);
             setUpSecondTripType();
         } else {

@@ -49,12 +49,9 @@ import prak.travelerapp.TripDatabase.model.Tupel;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
- * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
+ * Fragment, das uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
  */
 public class ItemViewFragment extends Fragment implements AdapterView.OnItemSelectedListener,ItemCheckedListener{
-
-    // Log Tag
-    public static final String LOG_TAG = ItemViewFragment.class.getSimpleName();
 
     // Instanzen
     ItemDBAdapter itemDBAdapter;
@@ -75,19 +72,10 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
     // UI Elemente für das Popup Window
     private PopupWindow dummyPopup;
-    private int windowWidth;
-    private int windowHeight;
     private EditText userInput;
-    private Spinner spinner;
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente", "Sonstiges"};
-    private Button finalAddButton;
-    private ImageButton button_hamburger;
     private ImageView imageView_location;
-    private TextView tripCity;
     private Trip activeTrip;
-
-    private Button delete_final_button;
-    private Button delete_for_trip;
 
     // Werte für das vom User hinzugefügte Item
     private String customItem; // Name des manuellen Icons
@@ -100,7 +88,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         this.container = container;
         View view = inflater.inflate(R.layout.fragment_item_view, container, false);
 
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+        ImageButton button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +105,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 showPopup(v);
             }
         });
-        tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
+        TextView tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
         activeTrip = ((MainActivity) getActivity()).getActive_trip();
         tripCity.setText(activeTrip.getCity());
 
@@ -181,6 +169,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         //sort the tripitems with ID ascending
         ArrayList<Tupel> tripitems = activeTrip.getTripItems().getItems();
         Collections.sort(tripitems);
+        //sortiere die items ebenfalls entsprechend der ID aufsteigend
         itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
         Collections.sort(itemList);
 
@@ -272,10 +261,12 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    /**
+     * Checkbox eines items wurde gecheckt oder unchecked
+     * @param clickedItem
+     */
     @Override
     public void itemClicked(ListItem clickedItem) {
-
-        System.out.println(clickedItem.getId() + " " + clickedItem.getName() + " " + clickedItem.isChecked());
 
         //update checked state of tripitems
         activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
@@ -293,8 +284,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        windowHeight = displaymetrics.heightPixels;
-        windowWidth = displaymetrics.widthPixels;
+        int windowHeight = displaymetrics.heightPixels;
+        int windowWidth = displaymetrics.widthPixels;
 
         dummyPopup = new PopupWindow(popupDummyView,
                windowWidth, windowHeight, false);
@@ -308,10 +299,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        /**
-         * Elemente des PopUp windows
-         */
 
         // Eingabefeld
         userInput = (EditText) popupView.findViewById(R.id.userInput);
@@ -328,7 +315,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         });
 
         // Spinner
-        spinner = (Spinner) popupView.findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) popupView.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(),
                 android.R.layout.simple_spinner_item, paths);
 
@@ -337,7 +324,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         spinner.setOnItemSelectedListener(this);
 
         // Button zum finalen hinzufügen eines Items
-        finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
+        Button finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
         finalAddButton.setOnClickListener(new View.OnClickListener() {
 
             @TargetApi(Build.VERSION_CODES.M)
@@ -352,6 +339,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
                     itemList.add(customDataSet);
                     activeTrip.getTripItems().addItem(customDataSet.getItemID());
+
+                    ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
 
                     showAllListEntries(itemList, activeTrip.getTripItems().getItems());
 
@@ -398,7 +387,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        delete_for_trip = (Button) popupView.findViewById(R.id.button_delete_for_trip);
+        Button delete_for_trip = (Button) popupView.findViewById(R.id.button_delete_for_trip);
         delete_for_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,20 +410,21 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     }
                 }
 
+                ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
-                expListView.setSelectedChild(groupPosition,childPosition-1,false);
+                expListView.setSelectedChild(groupPosition, childPosition - 1, false);
                 popupWindow.dismiss();
 
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
             }
         });
 
-        delete_final_button = (Button) popupView.findViewById(R.id.button_delete_final);
+        Button delete_final_button = (Button) popupView.findViewById(R.id.button_delete_final);
         delete_final_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int groupOfDeletedItem = 0;
                 //remove item from itemlist
                 for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
                     Dataset dataset = it.next();
@@ -452,6 +442,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
+
+                ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
 
                 itemDBAdapter.deleteItem(item.getId());
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());

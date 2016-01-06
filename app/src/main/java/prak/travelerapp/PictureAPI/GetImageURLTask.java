@@ -5,12 +5,7 @@ package prak.travelerapp.PictureAPI;
  */
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import prak.travelerapp.FlickrAPI.AsyncFlickrResponse;
-import prak.travelerapp.FlickrAPI.FlickrHTTPClient;
 
 public class GetImageURLTask extends AsyncTask<String, Void, String> {
 
