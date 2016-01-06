@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,20 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import org.joda.time.DateTime;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Locale;
-
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
-import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.Tupel;
 import prak.travelerapp.WeatherAPI.AsyncWeatherResponse;
@@ -42,11 +35,9 @@ import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class LandingFragment extends Fragment implements AsyncPictureResponse, AsyncWeatherResponse {
-
     private ImageButton button_hamburger;
-    private ImageView imageView;    // ImageView
-    private TextView city;
-    private TextView timeToJourney,missingThings;
+    private ImageView imageView;
+    private TextView city,timeToJourney,missingThings;
     private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
     private SharedPreferences sharedPref;
@@ -56,7 +47,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private PopupWindow dummyPopup;
     private LayoutInflater inflater;
     private ViewGroup container;
-
     DateTime currentDate = new DateTime();
     private int daysToTrip;
 
@@ -68,25 +58,48 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         this.daysToTrip = daysToTrip;
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         this.container = container;
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
         prepareViews(view);
         prepareListeners();
+        active_trip = getActiveTrip();
+        sharedPref = getActivity().getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        // Get remaining days to trip
+        float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
+        int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
+        setDaysToTrip(days);
+        String date = "(" + active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN) + ", " + active_trip.getStartdate().toString("dd. MMM yyyy", Locale.GERMAN) + ")";
+
+        // Get remaining days until return
+        float differenceReturn = active_trip.getEnddate().getMillis() - currentDate.getMillis();
+        int returnDays = Math.round((differenceReturn / 1000 / 3600 / 24)) + 1;
+        String returnDate = "(" + active_trip.getEnddate().dayOfWeek().getAsShortText(Locale.GERMAN) + ", " + active_trip.getEnddate().toString("dd. MMM yyyy", Locale.GERMAN) + ")";
+
+        setUpUnderline(days,returnDays, date,returnDate);
+
+        // Get Weather on departing date
+        WeatherTask weathertask = new WeatherTask();
+        weathertask.delegate = LandingFragment.this;
+        weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
+
+        city.setText(active_trip.getCity());
+
+        // Get things that are not checked
+        int number = 0;
+        for(Tupel t : active_trip.getTripItems().getItems()){
+            if (t.getY() == 0){
+                number++;
+            }
+        }
+        missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
+        setUpBackgroundImage();
 
         return view;
-    }
-
-    private Trip getActiveTrip() {
-        TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
-        tripDBAdapter.open();
-        return tripDBAdapter.getActiveTrip();
     }
 
     private void prepareViews(View view) {
@@ -125,7 +138,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDummyPopup(v);
+                showDummyPopup();
                 showPopup(v);
             }
         });
@@ -137,100 +150,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         });
     }
 
-    private void showDummyPopup(View anchorView) {
-
-        final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
-
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int windowHeight = displaymetrics.heightPixels;
-        int windowWidth = displaymetrics.widthPixels;
-
-        dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
-        dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
-    }
-
-    private void showPopup(View anchorView) {
-        final View popupView = inflater.inflate(R.layout.delete_active_popup, container, false);
-
-        final PopupWindow popupWindow = new PopupWindow(popupView,
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        ok_cancel_button = (Button) popupView.findViewById(R.id.button_remove);
-        ok_cancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
-                tripDBAdapter.open();
-                tripDBAdapter.setAllTripsInactive();
-
-                popupWindow.dismiss();
-                dummyPopup.dismiss();
-
-                // Remove path of loaded image (image gets overwritten when a new trip is started)
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(getString(R.string.saved_image_path), "default");
-                editor.putBoolean(String.valueOf(R.bool.day_before_notification), false);
-                editor.apply();
-
-                ((MainActivity) getActivity()).resetRemainingItems();
-
-                StartFragment startFragment = new StartFragment();
-                ((MainActivity) getActivity()).checkActiveTrip();
-                ((MainActivity) getActivity()).clearBackstack();
-                ((MainActivity) getActivity()).setUpFragment(startFragment,false);
-            }
-        });
-
-        cancel_popup = (Button) popupView.findViewById(R.id.button_cancel_popup);
-        cancel_popup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                dummyPopup.dismiss();
-            }
-        });
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-        int location[] = new int[2];
-        anchorView.getLocationOnScreen(location);
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        active_trip = getActiveTrip();
-        sharedPref = getActivity().getBaseContext().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-
-        // Get remaining days to trip
-        float difference = active_trip.getStartdate().getMillis() - currentDate.getMillis();
-        int days = Math.round((difference / 1000 / 3600 / 24)) + 1;
-        setDaysToTrip(days);
-        String date = "(" + active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN) + ", " + active_trip.getStartdate().toString("dd. MMM yyyy", Locale.GERMAN) + ")";
-
-        // Get remaining days until return
-        float differenceReturn = active_trip.getEnddate().getMillis() - currentDate.getMillis();
-        int returnDays = Math.round((differenceReturn / 1000 / 3600 / 24)) + 1;
-        String returnDate = "(" + active_trip.getEnddate().dayOfWeek().getAsShortText(Locale.GERMAN) + ", " + active_trip.getEnddate().toString("dd. MMM yyyy", Locale.GERMAN) + ")";
-
-        // Get Weather on departing date
-        WeatherTask weathertask = new WeatherTask();
-        weathertask.delegate = LandingFragment.this;
-        weathertask.execute(new String[]{active_trip.getCity(), active_trip.getCountry()});
-
-        city.setText(active_trip.getCity());
-
+    private void setUpUnderline(int days,int returnDays,String date,String returnDate) {
         if (days >= 0) {
             switch (days) {
                 case 0:
@@ -256,16 +176,10 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                     break;
             }
         }
+    }
 
-
-        int number = 0;
-        for(Tupel t : active_trip.getTripItems().getItems()){
-            if (t.getY() == 0){
-                number++;
-            }
-        }
-        missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
-
+    // Sets Background Image, path is stored in shared preferences
+    private void setUpBackgroundImage() {
         String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"default");
         if (path_fromPref.equals("image_by_categorie")){
             int resID = Utils.getDefaultPicResID(active_trip.getType1());
@@ -284,6 +198,79 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         }
     }
 
+    private Trip getActiveTrip() {
+        TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        return tripDBAdapter.getActiveTrip();
+    }
+
+    private void showDummyPopup() {
+        final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int windowHeight = displaymetrics.heightPixels;
+        int windowWidth = displaymetrics.widthPixels;
+
+        dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
+        dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
+    }
+
+    private void showPopup(View anchorView) {
+        final View popupView = inflater.inflate(R.layout.delete_active_popup, container, false);
+        final PopupWindow popupWindow = new PopupWindow(popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ok_cancel_button = (Button) popupView.findViewById(R.id.button_remove);
+        // when Active Trip gets canceled
+        ok_cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
+                tripDBAdapter.open();
+                tripDBAdapter.setAllTripsInactive();
+
+                popupWindow.dismiss();
+                dummyPopup.dismiss();
+
+                // Remove path of loaded image (image gets overwritten when a new trip is started)
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.saved_image_path), "default");
+                editor.putBoolean(String.valueOf(R.bool.day_before_notification), false);
+                editor.apply();
+
+                ((MainActivity) getActivity()).resetRemainingItems();
+
+                StartFragment startFragment = new StartFragment();
+                ((MainActivity) getActivity()).checkActiveTrip();
+                ((MainActivity) getActivity()).clearBackstack();
+                ((MainActivity) getActivity()).setUpFragment(startFragment,false);
+            }
+        });
+        cancel_popup = (Button) popupView.findViewById(R.id.button_cancel_popup);
+        cancel_popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                dummyPopup.dismiss();
+            }
+        });
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        int location[] = new int[2];
+        anchorView.getLocationOnScreen(location);
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     @Override
     public void getURLProcessFinish(String url) {
         GetImageFromURLTask getImageFromURLTask = new GetImageFromURLTask();
@@ -293,7 +280,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getURLProcessFailed() {
-        // TODO NO SAVE image Path here because no internet connection
+        // No internet connection here
+        // Could no longer save image path in shared preferences here so url task would try again next time
         Log.d("mw", "URL Process failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
@@ -301,7 +289,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
         imageView.setImageResource(resID);
-
     }
 
     @Override
@@ -345,11 +332,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     private String saveToInternalStorage(Bitmap bitmapImage) throws Exception{
         ContextWrapper cw = new ContextWrapper(getActivity().getBaseContext());
-        // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
         File mypath=new File(directory,"ActiveTrip.jpg");
-
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), directory.getAbsolutePath());
