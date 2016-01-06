@@ -91,8 +91,11 @@
         für deine nächste Reise.\n\nDurch Eingabe deines Zielorts, des Reisezeitraums
         und der Reisekategorie (bis zu zwei verschiedene)
         stellt dir unsere App automatisch die passenden
-        Gegenstände zusammen, die du auf deiner Reise
-        benötigst.
+        Gegenstände zusammen, die du für deiner Reise
+        benötigst.\n\nTRAVeL zeigt dir zusätzlich aktuelle Informationen zu deinem Zielort, wie z.B.
+        das Wetter für die ersten 5 Tage der Reise.\n\nIn der Packliste siehst du alle Gegenstände
+        nach Kategorie geordnet. Dort kannst du sie abhaken, wenn sie in deinem Koffer sind oder
+        löschen, wenn du einen Gegenstand nicht benötigst. Außerdem kannst du eigene Items erstellen.
     </string>
 
     <string name="faq_text">
@@ -126,6 +129,24 @@
         Es öffnet sich ein Fenster, indem du entscheiden kannst, ob du den Gegenstand nur für die
         aktuelle Reise oder auch für alle zukünftigen Reisen löschen willst. Durch klicken auf
         die jeweilige Option wird der Gegenstand dann aus deiner Liste gelöscht.
+    </string>
+
+    <string name="frage4">
+        Wie kann ich eine Reise abbrechen?
+    </string>
+
+    <string name="antwort4">Im Übersichtsfenster deiner aktuellen Reise befindet sich am unteren Ende
+    des Bildschirms ein Reise abbrechen Button. Nach einem Klick darauf muss der Abbruch nochmal
+    bestätigt werden.
+    </string>
+
+    <string name="frage5">
+        Wie kann ich die App wieder auf den ürsprünglichen Zustand zurücksetzen?
+    </string>
+
+    <string name="antwort5">
+        In den Einstellungen findest du einen Unterpunkt Inhalte. Dort wählst du einfach die Inhalte
+        aus, die du zurücksetzen möchtest und bestätigst dies über den Button.
     </string>
 
 </resources>

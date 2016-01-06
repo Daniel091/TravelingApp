@@ -186,6 +186,56 @@
                 android:gravity="left"
                 android:id="@+id/antwort3" />
 
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/frage4"
+                android:gravity="left"
+                android:id="@+id/frage4" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/antwort4"
+                android:gravity="left"
+                android:id="@+id/antwort4" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/frage5"
+                android:gravity="left"
+                android:id="@+id/frage5" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/antwort5"
+                android:gravity="left"
+                android:id="@+id/antwort5" />
+
         </LinearLayout>
 
     </ScrollView>
