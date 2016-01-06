@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1){
             getFragmentManager().popBackStack();
+
+            //Wegen problemen mit menü setze das menü bei backpress immer manuell auf den entsprechenden menüpunkt des Fragments,
+            //zu welchem zurückgegangen wird
             String fragmentTag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 2).getName();
             System.out.println(fragmentTag);
             switch (fragmentTag){
