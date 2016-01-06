@@ -121,7 +121,8 @@
         android:textStyle="bold"
         android:id="@+id/button_final_add"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff" />
+        android:background="@color/white"
+        android:textColor="@color/colorAccent" />
 
 
 </LinearLayout>
