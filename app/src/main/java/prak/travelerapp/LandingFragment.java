@@ -154,6 +154,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     }
 
     private void setUpUnderline(int days,int returnDays,String date,String returnDate) {
+        // Wenn die Reise noch nicht begonnen hat, werden die Tage bis zum Beginn angezeigt
         if (days >= 0) {
             switch (days) {
                 case 0:
@@ -166,7 +167,10 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                     timeToJourney.setText(getActivity().getResources().getString(R.string.daysToTrip, String.valueOf(days)) + " " + date);
                     break;
             }
-        } else {
+        }
+
+        // Wenn die Reise bereits läuft, werden die Tage bis zur Rückkehr angezeigt
+        else {
             switch (returnDays) {
                 case 0:
                     timeToJourney.setText("heute geht's nach Hause");
@@ -361,6 +365,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         forecastDays.setVisibility(View.VISIBLE);
         forecastTemperature.setVisibility(View.VISIBLE);
         forecastIcons.setVisibility(View.VISIBLE);
+
+        // Wenn die Reise frühestens morgen beginnt wird das Wetter für die ersten fünf Reisetage dargestellt
         if (getDaysToTrip() > 0) {
             weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
             weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
@@ -381,7 +387,10 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
             weatherForecastIcon5.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(4)), "mipmap", "prak.travelerapp"));
             weatherForecastTemp5.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4)) + "°");
             weatherForecastDay5.setText(active_trip.getStartdate().plusDays(4).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
-        } else {
+        }
+
+        // Wenn die Reise bereits läuft, wird das Wetter für den aktuellen und die vier weiteren Tage dargestellt
+        else {
             weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(currentDate), "mipmap", "prak.travelerapp"));
             weatherForecastTemp1.setText(output.getTemperatureOnDate(currentDate) + "°");
             weatherForecastDay1.setText(currentDate.dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
