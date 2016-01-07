@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -178,7 +177,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         itemDBAdapter.open();
     }
 
-        @Override
+    @Override
     public void onPause() {
         super.onPause();
         tripDBAdapter.updateTripItems(activeTrip);

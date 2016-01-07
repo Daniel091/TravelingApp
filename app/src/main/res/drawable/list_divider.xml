@@ -3,6 +3,6 @@
     android:insetRight="25dp" >
 
     <shape android:shape="rectangle" >
-        <solid android:color="@color/lightOpacityGrey" />
+        <solid android:color="@color/lightGrey" />
     </shape>
 </inset>

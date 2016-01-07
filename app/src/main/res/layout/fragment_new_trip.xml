@@ -78,7 +78,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/lightGrey" />
+            android:background="@color/mediumGrey" />
 
         <TableLayout
             android:id="@+id/secondSection"
@@ -150,7 +150,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/lightGrey" />
+            android:background="@color/mediumGrey" />
 
         <LinearLayout
             android:id="@+id/thirdSection"
@@ -186,7 +186,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/lightGrey" />
+            android:background="@color/mediumGrey" />
 
         <LinearLayout
             android:id="@+id/fourthSection"
