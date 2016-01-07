@@ -389,21 +389,22 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             isRaining = weather.isRaining();
         }
 
-        //value for temprature -> 0 if normal, 1 if warm, -1 if cold
+        //value for temp -> 0 if normal, 1 if warm, -1 if cold
         int tempValue = 0;  // default
 
         DateTime startDate = Utils.stringToDatetime(editText_arrival.getText().toString());
         DateTime endDate = Utils.stringToDatetime(editText_departure.getText().toString());
 
-        int averageTemp = weather.getAverageTemp(startDate, endDate);
-
-        // Setup list for cold temperature
-        if (averageTemp < 6) {
-            tempValue = -1;
-        }
-        // Setup list for warm temperature
-        if (averageTemp > 19) {
-            tempValue = 1;
+        if (weather != null){
+            int averageTemp = weather.getAverageTemp(startDate, endDate);
+            // Setup list for cold temperature
+            if (averageTemp < 6) {
+                tempValue = -1;
+            }
+            // Setup list for warm temperature
+            if (averageTemp > 19) {
+                tempValue = 1;
+            }
         }
 
         Log.d("Temp Value", String.valueOf(tempValue));

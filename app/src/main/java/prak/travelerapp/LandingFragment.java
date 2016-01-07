@@ -43,7 +43,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button,cancel_popup,ok_cancel_button;
-    private LinearLayout koffer_packen;
+    private LinearLayout koffer_packen,forecastIcons,forecastTemperature,forecastDays;
     private PopupWindow dummyPopup;
     private LayoutInflater inflater;
     private ViewGroup container;
@@ -111,6 +111,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
         koffer_packen = (LinearLayout) view.findViewById(R.id.koffer_packen);
+        forecastDays = (LinearLayout) view.findViewById(R.id.forecastDays);
+        forecastIcons = (LinearLayout) view.findViewById(R.id.forecastIcons);
+        forecastTemperature = (LinearLayout) view.findViewById(R.id.forecastTemperature);
         weatherForecastIcon1 = (ImageView) view.findViewById(R.id.weatherForecastIcon1);
         weatherForecastIcon2 = (ImageView) view.findViewById(R.id.weatherForecastIcon2);
         weatherForecastIcon3 = (ImageView) view.findViewById(R.id.weatherForecastIcon3);
@@ -355,6 +358,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void weatherProcessFinish(Weather output) {
+        forecastDays.setVisibility(View.VISIBLE);
+        forecastTemperature.setVisibility(View.VISIBLE);
+        forecastIcons.setVisibility(View.VISIBLE);
         if (getDaysToTrip() > 0) {
             weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
             weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
@@ -401,6 +407,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void weatherProcessFailed() {
-
+        forecastDays.setVisibility(View.GONE);
+        forecastTemperature.setVisibility(View.GONE);
+        forecastIcons.setVisibility(View.GONE);
     }
 }

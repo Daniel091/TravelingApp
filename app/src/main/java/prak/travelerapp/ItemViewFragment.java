@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -79,12 +80,12 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         this.container = container;
         View view = inflater.inflate(R.layout.fragment_item_view, container, false);
 
-        prepareViews(view);
-        prepareListeners();
-
         tripDBAdapter = new TripDBAdapter(getActivity());
         tripDBAdapter.open();
         activeTrip = tripDBAdapter.getActiveTrip();
+
+        prepareViews(view);
+        prepareListeners();
         tripCity.setText(activeTrip.getCity());
 
         itemDBAdapter = new ItemDBAdapter(getActivity());
@@ -396,13 +397,13 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
-                ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+                ((MainActivity) getActivity()).updateMenueRemainingItems(activeTrip);
 
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
                 expListView.setSelectedChild(groupPosition, childPosition - 1, false);
                 popupWindow.dismiss();
 
-                Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+                Toast.makeText(popupView.getContext(), "Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -501,5 +502,4 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             }
         }
     }
-
 }
