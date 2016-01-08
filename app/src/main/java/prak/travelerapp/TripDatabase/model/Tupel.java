@@ -28,6 +28,13 @@ public class Tupel implements Comparable<Tupel>{
 
     @Override
     public int compareTo(Tupel another) {
-        return Integer.compare(this.x,another.getX());
+        if (this.x == another.getX()){
+            return 0;
+        } else if (this.x > another.getX()){
+            return 1;
+        } else if (this.x < another.getX()){
+            return -1;
+        }
+        return this.compareTo(another);
     }
 }

@@ -164,10 +164,11 @@
                 android:text="@string/set_back"
                 android:id="@+id/button"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"/>
+                android:background="@color/white"
+                android:textColor="@color/colorAccent"/>
 
             <View
                 android:layout_width="match_parent"

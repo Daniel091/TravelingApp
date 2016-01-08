@@ -3,7 +3,7 @@
 
     <!-- Font Settings -->
     <dimen name="text_small">12sp</dimen>
-    <dimen name="text_medium">17sp</dimen>
+    <dimen name="text_medium">15sp</dimen>
     <dimen name="text_large">32sp</dimen>
 
 </resources>

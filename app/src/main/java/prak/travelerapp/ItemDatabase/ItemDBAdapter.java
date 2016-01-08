@@ -199,7 +199,7 @@ public class ItemDBAdapter {
 
         //items mit nass = 1 werden nur selektiert, wenn es regnet
         if(!isRaining){
-            selector+= "AND " + ItemDBHelper.COLUMN_NASS + "=" + 0;
+            selector+= " AND " + ItemDBHelper.COLUMN_NASS + "=" + 0;
         }
 
         Cursor cursor = itemDb.query(ItemDBHelper.TABLE_NAME, new String[]{ItemDBHelper.COLUMN_ID},selector, null, null, null, null);

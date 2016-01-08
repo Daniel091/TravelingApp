@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:textColor="@color/lightGrey"
+            android:textColor="@color/mediumGrey"
             android:textSize="@dimen/text_small"/>
 
         <!-- 5 days forecast -->
@@ -159,7 +159,7 @@
                 android:layout_height="20dp"
                 android:layout_weight=".20"
                 android:gravity="center"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"/>
 
             <TextView
@@ -168,7 +168,7 @@
                 android:layout_height="20dp"
                 android:layout_weight=".20"
                 android:gravity="center"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"/>
 
             <TextView
@@ -177,7 +177,7 @@
                 android:layout_height="20dp"
                 android:layout_weight=".20"
                 android:gravity="center"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"/>
 
             <TextView
@@ -186,7 +186,7 @@
                 android:layout_height="20dp"
                 android:layout_weight=".20"
                 android:gravity="center"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"/>
 
             <TextView
@@ -195,7 +195,7 @@
                 android:layout_height="20dp"
                 android:layout_weight=".20"
                 android:gravity="center"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"/>
 
         </LinearLayout>
@@ -231,7 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/mediumGrey"
                 android:textSize="@dimen/text_small"
                 android:layout_marginBottom="10dp"
                 />

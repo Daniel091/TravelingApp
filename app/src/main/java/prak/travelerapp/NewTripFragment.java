@@ -404,8 +404,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
         }
 
-
-
         Log.d("Temp Value", String.valueOf(tempValue));
 
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());

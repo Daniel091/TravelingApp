@@ -34,7 +34,7 @@
 
     <style name="itemList" parent="android:style/Widget.ListView">
         <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:divider">@color/lightGrey</item>
+        <item name="android:divider">@color/mediumGrey</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:dividerHeight">1dp</item>
         <item name="android:listSelector">@color/colorAccent</item>

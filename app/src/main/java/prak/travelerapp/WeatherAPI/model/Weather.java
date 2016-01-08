@@ -8,15 +8,16 @@ import org.joda.time.Days;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-/**
- * Created by Michael on 24.11.15.
- */
-
 public class Weather{
 
     public Location location;
     public ArrayList<Day> days = new ArrayList<Day>();
 
+    /**
+     * Funktion prüft, ob es an einem der Reisetage regnet
+     *
+     * @return
+     */
     public boolean isRaining(){
 
         for (Day day: days) {
@@ -28,6 +29,12 @@ public class Weather{
         return false;
     }
 
+    /**
+     * Funktion liefert die Tagestemperatur, die die Wetter API zurückgibt, für ein bestimmtes Datum
+     *
+     * @param dayRequest
+     * @return
+     */
     public String getTemperatureOnDate(DateTime dayRequest){
 
         String temperature = "--";
@@ -45,6 +52,13 @@ public class Weather{
         return temperature;
     }
 
+    /**
+     * Funktion liefert Wetter Icon für ein bestimmtes Datum. Der Rückgabe-String ist
+     * gleich dem Dateinamen
+     *
+     * @param dayRequest
+     * @return
+     */
     public String getIconOnDate(DateTime dayRequest){
 
         String iconSrc = "--";
@@ -63,6 +77,14 @@ public class Weather{
         return iconSrc;
     }
 
+    /**
+     * Funktion liefert die Durchschnittstemperatur von allen Tagen zwischen zwei eingegebenen
+     * Daten. Dabei werden fehlende Wetterdaten ignoriert
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public Integer getAverageTemp(DateTime startDate, DateTime endDate) {
         int travellingdays = Days.daysBetween(startDate.toLocalDate(), endDate.toLocalDate()).getDays() + 1;
 
