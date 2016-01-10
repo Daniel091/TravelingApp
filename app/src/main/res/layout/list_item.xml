@@ -9,7 +9,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginLeft="22dp"
         android:layout_marginRight="@dimen/space_small"
         android:id="@+id/checkBox"
         android:checked="false" />

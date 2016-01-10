@@ -20,6 +20,9 @@
         <item name="android:listViewStyle">@style/itemList</item>
         <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
 
+        <!-- Expandable ListView Packliste -->
+        <item name="android:expandableListViewStyle">@style/ExpandableListGroup</item>
+
         <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/CustomDatePickerDialogTheme</item>
     </style>
     <style name="Basic.NoActionBar">
@@ -32,6 +35,10 @@
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
         <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="ExpandableListGroup" parent="android:Widget.Holo.Light.ExpandableListView">
+        <item name="android:indicatorLeft">22dp</item>
     </style>
 
     <style name="itemList" parent="android:style/Widget.ListView">
