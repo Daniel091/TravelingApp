@@ -56,8 +56,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
                 android:textSize="@dimen/text_medium"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -68,9 +68,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium">
 
                 <TextView
                     android:layout_alignParentLeft="true"
@@ -85,7 +86,6 @@
                 <android.support.v7.widget.SwitchCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
                     android:layout_alignParentRight="true"
                     android:textOff="AUS"
                     android:textOn="AN"
@@ -101,8 +101,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
                 android:textSize="@dimen/text_medium"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -113,9 +113,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium">
 
                 <TextView
                     android:layout_alignParentLeft="true"
@@ -128,7 +129,6 @@
                     android:id="@+id/textViewVergange" />
 
                 <CheckBox
-                    android:layout_marginRight="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -138,9 +138,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium">
 
                 <TextView
                     android:layout_alignParentLeft="true"
@@ -153,7 +154,6 @@
                     android:id="@+id/textViewCustomItems" />
 
                 <CheckBox
-                    android:layout_marginRight="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -168,7 +168,11 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/white"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorAccent"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_medium"/>
 
             <View
                 android:layout_width="match_parent"
@@ -179,8 +183,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium"
                 android:textSize="@dimen/text_medium"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -191,9 +196,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium">
 
                 <TextView
                     android:layout_alignParentLeft="true"
