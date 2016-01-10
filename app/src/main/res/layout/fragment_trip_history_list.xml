@@ -35,8 +35,8 @@
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp"
-                android:layout_marginLeft="28dp"
-                android:textSize="30dp"/>
+                android:layout_marginLeft="@dimen/space_medium"
+                android:textSize="@dimen/text_large"/>
 
         </RelativeLayout>
     </RelativeLayout>

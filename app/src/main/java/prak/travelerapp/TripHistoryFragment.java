@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +23,7 @@ public class TripHistoryFragment extends Fragment {
 
     TripDBAdapter tripDBAdapter;
     private ListView listview;
+    private TextView noOldTrips;
     private ImageButton hamburger_button;
 
     @Override
@@ -31,7 +32,7 @@ public class TripHistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_history, container, false);
 
-
+        noOldTrips = (TextView) view.findViewById(R.id.history_list_noOldTrips);
         listview = (ListView) view.findViewById(R.id.historyList);
         hamburger_button = (ImageButton) view.findViewById(R.id.button_hamburger);
         hamburger_button.setOnClickListener(new View.OnClickListener() {
@@ -49,11 +50,19 @@ public class TripHistoryFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        //get all old Trips
+        // get all old Trips
         tripDBAdapter = new TripDBAdapter(getActivity());
         tripDBAdapter.open();
         ArrayList<Trip> oldTrips = tripDBAdapter.getOldTrips();
-        //reverse array to have the latest trips on top
+
+        // show message if no old trips exist
+        if (oldTrips.isEmpty()) {
+            noOldTrips.setVisibility(View.VISIBLE);
+        } else {
+            noOldTrips.setVisibility(View.GONE);
+        }
+
+        // reverse array to have the latest trips on top
         Collections.reverse(oldTrips);
         final Trip[] tripArray = oldTrips.toArray(new Trip[oldTrips.size()]);
 
@@ -68,7 +77,6 @@ public class TripHistoryFragment extends Fragment {
                 TripHistoryListFragment fragment = new TripHistoryListFragment();
                 fragment.trip = tripArray[position];
                 ((MainActivity) getActivity()).setUpFragment(fragment,false);
-
 
             }
         });

@@ -80,6 +80,8 @@
     <string name="set_back">Gewählte Inhalte zurücksetzen</string>
 
     <string name="trip_history">Vergangene Reisen</string>
+    <string name="trip_history_noOldTrips">Keine vergangenen Reisen verfügbar</string>
+
 
     <string name="help">Hilfe</string>
 

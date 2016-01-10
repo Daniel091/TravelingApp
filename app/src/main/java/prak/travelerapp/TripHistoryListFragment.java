@@ -35,7 +35,6 @@ public class TripHistoryListFragment extends Fragment {
         TextView tripCity = (TextView) view.findViewById(R.id.history_textview_tripCity);
         tripCity.setText(trip.getCity());
 
-
         listview = (ExpandableListView) view.findViewById(R.id.history_item_list_view);
 
         //prevent default scrolling action on Group toggle
@@ -52,6 +51,7 @@ public class TripHistoryListFragment extends Fragment {
                 return true;
             }
         });
+
         hamburger_button = (ImageButton) view.findViewById(R.id.button_hamburger);
         hamburger_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,6 @@ public class TripHistoryListFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
-
 
         ItemDBAdapter itemDBAdapter = new ItemDBAdapter(getActivity());
         itemDBAdapter.createDatabase();
@@ -102,8 +101,6 @@ public class TripHistoryListFragment extends Fragment {
         List<String> dokumente = new ArrayList<String>();
         List<String> sonstiges = new ArrayList<String>();
 
-
-
         // befüllt die Kategorien
         for(int i = 0; i < itemList.size(); i++){
             Dataset dataSet = itemList.get(i);
@@ -130,7 +127,6 @@ public class TripHistoryListFragment extends Fragment {
 
         HistoryItemListAdapter listAdapter = new HistoryItemListAdapter(getActivity(), listDataHeader, listDataChild);
         listview.setAdapter(listAdapter);
-
 
     }
 
