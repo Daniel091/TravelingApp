@@ -36,8 +36,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PlaceApi.AutocompleteActivity" />
-
         <service android:name=".Notifications.NotificationService"
             android:enabled="true" />
 

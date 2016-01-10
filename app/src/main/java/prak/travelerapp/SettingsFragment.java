@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.Trip;
 
 public class SettingsFragment extends Fragment {
     private Button button;
@@ -74,8 +75,7 @@ public class SettingsFragment extends Fragment {
 
     private void deleteCustomItems() {
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
-        itemDB.open();
-        itemDB.createDatabase();
+        itemDB.resetDatabase();
         itemDB.close();
         Toast.makeText(getActivity(),"Eigene Gegenstände gelöscht",Toast.LENGTH_SHORT).show();
         del_items.setChecked(false);

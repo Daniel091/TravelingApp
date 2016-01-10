@@ -84,6 +84,21 @@ public class ItemDBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void resetDatabase() throws IOException{
+        this.getReadableDatabase();
+        this.close();
+        try
+        {
+            //Copy the database from assests
+            copyDataBase();
+            Log.e(TAG, "resetDatabase database reseted");
+        }
+        catch (IOException mIOException)
+        {
+            throw new Error("ErrorCopyingDataBase");
+        }
+    }
+
     //Check that the database exists here: /data/data/your package/databases/Da Name
     private boolean checkDataBase()
     {

@@ -14,9 +14,6 @@ import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.TripDatabase.model.Tupel;
 
-/**
- * Created by Michael on 05.12.15.
- */
 public class ItemDBAdapter {
 
     protected static final String TAG = "DBAdapter";
@@ -42,6 +39,19 @@ public class ItemDBAdapter {
         {
             Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
             throw new Error("UnableToCreateDatabase");
+        }
+        return this;
+    }
+
+    public ItemDBAdapter resetDatabase(){
+        try
+        {
+            itemDBHelper.resetDatabase();
+        }
+        catch (IOException mIOException)
+        {
+            Log.e(TAG, mIOException.toString() + "  UnableToResetDatabase");
+            throw new Error("UnableToResetDatabase");
         }
         return this;
     }
