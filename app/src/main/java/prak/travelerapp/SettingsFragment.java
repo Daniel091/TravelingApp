@@ -52,10 +52,10 @@ public class SettingsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (del_history.isChecked()){
+                if (del_history.isChecked()) {
                     deleteHistory();
                 }
-                if (del_items.isChecked()){
+                if (del_items.isChecked()) {
                     deleteCustomItems();
                 }
             }
@@ -74,11 +74,17 @@ public class SettingsFragment extends Fragment {
     }
 
     private void deleteCustomItems() {
-        ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
-        itemDB.resetDatabase();
-        itemDB.close();
-        Toast.makeText(getActivity(),"Eigene Gegenstände gelöscht",Toast.LENGTH_SHORT).show();
-        del_items.setChecked(false);
+        Trip active_trip =  ((MainActivity) getActivity()).checkActiveTrip();
+
+        if (active_trip == null) {
+            ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
+            itemDB.resetDatabase();
+            itemDB.close();
+            Toast.makeText(getActivity(), "Eigene Gegenstände gelöscht", Toast.LENGTH_SHORT).show();
+            del_items.setChecked(false);
+        } else {
+            Toast.makeText(getActivity(), "Gegenstände löschen nicht möglich, es gibt einen Aktiven Trip", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void deleteHistory() {
