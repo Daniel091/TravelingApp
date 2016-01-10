@@ -69,7 +69,7 @@
     <string name="item_name">Name</string>
     <string name="item_hint">z.B. Flugticket</string>
     <string name="item_category">Kategorie</string>
-    <string name="add_item">Gegenstand hinzufügen</string>
+    <string name="item_addButton">hinzufügen</string>
 
     <string name="final_cancel">Ja</string>
     <string name="dont_cancel">Nein</string>

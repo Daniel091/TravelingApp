@@ -15,8 +15,8 @@
 
         <!-- Raised Button Style -->
         <item name="colorButtonNormal">@color/colorAccent</item>
-        <!-- ListView Packliste -->
 
+        <!-- ListView Packliste -->
         <item name="android:listViewStyle">@style/itemList</item>
         <item name="android:spinnerItemStyle">@style/TextViewSpinnerItem</item>
 
@@ -28,8 +28,10 @@
     </style>
 
     <style name="TextViewSpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:paddingTop">0dp</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
+        <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
     <style name="itemList" parent="android:style/Widget.ListView">

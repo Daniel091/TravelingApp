@@ -8,7 +8,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="150dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -30,8 +30,8 @@
                 android:text="@string/new_item"
                 android:textColor="@color/white"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="60dp"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginBottom="45dp"
                 android:textSize="@dimen/text_large"/>
         </RelativeLayout>
     </RelativeLayout>
@@ -39,16 +39,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginBottom="@dimen/space_small"
+        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginRight="@dimen/space_medium">
 
         <TextView
             android:layout_alignParentLeft="true"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:textSize="@dimen/text_medium"
             android:text="@string/item_name"
             android:id="@+id/textViewName" />
@@ -60,10 +59,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/item_hint"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/space_small"
+            android:paddingRight="@dimen/space_medium"
+            android:textSize="@dimen/text_medium"
             android:gravity="start"
             android:inputType="text"
             android:background="@color/white"
@@ -80,18 +78,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginBottom="@dimen/space_small"
+        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginRight="@dimen/space_medium" >
 
         <TextView
             android:layout_alignParentLeft="true"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="@dimen/text_medium"
             android:text="Kategorie"
+            android:textSize="@dimen/text_medium"
+            android:layout_marginTop="3dp"
             android:id="@+id/textViewKategorie" />
 
         <Spinner
@@ -99,30 +97,25 @@
             android:layout_toRightOf="@id/textViewKategorie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/space_small"
             android:gravity="center"
             android:spinnerMode="dialog"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/landing_divider"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/add_item"
+        android:text="@string/item_addButton"
         android:textStyle="bold"
         android:id="@+id/button_final_add"
         android:layout_gravity="center_horizontal"
         android:background="@color/white"
-        android:textColor="@color/colorAccent" />
-
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="@dimen/space_medium"
+        android:layout_marginRight="@dimen/space_medium"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginBottom="@dimen/space_medium" />
 
 </LinearLayout>
