@@ -82,6 +82,8 @@
     <string name="trip_history">Vergangene Reisen</string>
     <string name="trip_history_noOldTrips">Keine vergangenen Reisen verfügbar</string>
 
+    <string name="for_all_types">Für alle Reisetypen</string>
+
 
     <string name="help">Hilfe</string>
 

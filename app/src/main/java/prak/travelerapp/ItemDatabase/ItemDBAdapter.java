@@ -124,7 +124,7 @@ public class ItemDBAdapter {
         return idArrayString;
     }
 
-    public Dataset createDataset(String itemName, int basic, int geschlecht, int trocken,
+    public Dataset createDataset(String itemName, int geschlecht, int trocken,
                                  int strandurlaub, int staedtetrip, int skifahren, int wandern,
                                  int geschaeftsreise, int partyurlaub, int camping, int festival,
                                  int kategorie) {

@@ -20,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -42,6 +44,7 @@ import prak.travelerapp.ItemList.ExpandableListAdapter;
 import prak.travelerapp.ItemList.ItemCheckedListener;
 import prak.travelerapp.ItemList.ListItem;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.Tupel;
 
@@ -67,10 +70,19 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     private TextView tripCity;
     private FloatingActionButton buttonAddItem;
     private Trip activeTrip;
+    private CheckBox allTravelTypes;
 
     // Werte für das vom User hinzugefügte Item
     private String customItem;
     private int customCat;
+    private int strandurlaub;
+    private int staedtetrip;
+    private int skifahren;
+    private int wandern;
+    private int geschaeftsreise;
+    private int partyurlaub;
+    private int camping;
+    private int festival;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -306,12 +318,57 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         // Spinner
         Spinner spinner = (Spinner) popupView.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(popupView.getContext(),
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(popupView.getContext(),
                 android.R.layout.simple_spinner_item, paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        strandurlaub = 0;
+        staedtetrip = 0;
+        skifahren = 0;
+        wandern = 0;
+        geschaeftsreise = 0;
+        partyurlaub = 0;
+        camping = 0;
+        festival = 0;
+
+        allTravelTypes = (CheckBox) popupView.findViewById(R.id.checkBoxTravelType);
+        allTravelTypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (allTravelTypes.isChecked()) {
+                    setTravelType();
+                } else {
+                    strandurlaub = 0;
+                    staedtetrip = 0;
+                    skifahren = 0;
+                    wandern = 0;
+                    geschaeftsreise = 0;
+                    partyurlaub = 0;
+                    camping = 0;
+                    festival = 0;
+
+                    TravelType tripType1 = activeTrip.getType1();
+                    String tripType1asString = tripType1.getStringValue();
+                    getTravelType(tripType1asString);
+
+                    TravelType tripType2 = activeTrip.getType2();
+                    String tripType2asString = tripType2.getStringValue();
+                    getTravelType(tripType2asString);
+                }
+            }
+        });
+
+        TravelType tripType1 = activeTrip.getType1();
+        String tripType1asString = tripType1.getStringValue();
+        getTravelType(tripType1asString);
+
+        TravelType tripType2 = activeTrip.getType2();
+        String tripType2asString = tripType2.getStringValue();
+        getTravelType(tripType2asString);
+
 
         // Button zum finalen hinzufügen eines Items
         Button finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
@@ -326,7 +383,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 if (userInput.length() == 0) {
                     Toast.makeText(popupView.getContext(), "Bitte Namen des Items eingeben", Toast.LENGTH_SHORT).show();
                 } else {
-                    Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
+                    Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, strandurlaub, staedtetrip, skifahren,
+                            wandern, geschaeftsreise, partyurlaub, camping, festival, customCat);
                     itemList.add(customDataSet);
                     activeTrip.getTripItems().addItem(customDataSet.getItemID());
 
@@ -500,5 +558,54 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 imageView_location.setImageBitmap(image);
             }
         }
+    }
+
+    /**
+     * Setzt den Reisetyp für alle auf Reisetypen
+     */
+    public void setTravelType() {
+        strandurlaub = 1;
+        staedtetrip = 1;
+        skifahren = 1;
+        wandern = 1;
+        geschaeftsreise = 1;
+        partyurlaub = 1;
+        camping = 1;
+        festival = 1;
+    }
+    /**
+     * Weist einem Gegenstand den passenden Reisetyp zu
+     * @param travelType
+     */
+    public void getTravelType(String travelType) {
+        switch (travelType) {
+            case "Keine Kategorie":
+                break;
+            case "Strandurlaub":
+                strandurlaub = 1;
+                break;
+            case "Städtetrip":
+                staedtetrip = 1;
+                break;
+            case "Skifahren":
+                skifahren = 1;
+                break;
+            case "Wandern":
+                wandern = 1;
+                break;
+            case "Geschäftsreise":
+                geschaeftsreise = 1;
+                break;
+            case "Partyurlaub":
+                partyurlaub = 1;
+                break;
+            case "Camping":
+                camping = 1;
+                break;
+            case "Festival":
+                festival = 1;
+                break;
+        }
+
     }
 }
