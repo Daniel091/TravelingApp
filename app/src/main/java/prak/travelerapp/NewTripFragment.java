@@ -356,7 +356,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
-        if (spinner.getId() == R.id.spinner_category && !firstSelect){
+        if (spinner.getId() == R.id.spinner_category){
             LinearLayout secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
             secondTripType.setVisibility(LinearLayout.VISIBLE);
             setUpSecondTripType();
@@ -414,8 +414,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 tempValue = 1;
             }
         }
-
-        Log.d("Temp Value", String.valueOf(tempValue));
 
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
         itemDB.createDatabase();
