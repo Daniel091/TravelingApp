@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private DatePickerDialog arrivalDatePickerDialog,departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
     private boolean firstSelect = true;
+    private RelativeLayout relativeLayout;
 
     private String[] traveltypeStrings;
     String[] items = new String[] {};
@@ -72,7 +74,16 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     }
 
     private void prepareViews(View view) {
-
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.newTripRelative);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (in.isAcceptingText()){
+                    in.hideSoftInputFromWindow(v.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        });
         autocompleter = (CityAutoCompleteView) view.findViewById(R.id.autocomplete_destination);
         autocompleter.addTextChangedListener(this);
 
@@ -345,7 +356,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
-        if (spinner.getId() == R.id.spinner_category && !firstSelect){
+        if (spinner.getId() == R.id.spinner_category){
             LinearLayout secondTripType = (LinearLayout) getView().findViewById(R.id.fourthSection);
             secondTripType.setVisibility(LinearLayout.VISIBLE);
             setUpSecondTripType();
@@ -403,8 +414,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 tempValue = 1;
             }
         }
-
-        Log.d("Temp Value", String.valueOf(tempValue));
 
         ItemDBAdapter itemDB = new ItemDBAdapter(getActivity());
         itemDB.createDatabase();

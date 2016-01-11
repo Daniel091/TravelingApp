@@ -368,25 +368,49 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         // Wenn die Reise frühestens morgen beginnt wird das Wetter für die ersten fünf Reisetage dargestellt
         if (getDaysToTrip() > 0) {
-            weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
-            weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
-            weatherForecastDay1.setText(active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
 
-            weatherForecastIcon2.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(1)), "mipmap", "prak.travelerapp"));
-            weatherForecastTemp2.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(1)) + "°");
-            weatherForecastDay2.setText(active_trip.getStartdate().plusDays(1).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            // Alle Wetterdaten ausblenden, wenn Reisedatum außerhalb Vorhersage liegt
+            int missingData = 0;
+            for (int i=0; i<5; i++) {
+                if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(i))) == "--") {
+                    missingData++;
+                }
+                if (missingData == 5) {
+                    forecastDays.setVisibility(View.GONE);
+                    forecastTemperature.setVisibility(View.GONE);
+                    forecastIcons.setVisibility(View.GONE);
+                }
+            }
 
-            weatherForecastIcon3.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(2)), "mipmap", "prak.travelerapp"));
-            weatherForecastTemp3.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(2)) + "°");
-            weatherForecastDay3.setText(active_trip.getStartdate().plusDays(2).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(0))) != "--") {
+                weatherForecastIcon1.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate()), "mipmap", "prak.travelerapp"));
+                weatherForecastTemp1.setText(output.getTemperatureOnDate(active_trip.getStartdate()) + "°");
+                weatherForecastDay1.setText(active_trip.getStartdate().dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            }
 
-            weatherForecastIcon4.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(3)), "mipmap", "prak.travelerapp"));
-            weatherForecastTemp4.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(3)) + "°");
-            weatherForecastDay4.setText(active_trip.getStartdate().plusDays(3).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(1))) != "--") {
+                weatherForecastIcon2.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(1)), "mipmap", "prak.travelerapp"));
+                weatherForecastTemp2.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(1)) + "°");
+                weatherForecastDay2.setText(active_trip.getStartdate().plusDays(1).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            }
 
-            weatherForecastIcon5.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(4)), "mipmap", "prak.travelerapp"));
-            weatherForecastTemp5.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4)) + "°");
-            weatherForecastDay5.setText(active_trip.getStartdate().plusDays(4).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(2))) != "--") {
+                weatherForecastIcon3.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(2)), "mipmap", "prak.travelerapp"));
+                weatherForecastTemp3.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(2)) + "°");
+                weatherForecastDay3.setText(active_trip.getStartdate().plusDays(2).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            }
+
+            if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(3))) != "--") {
+                weatherForecastIcon4.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(3)), "mipmap", "prak.travelerapp"));
+                weatherForecastTemp4.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(3)) + "°");
+                weatherForecastDay4.setText(active_trip.getStartdate().plusDays(3).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            }
+
+            if ((output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4))) != "--") {
+                weatherForecastIcon5.setImageResource(getResources().getIdentifier(output.getIconOnDate(active_trip.getStartdate().plusDays(4)), "mipmap", "prak.travelerapp"));
+                weatherForecastTemp5.setText(output.getTemperatureOnDate(active_trip.getStartdate().plusDays(4)) + "°");
+                weatherForecastDay5.setText(active_trip.getStartdate().plusDays(4).dayOfWeek().getAsShortText(Locale.GERMAN).toUpperCase());
+            }
         }
 
         // Wenn die Reise bereits läuft, wird das Wetter für den aktuellen und die vier weiteren Tage dargestellt

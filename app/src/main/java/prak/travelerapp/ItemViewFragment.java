@@ -194,6 +194,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         super.onPause();
         tripDBAdapter.updateTripItems(activeTrip);
         itemDBAdapter.close();
+        ((MainActivity) getActivity()).setActive_trip(activeTrip);
+        ((MainActivity) getActivity()).updateMenueRemainingItems(activeTrip);
 
         if(tripDBAdapter != null){
             tripDBAdapter.close();

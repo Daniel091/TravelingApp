@@ -204,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    public void setActive_trip(Trip active_trip) {
+        this.active_trip = active_trip;
+    }
 
     /**
      * Initialisiere ein Fragment
