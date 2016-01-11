@@ -24,6 +24,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<ListItem>> _listDataChild;
     public ItemCheckedListener listener;
+    private TextView checkedItems;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -93,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         View view = null;
@@ -107,15 +108,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                                             boolean isChecked) {
-
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
+                    // TODO Update CheckedItems here leads to bugs
                 }
             });
-
 
             //verhindere, dass die view den longclick empfängt-> liste empfängt longclick
             view.setOnLongClickListener(new View.OnLongClickListener(){
@@ -159,8 +158,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -168,11 +166,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
+        checkedItems = (TextView) convertView.findViewById(R.id.checkedItems);
+        setUpCheckedItems(groupPosition);
+
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
         //lblListHeader.setTypeface(null, Typeface.NORMAL);
         lblListHeader.setText(headerTitle.toUpperCase());
 
         return convertView;
+    }
+
+    private void setUpCheckedItems(int groupPosition) {
+        String group_name = (String) getGroup(groupPosition);
+        List<ListItem> group_items = _listDataChild.get(group_name);
+        int unchecked_items = 0;
+        for (ListItem item : group_items){
+            if (!item.isChecked()){
+                unchecked_items++;
+            }
+        }
+        checkedItems.setText(String.valueOf(unchecked_items));
     }
 
     @Override
