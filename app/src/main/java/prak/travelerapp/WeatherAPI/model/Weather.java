@@ -1,7 +1,5 @@
 package prak.travelerapp.WeatherAPI.model;
 
-import android.util.Log;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -37,13 +35,10 @@ public class Weather{
      */
     public String getTemperatureOnDate(DateTime dayRequest){
 
-        String temperature = "--";
-
-        Log.d("Weather API. Date Temp", dayRequest.toDateMidnight().toString());
+        String temperature = "--";  // wenn keine Temp verfügbar ist bleibt Temperatur "--"
 
         for (Day day: days) {
             if (day.getDate().toDateMidnight().equals(dayRequest.toDateMidnight())) {
-                Log.d("Weather API. Temp", String.valueOf(day.temperature.getDayTemp()));
                 float temp = Math.round(day.temperature.getDayTemp());
                 temperature = new DecimalFormat("#").format(temp);
             }
@@ -63,13 +58,8 @@ public class Weather{
 
         String iconSrc = "--";
 
-        Log.d("Weather API. Date Cond", dayRequest.toDateMidnight().toString());
-
         for (Day day: days) {
             if (day.getDate().toDateMidnight().equals(dayRequest.toDateMidnight())) {
-                Log.d("Weather API. Cond Main", String.valueOf(day.condition.getMain()));
-                Log.d("Weather API. Cond Desc", String.valueOf(day.condition.getDescription()));
-                Log.d("Weather API. Cond Icon", String.valueOf(day.condition.getIcon()));
                 iconSrc = "weather_" + String.valueOf(day.condition.getIcon());
             }
         }
@@ -92,13 +82,11 @@ public class Weather{
         int tempSum = 0;
         for (int i = 0; i < travellingdays; i++) {
             if (getTemperatureOnDate(startDate.plusDays(i)) != "--") {
-                Log.d("Tag " + i, getTemperatureOnDate(startDate.plusDays(i)));
                 tempSum += Integer.valueOf(getTemperatureOnDate(startDate.plusDays(i)));
                 factor++;
             }
         }
         int averageTemp = tempSum / factor;
-        Log.d("Temperatur Durchschnitt", String.valueOf(averageTemp));
 
         return averageTemp;
     }
