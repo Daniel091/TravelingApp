@@ -2,12 +2,16 @@ package prak.travelerapp;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,10 +29,17 @@ public class TripHistoryListFragment extends Fragment {
     private ImageButton hamburger_button;
     public Trip trip;
     private ImageView imageView_traveltype;
+    private FloatingActionButton reuseList_button;
+    private PopupWindow dummyPopup;
+    private LayoutInflater inflater;
+    private ViewGroup container;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        this.container = container;
+        this.inflater = inflater;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_history_list, container, false);
 
@@ -57,6 +68,24 @@ public class TripHistoryListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openDrawer();
+            }
+        });
+
+        reuseList_button = (FloatingActionButton)view.findViewById(R.id.button_reuse_list);
+        //if there is an active trip hide the floating action Button
+        if(((MainActivity) getActivity()).checkActiveTrip() != null){
+            reuseList_button.setVisibility(View.GONE);
+        }
+
+        reuseList_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewTripFragment newTripFragment = new NewTripFragment();
+                newTripFragment.reusedTrip = trip;
+                ((MainActivity) getActivity()).setUpFragment(newTripFragment, false);
+
+                //showDummyPopup();
+                //showPopup(v);
             }
         });
 
@@ -128,6 +157,17 @@ public class TripHistoryListFragment extends Fragment {
         HistoryItemListAdapter listAdapter = new HistoryItemListAdapter(getActivity(), listDataHeader, listDataChild);
         listview.setAdapter(listAdapter);
 
+    }
+
+    private void showDummyPopup() {
+        final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int windowHeight = displaymetrics.heightPixels;
+        int windowWidth = displaymetrics.widthPixels;
+
+        dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
+        dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
     }
 
 }

@@ -67,4 +67,12 @@ public class TripItems {
         return items_list;
     }
 
+    //mark all items as unchecked
+    public void cleanItems(){
+        for(Tupel item : items_list){
+            item.setY(0);
+        }
+
+    }
+
 }

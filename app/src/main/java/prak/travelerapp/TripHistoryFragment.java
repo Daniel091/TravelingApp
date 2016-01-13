@@ -2,13 +2,21 @@ package prak.travelerapp;
 
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +37,7 @@ public class TripHistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_history, container, false);
 
@@ -76,7 +85,7 @@ public class TripHistoryFragment extends Fragment {
                 System.out.println(tripArray[position].getCity());
                 TripHistoryListFragment fragment = new TripHistoryListFragment();
                 fragment.trip = tripArray[position];
-                ((MainActivity) getActivity()).setUpFragment(fragment,false);
+                ((MainActivity) getActivity()).setUpFragment(fragment, false);
 
             }
         });

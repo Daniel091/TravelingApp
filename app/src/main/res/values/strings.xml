@@ -31,7 +31,7 @@
     <string name="daysToReturn"> zurück in %1$s Tagen</string>
     <string name="kofferpacken">Koffer packen</string>
     <string name="settings">Einstellungen</string>
-    <string name="city_default">San Francisco</string>
+    <string name="city_default">z.B. San Francisco</string>
     <string name="reiseziel">Reiseziel</string>
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_image_path"></string>
