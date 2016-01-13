@@ -337,6 +337,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         Fragment landingFragment = new LandingFragment();
         ((MainActivity) getActivity()).setUpFragment(landingFragment,false);
         ((MainActivity) getActivity()).setUpNotificationService(activeTrip.getStartdate());
+        if(reusedTrip != null){
+            ((MainActivity) getActivity()).setUpMenu(1);
+        }
     }
 
     @Override
