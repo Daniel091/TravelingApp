@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class StartFragment extends Fragment implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
     private ImageButton button_hamburger;
@@ -59,9 +60,13 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
                 ((MainActivity)getActivity()).openDrawer();
                 break;
             case R.id.button_newTrip:
-                Fragment newTripFragment = new NewTripFragment();
-                ((MainActivity) getActivity()).setUpFragment(newTripFragment,false);
-                break;
+                if (radioGroup_gender.getCheckedRadioButtonId() != -1) {
+                    Fragment newTripFragment = new NewTripFragment();
+                    ((MainActivity) getActivity()).setUpFragment(newTripFragment,false);
+                }else
+                {
+                    Toast.makeText(getActivity(), "Bitte wähle ein Geschlecht", Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
