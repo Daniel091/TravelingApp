@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -277,8 +278,13 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
     public void itemClicked(ListItem clickedItem) {
         //update checked state of tripitems
         activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
+
         //update die anzahl der verbleibenden Items im Menü
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+
+        // update der Anzahl in der Group Kategorie
+        int group_pos = listAdapter.getGroupPositionForItem(clickedItem.getId());
+        listAdapter.setUpCheckedItems(group_pos);
     }
 
     /**

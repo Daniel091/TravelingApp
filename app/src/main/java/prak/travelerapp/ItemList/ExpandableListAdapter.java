@@ -112,7 +112,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
-                    // TODO Update CheckedItems here leads to bugs
                 }
             });
 
@@ -176,7 +175,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    private void setUpCheckedItems(int groupPosition) {
+    public void setUpCheckedItems(int groupPosition) {
         String group_name = (String) getGroup(groupPosition);
         List<ListItem> group_items = _listDataChild.get(group_name);
         int unchecked_items = 0;
