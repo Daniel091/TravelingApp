@@ -27,6 +27,7 @@
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string name="missingThings">es fehlen noch %1$s Dinge</string>
+    <string name="numberOpen">%1$s offen</string>
     <string name="daysToTrip">in %1$s Tagen</string>
     <string name="daysToReturn"> zurück in %1$s Tagen</string>
     <string name="kofferpacken">Koffer packen</string>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<ListItem>> _listDataChild;
     public ItemCheckedListener listener;
     private TextView checkedItems;
+    private ImageView checkMark;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -164,7 +166,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
-
+        checkMark = (ImageView) convertView.findViewById(R.id.checkMark);
         checkedItems = (TextView) convertView.findViewById(R.id.checkedItems);
         setUpCheckedItems(groupPosition);
 
@@ -184,7 +186,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 unchecked_items++;
             }
         }
-        checkedItems.setText(String.valueOf(unchecked_items));
+        if (unchecked_items == 0){
+            checkedItems.setVisibility(View.GONE);
+            checkMark.setVisibility(View.VISIBLE);
+        } else {
+            checkMark.setVisibility(View.GONE);
+            checkedItems.setVisibility(View.VISIBLE);
+            checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
+        }
     }
 
     @Override
