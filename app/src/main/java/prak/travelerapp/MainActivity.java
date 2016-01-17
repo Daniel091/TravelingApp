@@ -156,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setUpFragment(fragment,true);
                 break;
             case 5:
+                fragment = new AboutFragment();
+                setUpFragment(fragment,true);
+                break;
+            case 6:
                 fragment = new HelpFragment();
                 setUpFragment(fragment,true);
                 break;
@@ -171,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (getFragmentManager().getBackStackEntryCount() > 1){
             getFragmentManager().popBackStack();
 
-            //Wegen problemen mit menü setze das menü bei backpress immer manuell auf den entsprechenden menüpunkt des Fragments,
+            //Wegen Problemen mit Menü setze das Menü bei backpress immer manuell auf den entsprechenden Menüpunkt des Fragments,
             //zu welchem zurückgegangen wird
             String fragmentTag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 2).getName();
             System.out.println(fragmentTag);
@@ -194,6 +198,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
                 case "SettingsFragment":
                     setUpMenu(4);
+                    break;
+                case "AboutFragment":
+                    setUpMenu(5);
                     break;
                 case "HelpFragment":
                     setUpMenu(5);

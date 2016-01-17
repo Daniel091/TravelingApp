@@ -52,7 +52,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/white"
-            android:padding="@dimen/space_medium">
+            android:paddingTop="@dimen/space_small"
+            android:paddingBottom="@dimen/space_small">
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -63,7 +64,9 @@
                 android:textStyle="bold"
                 android:text="@string/first_steps"
                 android:gravity="left"
-                android:id="@+id/textView1" />
+                android:id="@+id/textView1"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -74,7 +77,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/first_steps_text"
                 android:gravity="left"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <View
                 android:layout_width="match_parent"
@@ -91,7 +96,9 @@
                 android:textStyle="bold"
                 android:text="@string/faq"
                 android:gravity="left"
-                android:id="@+id/textView3" />
+                android:id="@+id/textView3"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -101,7 +108,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/faq_text"
                 android:gravity="left"
-                android:id="@+id/textView4" />
+                android:id="@+id/textView4"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -112,7 +121,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/frage1"
                 android:gravity="left"
-                android:id="@+id/frage1" />
+                android:id="@+id/frage1"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -122,7 +133,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/antwort1"
                 android:gravity="left"
-                android:id="@+id/antwort1" />
+                android:id="@+id/antwort1"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -133,7 +146,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/frage2"
                 android:gravity="left"
-                android:id="@+id/frage2" />
+                android:id="@+id/frage2"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -143,7 +158,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/antwort2"
                 android:gravity="left"
-                android:id="@+id/antwort2" />
+                android:id="@+id/antwort2"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -154,7 +171,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/frage3"
                 android:gravity="left"
-                android:id="@+id/frage3" />
+                android:id="@+id/frage3"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -164,7 +183,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/antwort3"
                 android:gravity="left"
-                android:id="@+id/antwort3" />
+                android:id="@+id/antwort3"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -175,7 +196,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/frage4"
                 android:gravity="left"
-                android:id="@+id/frage4" />
+                android:id="@+id/frage4"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -185,7 +208,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/antwort4"
                 android:gravity="left"
-                android:id="@+id/antwort4" />
+                android:id="@+id/antwort4"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -196,7 +221,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/frage5"
                 android:gravity="left"
-                android:id="@+id/frage5" />
+                android:id="@+id/frage5"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
             <TextView
                 android:layout_alignParentLeft="true"
@@ -206,7 +233,9 @@
                 android:textSize="@dimen/text_medium"
                 android:text="@string/antwort5"
                 android:gravity="left"
-                android:id="@+id/antwort5" />
+                android:id="@+id/antwort5"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
 
         </LinearLayout>
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/airport"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:id="@+id/transparentOverlay"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_overlay" >
+
+            <include layout="@layout/button_hamburger"/>
+
+            <TextView
+                android:id="@+id/textview_newTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about"
+                android:textColor="@android:color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:textSize="@dimen/text_large"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:paddingTop="@dimen/space_small"
+            android:paddingBottom="@dimen/space_small">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/copyright_header"
+                android:gravity="left"
+                android:id="@+id/textView1"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/copyright_content1"
+                android:gravity="left"
+                android:id="@+id/textView2"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/landing_divider"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
