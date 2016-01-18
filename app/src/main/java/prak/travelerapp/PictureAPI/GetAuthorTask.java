@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import org.json.JSONObject;
 
-public class GetImageURLTask extends AsyncTask<String, Void, String> {
+public class GetAuthorTask extends AsyncTask<String, Void, String> {
 
     public AsyncPictureResponse delegate = null;
     private Exception error;
@@ -15,23 +15,24 @@ public class GetImageURLTask extends AsyncTask<String, Void, String> {
         //only searchterm given
         if(params.length == 1){
             data = ( (new PictureHTTPClient()).getImageURL(params[0]));
-        //searchterm and Tag given
+            //searchterm and Tag given
         }else{
             data = ( (new PictureHTTPClient()).getImageURL(params[0], params[1]));
         }
 
-        String url = "";
+        String author = "";
 
         // We create out JSONObject from the data
         try {
             JSONObject jObj = new JSONObject(data);
             JSONObject firstPhoto = jObj.getJSONArray("photos").getJSONObject(0);
-            url = firstPhoto.getString("image_url");
+            JSONObject user = firstPhoto.getJSONObject("user");
+            author = user.getString("fullname");
         } catch (Exception e) {
             return null;
         }
-        if(!url.isEmpty()){
-            return url;
+        if(!author.isEmpty()){
+            return author;
         }else{
             return null;
         }
@@ -39,12 +40,12 @@ public class GetImageURLTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String url) {
-        super.onPostExecute(url);
-        if(url != null) {
-            delegate.getURLProcessFinish(url);
+    protected void onPostExecute(String author) {
+        super.onPostExecute(author);
+        if(author != null) {
+            delegate.getAuthorProcessFinish(author);
         }else{
-            delegate.getURLProcessFailed();
+            delegate.getAuthorProcessFailed();
         }
     }
 

@@ -20,11 +20,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import org.joda.time.DateTime;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Locale;
+
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
+import prak.travelerapp.PictureAPI.GetAuthorTask;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
@@ -187,18 +191,24 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     // Sets Background Image, path is stored in shared preferences
     private void setUpBackgroundImage() {
-        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"default");
+        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path), "default");
         if (path_fromPref.equals("image_by_categorie")){
             int resID = Utils.getDefaultPicResID(active_trip.getType1());
             imageView.setImageResource(resID);
         } else {
             Bitmap image = Utils.loadImageFromStorage(path_fromPref);
             if (image == null) {
+                String keyword = active_trip.getCity().replaceAll("\\s", "%20");
+
                 GetImageURLTask getImageURLTask = new GetImageURLTask();
                 getImageURLTask.delegate = this;
+                getImageURLTask.execute(keyword);
+                Log.d("500px loads new image ", keyword);
 
-                getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
-                Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s", "%20"));
+                GetAuthorTask getAuthorTask = new GetAuthorTask();
+                getAuthorTask.delegate = this;
+                getAuthorTask.execute(keyword);
+                Log.d("500px author ", keyword);
             } else {
                 imageView.setImageBitmap(image);
             }
@@ -296,6 +306,16 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
         imageView.setImageResource(resID);
+    }
+
+    @Override
+    public void getAuthorProcessFinish(String author) {
+        Log.d("JSON Author", author);
+    }
+
+    @Override
+    public void getAuthorProcessFailed() {
+
     }
 
     @Override
