@@ -1,6 +1,7 @@
 package prak.travelerapp.PictureAPI;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -27,7 +28,10 @@ public class GetAuthorTask extends AsyncTask<String, Void, String> {
             JSONObject jObj = new JSONObject(data);
             JSONObject firstPhoto = jObj.getJSONArray("photos").getJSONObject(0);
             JSONObject user = firstPhoto.getJSONObject("user");
-            author = user.getString("fullname");
+            String name = user.getString("fullname");
+            String source = firstPhoto.getString("url");
+            author = "<a href='http://www.500px.com/" + source + "'>\u00A9 " + name + " / 500px </a>";
+            Log.d("Quelle",author);
         } catch (Exception e) {
             return null;
         }
