@@ -10,9 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Michael on 08.12.15.
- */
 public class GetImageFromURLTask extends AsyncTask<String,Void,Bitmap> {
 
     public AsyncPictureResponse delegate = null;

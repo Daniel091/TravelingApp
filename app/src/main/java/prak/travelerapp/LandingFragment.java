@@ -198,7 +198,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 getImageURLTask.delegate = this;
 
                 getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
-                Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
+                Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s", "%20"));
             } else {
                 imageView.setImageBitmap(image);
             }
@@ -289,7 +289,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     public void getURLProcessFailed() {
         // No internet connection here
         // Could no longer save image path in shared preferences here so url task would try again next time
-        Log.d("mw", "URL Process failed, now Default Picture");
+        Log.d("500px API", "URL Process failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
         editor.apply();
