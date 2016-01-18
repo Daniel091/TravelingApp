@@ -244,15 +244,25 @@
         </LinearLayout>
 
         <Button
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="30dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:text="@string/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cancel_button"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             style="?android:attr/borderlessButtonStyle" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_alignParentBottom="true"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_small"
+            android:padding="@dimen/space_small"
+            android:textColor="@color/mediumGrey"/>
 
     </RelativeLayout>
 </RelativeLayout>

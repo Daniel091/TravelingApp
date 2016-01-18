@@ -43,7 +43,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageView imageView;
     private TextView city,timeToJourney,missingThings;
     private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
-    private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
+    private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5, authorText;
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button,cancel_popup,ok_cancel_button;
@@ -133,6 +133,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weatherForecastDay3 = (TextView) view.findViewById(R.id.weatherForecastDay3);
         weatherForecastDay4 = (TextView) view.findViewById(R.id.weatherForecastDay4);
         weatherForecastDay5 = (TextView) view.findViewById(R.id.weatherForecastDay5);
+        authorText = (TextView) view.findViewById(R.id.author);
     }
 
     private void prepareListeners() {
@@ -310,12 +311,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getAuthorProcessFinish(String author) {
-        Log.d("JSON Author", author);
+        authorText.setText("\u00A9 " + author + " / 500px");
     }
 
     @Override
     public void getAuthorProcessFailed() {
-
+        Log.d("500px Autor", "nicht gefunden");
     }
 
     @Override
