@@ -219,7 +219,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private Trip getActiveTrip() {
         TripDBAdapter tripDBAdapter = new TripDBAdapter(getActivity());
         tripDBAdapter.open();
-        return tripDBAdapter.getActiveTrip();
+        Trip active_trip = tripDBAdapter.getActiveTrip();
+        tripDBAdapter.close();
+        return active_trip;
     }
 
     private void showDummyPopup() {

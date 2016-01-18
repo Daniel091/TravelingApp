@@ -2,6 +2,7 @@ package prak.travelerapp.ItemList;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<ListItem>> _listDataChild;
     public ItemCheckedListener listener;
-    private TextView checkedItems;
-    private ImageView checkMark;
+    private TextView chItKl,chItHy,chItEq,chItDok,chItSonst;
+    private ImageView chMKl,chMHy,chMEq,chMDok,chMSonst;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -114,6 +115,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
+                    int group_pos = getGroupPositionForItem(item.getId());
+                    setUpCheckedItems(group_pos);
                 }
             });
 
@@ -166,8 +169,31 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
-        checkMark = (ImageView) convertView.findViewById(R.id.checkMark);
-        checkedItems = (TextView) convertView.findViewById(R.id.checkedItems);
+
+        if (chMKl == null || chMHy == null || chMEq == null || chMDok == null || chMSonst == null) {
+            switch (headerTitle) {
+                case "Kleidung":
+                    chMKl = (ImageView) convertView.findViewById(R.id.checkMark);
+                    chItKl = (TextView) convertView.findViewById(R.id.checkedItems);
+                    break;
+                case "Hygiene":
+                    chMHy = (ImageView) convertView.findViewById(R.id.checkMark);
+                    chItHy = (TextView) convertView.findViewById(R.id.checkedItems);
+                    break;
+                case "Equipment":
+                    chMEq = (ImageView) convertView.findViewById(R.id.checkMark);
+                    chItEq = (TextView) convertView.findViewById(R.id.checkedItems);
+                    break;
+                case "Dokumente":
+                    chMDok = (ImageView) convertView.findViewById(R.id.checkMark);
+                    chItDok = (TextView) convertView.findViewById(R.id.checkedItems);
+                    break;
+                case "Sonstiges":
+                    chMSonst = (ImageView) convertView.findViewById(R.id.checkMark);
+                    chItSonst = (TextView) convertView.findViewById(R.id.checkedItems);
+                    break;
+            }
+        }
         setUpCheckedItems(groupPosition);
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
@@ -186,13 +212,37 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 unchecked_items++;
             }
         }
-        if (unchecked_items == 0){
-            checkedItems.setVisibility(View.GONE);
-            checkMark.setVisibility(View.VISIBLE);
-        } else {
-            checkMark.setVisibility(View.GONE);
-            checkedItems.setVisibility(View.VISIBLE);
-            checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
+
+        Log.d("Tag",group_name);
+        switch (group_name){
+            case "Kleidung":
+                setUpGroupText(chItKl,chMKl,unchecked_items);
+                break;
+            case "Hygiene":
+                setUpGroupText(chItHy,chMHy,unchecked_items);
+                break;
+            case "Equipment":
+                setUpGroupText(chItEq,chMEq,unchecked_items);
+                break;
+            case "Dokumente":
+                setUpGroupText(chItDok,chMDok,unchecked_items);
+                break;
+            case "Sonstiges":
+                setUpGroupText(chItSonst,chMSonst,unchecked_items);
+                break;
+        }
+    }
+
+    private void setUpGroupText(TextView checkedItems,ImageView checkMark, int unchecked_items) {
+        if (checkedItems != null && checkMark != null) {
+            if (unchecked_items == 0) {
+                checkedItems.setVisibility(View.GONE);
+                checkMark.setVisibility(View.VISIBLE);
+            } else {
+                checkMark.setVisibility(View.GONE);
+                checkedItems.setVisibility(View.VISIBLE);
+                checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
+            }
         }
     }
 

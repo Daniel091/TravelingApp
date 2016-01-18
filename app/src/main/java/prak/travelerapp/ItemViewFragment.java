@@ -283,8 +283,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
 
         // update der Anzahl in der Group Kategorie
-        int group_pos = listAdapter.getGroupPositionForItem(clickedItem.getId());
-        listAdapter.setUpCheckedItems(group_pos);
+        //int group_pos = listAdapter.getGroupPositionForItem(clickedItem.getId());
+        //listAdapter.setUpCheckedItems(group_pos);
     }
 
     /**
