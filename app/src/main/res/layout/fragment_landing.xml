@@ -257,12 +257,15 @@
         <TextView
             android:id="@+id/author"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
             android:gravity="right"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_small"
             android:padding="@dimen/space_small"
-            android:textColor="@color/mediumGrey"/>
+            android:textColorLink="@color/white"
+            android:textColor="@color/mediumGrey" />
 
     </RelativeLayout>
 </RelativeLayout>

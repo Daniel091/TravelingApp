@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -209,7 +211,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 GetAuthorTask getAuthorTask = new GetAuthorTask();
                 getAuthorTask.delegate = this;
                 getAuthorTask.execute(keyword);
-                Log.d("500px author ", keyword);
             } else {
                 imageView.setImageBitmap(image);
             }
@@ -313,7 +314,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getAuthorProcessFinish(String author) {
-        authorText.setText("\u00A9 " + author + " / 500px");
+        authorText.setClickable(true);
+        authorText.setMovementMethod(LinkMovementMethod.getInstance());
+        authorText.setText(Html.fromHtml(author));
     }
 
     @Override
