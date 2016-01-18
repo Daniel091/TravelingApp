@@ -115,8 +115,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
-                    int group_pos = getGroupPositionForItem(item.getId());
-                    setUpCheckedItems(group_pos);
+                    //int group_pos = getGroupPositionForItem(item.getId());
+                    //setUpCheckedItems(group_pos);
                 }
             });
 
@@ -213,7 +213,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
 
-        Log.d("Tag",group_name);
         switch (group_name){
             case "Kleidung":
                 setUpGroupText(chItKl,chMKl,unchecked_items);
