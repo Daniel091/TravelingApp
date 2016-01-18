@@ -2,13 +2,13 @@ package prak.travelerapp.ItemList;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +26,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<ListItem>> _listDataChild;
     public ItemCheckedListener listener;
-    private TextView chItKl,chItHy,chItEq,chItDok,chItSonst;
-    private ImageView chMKl,chMHy,chMEq,chMDok,chMSonst;
+    private TextView checkedItems;
+    private ImageView checkMark;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -115,8 +115,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
-                    //int group_pos = getGroupPositionForItem(item.getId());
-                    //setUpCheckedItems(group_pos);
                 }
             });
 
@@ -169,35 +167,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
-
-        if (chMKl == null || chMHy == null || chMEq == null || chMDok == null || chMSonst == null) {
-            switch (headerTitle) {
-                case "Kleidung":
-                    chMKl = (ImageView) convertView.findViewById(R.id.checkMark);
-                    chItKl = (TextView) convertView.findViewById(R.id.checkedItems);
-                    break;
-                case "Hygiene":
-                    chMHy = (ImageView) convertView.findViewById(R.id.checkMark);
-                    chItHy = (TextView) convertView.findViewById(R.id.checkedItems);
-                    break;
-                case "Equipment":
-                    chMEq = (ImageView) convertView.findViewById(R.id.checkMark);
-                    chItEq = (TextView) convertView.findViewById(R.id.checkedItems);
-                    break;
-                case "Dokumente":
-                    chMDok = (ImageView) convertView.findViewById(R.id.checkMark);
-                    chItDok = (TextView) convertView.findViewById(R.id.checkedItems);
-                    break;
-                case "Sonstiges":
-                    chMSonst = (ImageView) convertView.findViewById(R.id.checkMark);
-                    chItSonst = (TextView) convertView.findViewById(R.id.checkedItems);
-                    break;
-            }
-        }
+        checkMark = (ImageView) convertView.findViewById(R.id.checkMark);
+        checkedItems = (TextView) convertView.findViewById(R.id.checkedItems);
         setUpCheckedItems(groupPosition);
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
-        //lblListHeader.setTypeface(null, Typeface.NORMAL);
         lblListHeader.setText(headerTitle.toUpperCase());
 
         return convertView;
@@ -213,35 +187,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
 
-        switch (group_name){
-            case "Kleidung":
-                setUpGroupText(chItKl,chMKl,unchecked_items);
-                break;
-            case "Hygiene":
-                setUpGroupText(chItHy,chMHy,unchecked_items);
-                break;
-            case "Equipment":
-                setUpGroupText(chItEq,chMEq,unchecked_items);
-                break;
-            case "Dokumente":
-                setUpGroupText(chItDok,chMDok,unchecked_items);
-                break;
-            case "Sonstiges":
-                setUpGroupText(chItSonst,chMSonst,unchecked_items);
-                break;
-        }
-    }
-
-    private void setUpGroupText(TextView checkedItems,ImageView checkMark, int unchecked_items) {
-        if (checkedItems != null && checkMark != null) {
-            if (unchecked_items == 0) {
-                checkedItems.setVisibility(View.GONE);
-                checkMark.setVisibility(View.VISIBLE);
-            } else {
-                checkMark.setVisibility(View.GONE);
-                checkedItems.setVisibility(View.VISIBLE);
-                checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
-            }
+        if (unchecked_items == 0){
+            checkedItems.setVisibility(View.GONE);
+            checkMark.setVisibility(View.VISIBLE);
+        } else {
+            checkMark.setVisibility(View.GONE);
+            checkedItems.setVisibility(View.VISIBLE);
+            checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
         }
     }
 

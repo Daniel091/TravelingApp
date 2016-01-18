@@ -282,9 +282,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         //update die anzahl der verbleibenden Items im Menü
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
 
-        // update der Anzahl in der Group Kategorie
-        //int group_pos = listAdapter.getGroupPositionForItem(clickedItem.getId());
-        //listAdapter.setUpCheckedItems(group_pos);
+        // update der Anzahl in der Group-Kategorie-View
+        listAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -407,6 +406,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
                     popupWindow.dismiss();
                     Toast.makeText(popupView.getContext(), "Gegenstand hinzugefügt", Toast.LENGTH_SHORT).show();
+                    listAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -499,6 +499,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 expListView.setSelectedChild(groupPosition,childPosition-1,false);
                 popupWindow.dismiss();
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+                listAdapter.notifyDataSetChanged();
             }
         });
         // Listener, der abfängt sobald das popup window geschlossen wird und damit automatisch
