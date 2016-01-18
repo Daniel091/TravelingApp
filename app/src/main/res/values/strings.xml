@@ -98,15 +98,15 @@
     <string name="faq">FAQ</string>
 
     <string name="first_steps_text">
-        TRAVeL ist die persönliche Packliste
-        für deine nächste Reise.\n\nDurch Eingabe deines Zielorts, des Reisezeitraums
+        TRAVeL ist die intelligente Packliste
+        für deine nächste Reise.\n\nDurch Eingabe deines Geschlechts, des Zielorts, des Reisezeitraums
         und der Reisekategorie (bis zu zwei verschiedene)
         stellt dir unsere App automatisch die passenden
         Gegenstände zusammen, die du für deiner Reise
         benötigst.\n\nTRAVeL zeigt dir zusätzlich aktuelle Informationen zu deinem Zielort, wie z.B.
-        das Wetter für die ersten 5 Tage der Reise.\n\nIn der Packliste siehst du alle Gegenstände
+        das Wetter für die ersten Tage der Reise.\n\nIn der Packliste siehst du alle Gegenstände
         nach Kategorie geordnet. Dort kannst du sie abhaken, wenn sie in deinem Koffer sind oder
-        löschen, wenn du einen Gegenstand nicht benötigst. Außerdem kannst du eigene Items erstellen.
+        löschen, wenn du einen Gegenstand nicht benötigst. Außerdem kannst du eigene Gegenstände erstellen.
     </string>
 
     <string name="faq_text">
@@ -157,7 +157,30 @@
 
     <string name="antwort5">
         In den Einstellungen findest du einen Unterpunkt Inhalte. Dort wählst du einfach die Inhalte
-        aus, die du zurücksetzen möchtest und bestätigst dies über den Button.
+        aus, die du zurücksetzen möchtest und bestätigst dies über den darunter liegenden Button.
     </string>
+
+    <string name="frage6">
+        Wie kann ich eine vergangene Reise/Packliste wieder laden?
+    </string>
+
+    <string name="antwort6">
+        Vergangene Reisen inklusive ihrer Packlisten können von dir für eine neue Reise
+        wiederverwendet werden. Wähle deine Reise aus der Liste der vergangenen Reisen aus - damit
+        gelangst du auf deine alte Packliste. Von dort gelangst du über den -> Button zu einem
+        Bildschirm, in dem du ein neues Reiseziel und deine Reisedaten eingeben kannst. Nachdem
+        du die Daten durch Klick auf den -> Button bestätigt hast, kannst du wieder mit dem
+        Koffer packen loslegen.
+    </string>
+
+    <string name="frage7">
+        Wie kann ich eine alte Packliste nochmal anschauen?
+    </string>
+
+    <string name="antwort7">
+        Alte Packlisten gehen nicht verloren. Bei den vergangenen Reisen genügt ein Klick auf die jeweilige
+        Reise, um deren Packliste nochmal ansehen zu können.
+    </string>
+
 
 </resources>
