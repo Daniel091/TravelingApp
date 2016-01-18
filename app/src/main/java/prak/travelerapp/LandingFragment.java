@@ -20,11 +20,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import org.joda.time.DateTime;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Locale;
+
 import prak.travelerapp.PictureAPI.AsyncPictureResponse;
+import prak.travelerapp.PictureAPI.GetAuthorTask;
 import prak.travelerapp.PictureAPI.GetImageFromURLTask;
 import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
@@ -39,7 +43,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private ImageView imageView;
     private TextView city,timeToJourney,missingThings;
     private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
-    private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5;
+    private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5, authorText;
     private SharedPreferences sharedPref;
     private Trip active_trip;
     private Button cancel_button,cancel_popup,ok_cancel_button;
@@ -129,6 +133,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weatherForecastDay3 = (TextView) view.findViewById(R.id.weatherForecastDay3);
         weatherForecastDay4 = (TextView) view.findViewById(R.id.weatherForecastDay4);
         weatherForecastDay5 = (TextView) view.findViewById(R.id.weatherForecastDay5);
+        authorText = (TextView) view.findViewById(R.id.author);
     }
 
     private void prepareListeners() {
@@ -187,18 +192,24 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     // Sets Background Image, path is stored in shared preferences
     private void setUpBackgroundImage() {
-        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path),"default");
+        String path_fromPref = sharedPref.getString(getString(R.string.saved_image_path), "default");
         if (path_fromPref.equals("image_by_categorie")){
             int resID = Utils.getDefaultPicResID(active_trip.getType1());
             imageView.setImageResource(resID);
         } else {
             Bitmap image = Utils.loadImageFromStorage(path_fromPref);
             if (image == null) {
+                String keyword = active_trip.getCity().replaceAll("\\s", "%20");
+
                 GetImageURLTask getImageURLTask = new GetImageURLTask();
                 getImageURLTask.delegate = this;
+                getImageURLTask.execute(keyword);
+                Log.d("500px loads new image ", keyword);
 
-                getImageURLTask.execute(active_trip.getCity().replaceAll("\\s", "%20"));
-                Log.d("500px loads new image ", active_trip.getCity().replaceAll("\\s","%20"));
+                GetAuthorTask getAuthorTask = new GetAuthorTask();
+                getAuthorTask.delegate = this;
+                getAuthorTask.execute(keyword);
+                Log.d("500px author ", keyword);
             } else {
                 imageView.setImageBitmap(image);
             }
@@ -289,13 +300,23 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     public void getURLProcessFailed() {
         // No internet connection here
         // Could no longer save image path in shared preferences here so url task would try again next time
-        Log.d("mw", "URL Process failed, now Default Picture");
+        Log.d("500px API", "URL Process failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
         editor.apply();
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
         imageView.setImageResource(resID);
+    }
+
+    @Override
+    public void getAuthorProcessFinish(String author) {
+        authorText.setText("\u00A9 " + author + " / 500px");
+    }
+
+    @Override
+    public void getAuthorProcessFailed() {
+        Log.d("500px Autor", "nicht gefunden");
     }
 
     @Override
