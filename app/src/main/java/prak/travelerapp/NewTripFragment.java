@@ -59,7 +59,6 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     private DatePickerDialog arrivalDatePickerDialog,departureDatePickerDialog;
     private SimpleDateFormat dateFormatter;
     private boolean firstSelect = true;
-    private RelativeLayout relativeLayout;
 
     private String[] traveltypeStrings;
     String[] items = new String[] {};
@@ -76,7 +75,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     }
 
     private void prepareViews(View view) {
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.newTripRelative);
+        RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.newTripRelative);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

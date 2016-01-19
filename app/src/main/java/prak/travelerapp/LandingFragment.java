@@ -48,7 +48,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5, authorText;
     private SharedPreferences sharedPref;
     private Trip active_trip;
-    private Button cancel_button,cancel_popup,ok_cancel_button;
+    private Button cancel_button;
     private LinearLayout koffer_packen,forecastIcons,forecastTemperature,forecastDays;
     private PopupWindow dummyPopup;
     private LayoutInflater inflater;
@@ -241,7 +241,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ok_cancel_button = (Button) popupView.findViewById(R.id.button_remove);
+        Button ok_cancel_button = (Button) popupView.findViewById(R.id.button_remove);
         // when Active Trip gets canceled
         ok_cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,7 +267,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 ((MainActivity) getActivity()).setUpFragment(startFragment,false);
             }
         });
-        cancel_popup = (Button) popupView.findViewById(R.id.button_cancel_popup);
+        Button cancel_popup = (Button) popupView.findViewById(R.id.button_cancel_popup);
         cancel_popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

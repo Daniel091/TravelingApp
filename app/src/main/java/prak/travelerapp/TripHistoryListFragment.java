@@ -30,7 +30,6 @@ public class TripHistoryListFragment extends Fragment {
     public Trip trip;
     private ImageView imageView_traveltype;
     private FloatingActionButton reuseList_button;
-    private PopupWindow dummyPopup;
     private LayoutInflater inflater;
     private ViewGroup container;
 
@@ -166,7 +165,7 @@ public class TripHistoryListFragment extends Fragment {
         int windowHeight = displaymetrics.heightPixels;
         int windowWidth = displaymetrics.widthPixels;
 
-        dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
+        PopupWindow dummyPopup = new PopupWindow(popupDummyView, windowWidth, windowHeight, false);
         dummyPopup.showAtLocation(popupDummyView, Gravity.NO_GRAVITY, 0, 0);
     }
 

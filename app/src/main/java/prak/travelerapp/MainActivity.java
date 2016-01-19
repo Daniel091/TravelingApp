@@ -31,12 +31,10 @@ import prak.travelerapp.TripDatabase.model.Tupel;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-
     private MenueApdapter menueApdapter;
     private DrawerLayout drawerLayout;
     private ListView listView;
     private Trip active_trip;
-    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (push_enabled) {
                 if (!day_before_pushed) {
                     Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
-                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                     //alarmManager.cancel(pendingIntent);
