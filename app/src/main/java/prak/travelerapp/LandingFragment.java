@@ -105,6 +105,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
         setUpBackgroundImage();
 
+        authorText.setClickable(true);
+        authorText.setMovementMethod(LinkMovementMethod.getInstance());
+
         return view;
     }
 
@@ -198,8 +201,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         if (path_fromPref.equals("image_by_categorie")){
             int resID = Utils.getDefaultPicResID(active_trip.getType1());
             imageView.setImageResource(resID);
-            authorText.setClickable(true);
-            authorText.setMovementMethod(LinkMovementMethod.getInstance());
             authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
         } else {
             Bitmap image = Utils.loadImageFromStorage(path_fromPref);
@@ -216,6 +217,8 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 getAuthorTask.execute(keyword);
             } else {
                 imageView.setImageBitmap(image);
+                //TODO Autor aus Zwischenspeicher laden
+                authorText.setText("Link fehlt");
             }
         }
     }
@@ -313,16 +316,13 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
         imageView.setImageResource(resID);
-        authorText.setClickable(true);
-        authorText.setMovementMethod(LinkMovementMethod.getInstance());
         authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
     }
 
     @Override
     public void getAuthorProcessFinish(String author) {
-        authorText.setClickable(true);
-        authorText.setMovementMethod(LinkMovementMethod.getInstance());
         authorText.setText(Html.fromHtml(author));
+
     }
 
     @Override
@@ -333,12 +333,12 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public void getImageFromURLProcessFinish(Bitmap image) {
         final Bitmap resizedImage = getResizedBitmap(image, 800, 800);
-            try {
-                imageView.setImageBitmap(resizedImage);
-                saveToInternalStorage(resizedImage);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        try {
+            imageView.setImageBitmap(resizedImage);
+            saveToInternalStorage(resizedImage);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

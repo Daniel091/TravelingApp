@@ -22,11 +22,7 @@ import java.lang.reflect.Field;
 
 import prak.travelerapp.TripDatabase.model.TravelType;
 
-/**
- * Created by Michael on 25.11.15.
- */
 public class Utils {
-
 
     /**
      * Checks if internet connetion is active
