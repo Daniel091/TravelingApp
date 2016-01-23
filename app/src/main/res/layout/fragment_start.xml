@@ -23,7 +23,7 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="70dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="30dp"/>
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:id="@+id/textview_opener2"
@@ -32,9 +32,9 @@
             android:text="Was hast du vor?"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/space_medium"
             android:layout_gravity="center_horizontal"
-            android:textSize="30dp"/>
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:id="@+id/textview_opener3"
@@ -43,9 +43,9 @@
             android:text="Das solltest du einpacken!"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/space_medium"
             android:layout_gravity="center_horizontal"
-            android:textSize="30dp"/>
+            android:textSize="@dimen/text_large"/>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/radioGroup_gender"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="@dimen/space_start">
             <RadioButton android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text="@string/neueReise"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp" />
+            android:layout_marginTop="@dimen/space_start" />
     </LinearLayout>
 
 </RelativeLayout>
