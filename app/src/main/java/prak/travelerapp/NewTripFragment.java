@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -152,9 +153,35 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         Calendar newCalendar = Calendar.getInstance();
         arrivalDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Date newDate = new Date(year, monthOfYear, dayOfMonth - 1);
-                departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
-                editText_arrival.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+
+                DatePicker departureDatepicker = departureDatePickerDialog.getDatePicker();
+
+                //save the values of the currently set depdate
+                int depDay = departureDatepicker.getDayOfMonth();
+                int depMonth = departureDatepicker.getMonth();
+                int depYear = departureDatepicker.getYear();
+                GregorianCalendar currentDepartureDate = new GregorianCalendar(depYear, depMonth, depDay);
+
+
+                //Set mindate of departure datepicker to new arrival date + 1
+                GregorianCalendar newdepartureMinDate = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+                newdepartureMinDate.add(Calendar.DATE,1);
+
+                //SET to 0 first -> workaround to be able to update mindate
+                departureDatepicker.setMinDate(0);
+                departureDatepicker.setMinDate(newdepartureMinDate.getTimeInMillis());
+
+                //if departure mindate is now after currently set depDate, the depDate has changed -> update textfield
+                long depCurrentMillis = currentDepartureDate.getTimeInMillis();
+                long depMinimumMillis = newdepartureMinDate.getTimeInMillis();
+                if(depCurrentMillis < depMinimumMillis){
+                    editText_departure.setText(dateFormatter.format(newdepartureMinDate.getTime()));
+                }
+
+
+                Calendar arrivalDate = Calendar.getInstance();
+                arrivalDate.set(year, monthOfYear, dayOfMonth);
+                editText_arrival.setText(dateFormatter.format(arrivalDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
