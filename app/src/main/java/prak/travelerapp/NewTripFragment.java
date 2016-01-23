@@ -184,7 +184,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 editText_arrival.setText(dateFormatter.format(arrivalDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        arrivalDatePickerDialog.getDatePicker().setMinDate(new Date().getTime() - 10000);
+        arrivalDatePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
     }
 
     private void setUpDepartureDatePicker() {
@@ -199,7 +199,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        //departureDatePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.DATE, 1);
+        departureDatePickerDialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
     }
 
     @Override
