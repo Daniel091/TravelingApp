@@ -198,6 +198,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         if (path_fromPref.equals("image_by_categorie")){
             int resID = Utils.getDefaultPicResID(active_trip.getType1());
             imageView.setImageResource(resID);
+            authorText.setClickable(true);
+            authorText.setMovementMethod(LinkMovementMethod.getInstance());
+            authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
         } else {
             Bitmap image = Utils.loadImageFromStorage(path_fromPref);
             if (image == null) {
@@ -310,6 +313,9 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
         imageView.setImageResource(resID);
+        authorText.setClickable(true);
+        authorText.setMovementMethod(LinkMovementMethod.getInstance());
+        authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
     }
 
     @Override
