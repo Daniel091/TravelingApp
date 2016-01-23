@@ -1,5 +1,6 @@
 package prak.travelerapp.ItemDatabase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +23,8 @@ public class ItemDBHelper extends SQLiteOpenHelper {
 
     private static String DB_PATH = "";
     private static String DB_NAME ="items.db";// Database name
+    // database version
+    static final int DB_VERSION = 1;
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -51,7 +54,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
 
     public ItemDBHelper(Context context)
     {
-        super(context, DB_NAME, null, 1);// 1? Its database Version
+        super(context, DB_NAME, null, DB_VERSION);
         if(android.os.Build.VERSION.SDK_INT >= 17){
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         }
@@ -150,6 +153,33 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        /*Log.d("Upgrade ItemDB", String.format("IansSQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
+        if(oldVersion < 2){
+
+            ContentValues values = new ContentValues();
+            values.put(ItemDBHelper.COLUMN_NAME, "UpdateTest");
+            values.put(ItemDBHelper.COLUMN_GENDER, 1);
+            values.put(ItemDBHelper.COLUMN_NASS, 0);
+            values.put(ItemDBHelper.COLUMN_STRANDURLAUB, 1);
+            values.put(ItemDBHelper.COLUMN_STAEDTETRIP, 1);
+            values.put(ItemDBHelper.COLUMN_SKIFAHREN, 1);
+            values.put(ItemDBHelper.COLUMN_WANDERN, 1);
+            values.put(ItemDBHelper.COLUMN_GESCHAEFTSREISE, 1);
+            values.put(ItemDBHelper.COLUMN_PARTYURLAUB, 1);
+            values.put(ItemDBHelper.COLUMN_CAMPING, 1);
+            values.put(ItemDBHelper.COLUMN_FESTIVAL, 1);
+            values.put(ItemDBHelper.COLUMN_TEMP_STRANDURLAUB, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_STAEDTETRIP, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_SKIFAHREN, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_WANDERN, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_GESCHAEFTSREISE, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_PARTYURLAUB, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_CAMPING, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_FESTIVAL, 0);
+            values.put(ItemDBHelper.COLUMN_KATEGORIE, 1);
+            db.insert(TABLE_NAME,null, values);
+
+        }*/
     }
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="prak.travelerapp" >
+    package="prak.travelerapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,9 +12,6 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
-    <uses-sdk
-        android:minSdkVersion="23" />
 
     <application
         android:allowBackup="true"
