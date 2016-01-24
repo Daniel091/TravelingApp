@@ -41,15 +41,13 @@ import prak.travelerapp.WeatherAPI.WeatherTask;
 import prak.travelerapp.WeatherAPI.model.Weather;
 
 public class LandingFragment extends Fragment implements AsyncPictureResponse, AsyncWeatherResponse {
-    private ImageButton button_hamburger;
     private ImageView imageView;
     private TextView city,timeToJourney,missingThings;
     private ImageView weatherForecastIcon1, weatherForecastIcon2, weatherForecastIcon3, weatherForecastIcon4, weatherForecastIcon5;
     private TextView weatherForecastTemp1, weatherForecastTemp2, weatherForecastTemp3, weatherForecastTemp4, weatherForecastTemp5, weatherForecastDay1, weatherForecastDay2, weatherForecastDay3, weatherForecastDay4, weatherForecastDay5, authorText;
     private SharedPreferences sharedPref;
     private Trip active_trip;
-    private Button cancel_button;
-    private LinearLayout koffer_packen,forecastIcons,forecastTemperature,forecastDays;
+    private LinearLayout forecastIcons,forecastTemperature,forecastDays;
     private PopupWindow dummyPopup;
     private LayoutInflater inflater;
     private ViewGroup container;
@@ -70,8 +68,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         this.container = container;
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
 
-        prepareViews(view);
-        prepareListeners();
+        prepareViewsAndListeners(view);
         active_trip = getActiveTrip();
         sharedPref = getActivity().getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
@@ -112,15 +109,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         return view;
     }
 
-    private void prepareViews(View view) {
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+    private void prepareViewsAndListeners(View view) {
+        ImageButton button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
         button_hamburger.bringToFront();
         city = (TextView) view.findViewById(R.id.city);
         timeToJourney = (TextView) view.findViewById(R.id.city_subline);
         imageView = (ImageView) view.findViewById(R.id.imageView);
-        cancel_button = (Button) view.findViewById(R.id.cancel_button);
+        Button cancel_button = (Button) view.findViewById(R.id.cancel_button);
         missingThings = (TextView) view.findViewById(R.id.missingThings);
-        koffer_packen = (LinearLayout) view.findViewById(R.id.koffer_packen);
+        LinearLayout koffer_packen = (LinearLayout) view.findViewById(R.id.koffer_packen);
         forecastDays = (LinearLayout) view.findViewById(R.id.forecastDays);
         forecastIcons = (LinearLayout) view.findViewById(R.id.forecastIcons);
         forecastTemperature = (LinearLayout) view.findViewById(R.id.forecastTemperature);
@@ -140,9 +137,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         weatherForecastDay4 = (TextView) view.findViewById(R.id.weatherForecastDay4);
         weatherForecastDay5 = (TextView) view.findViewById(R.id.weatherForecastDay5);
         authorText = (TextView) view.findViewById(R.id.author);
-    }
 
-    private void prepareListeners() {
         button_hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,8 +213,10 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 getAuthorTask.execute(keyword);
             } else {
                 imageView.setImageBitmap(image);
-                //TODO Autor aus Zwischenspeicher laden
-                authorText.setText("Link fehlt");
+                path_fromPref = sharedPref.getString(getString(R.string.saved_author), "default");
+                if (!path_fromPref.equals("default")){
+                    authorText.setText(Html.fromHtml(path_fromPref));
+                }
             }
         }
     }
@@ -300,6 +297,19 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     }
 
     @Override
+    public void getAuthorProcessFinish(String author) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.saved_author), author);
+        editor.apply();
+        authorText.setText(Html.fromHtml(author));
+    }
+
+    @Override
+    public void getAuthorProcessFailed() {
+        Log.d("500px Autor", "nicht gefunden");
+    }
+
+    @Override
     public void getURLProcessFinish(String url) {
         GetImageFromURLTask getImageFromURLTask = new GetImageFromURLTask();
         getImageFromURLTask.delegate = this;
@@ -309,7 +319,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public void getURLProcessFailed() {
         // No internet connection here
-        // Could no longer save image path in shared preferences here so url task would try again next time
         Log.d("500px API", "URL Process failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
@@ -320,18 +329,6 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         imageView.setImageResource(resID);
         // Source for background image
         authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
-    }
-
-    @Override
-    public void getAuthorProcessFinish(String author) {
-        // Source for background image from API
-        authorText.setText(Html.fromHtml(author));
-
-    }
-
-    @Override
-    public void getAuthorProcessFailed() {
-        Log.d("500px Autor", "nicht gefunden");
     }
 
     @Override
