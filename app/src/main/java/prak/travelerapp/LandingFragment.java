@@ -105,6 +105,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         missingThings.setText(getActivity().getResources().getString(R.string.missingThings, String.valueOf(number)));
         setUpBackgroundImage();
 
+        // makes link to source clickable
         authorText.setClickable(true);
         authorText.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -315,12 +316,15 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         editor.apply();
 
         int resID = Utils.getDefaultPicResID(active_trip.getType1());
+        // Default Background Image for given Type
         imageView.setImageResource(resID);
+        // Source for background image
         authorText.setText(Html.fromHtml(Utils.getDefaultPicSource(active_trip.getType1())));
     }
 
     @Override
     public void getAuthorProcessFinish(String author) {
+        // Source for background image from API
         authorText.setText(Html.fromHtml(author));
 
     }

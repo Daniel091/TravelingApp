@@ -5,6 +5,9 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+/**
+ * Class creates URL to background image loaded from API
+ */
 public class GetAuthorTask extends AsyncTask<String, Void, String> {
 
     public AsyncPictureResponse delegate = null;

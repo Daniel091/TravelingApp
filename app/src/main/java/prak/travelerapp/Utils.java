@@ -115,6 +115,11 @@ public class Utils {
         return null;
     }
 
+    /**
+     * Takes TravelType and gives back default background image
+     * @param type
+     * @return
+     */
     public static int getDefaultPicResID(TravelType type) {
         switch (type){
             case STRANDURLAUB:
@@ -138,6 +143,11 @@ public class Utils {
         return 0;
     }
 
+    /**
+     * Takes TravelType and gives back Source for background image
+     * @param type
+     * @return
+     */
     public static String getDefaultPicSource(TravelType type) {
         switch (type){
             case STRANDURLAUB:
