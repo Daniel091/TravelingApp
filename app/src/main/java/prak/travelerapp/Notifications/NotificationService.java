@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import prak.travelerapp.Logger;
 import prak.travelerapp.MainActivity;
 import prak.travelerapp.R;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
@@ -47,7 +48,7 @@ public class NotificationService extends Service{
         }
         @Override
         protected Integer doInBackground(Void... params) {
-            //Log.d("Started Task", "Started");
+            Logger.getInstance().log("Started Task", "Started");
             // get Active Trip
             TripDBAdapter tripDBAdapter = new TripDBAdapter(context);
             tripDBAdapter.open();
@@ -106,7 +107,7 @@ public class NotificationService extends Service{
                 notification.flags = Notification.FLAG_AUTO_CANCEL;
                 manager.notify(0, notification);
             }
-            //Log.d("Pushed Notification", "Successfully");
+            Logger.getInstance().log("Pushed Notification", "Successfully");
             stopSelf();
         }
     }

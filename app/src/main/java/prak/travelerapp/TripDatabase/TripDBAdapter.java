@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prak.travelerapp.ItemDatabase.Dataset;
+import prak.travelerapp.Logger;
 import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
 import prak.travelerapp.TripDatabase.model.TripItems;
@@ -51,15 +52,15 @@ public class TripDBAdapter {
                 // move cursor to first row
                 if (cursor.moveToFirst()) {
                     do {
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ID)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE2)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ACTIVE)));
-                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ID)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE2)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ACTIVE)));
+                        Logger.getInstance().log("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS)));
 
                     } while (cursor.moveToNext());
                     cursor.close();

@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import prak.travelerapp.Autocompleter.model.City;
+import prak.travelerapp.Logger;
 
 /**
  * Created by Michael on 05.12.15.
@@ -88,7 +89,7 @@ public class CityDBAdapter {
             sql += " ORDER BY " + fieldObjectId + " DESC";
             sql += " LIMIT 0,15";
         }else{
-            //Log.d("mw", searchTerm);
+            Logger.getInstance().log("mw", searchTerm);
             String searchTermWithoutUmlaute = searchTerm;
             searchTermWithoutUmlaute = searchTermWithoutUmlaute.replace("ö","oe");
             searchTermWithoutUmlaute =searchTermWithoutUmlaute.replace("ä","ae");
@@ -149,7 +150,7 @@ public class CityDBAdapter {
                         // Get version from Cursor
                         String cityname = mCur.getString(mCur.getColumnIndex("Name"));
                         // add the bookName into the bookTitles ArrayList
-                        //Log.d("mw", cityname);
+                        Logger.getInstance().log("mw", cityname);
                         // move to next row
                    // } while (mCur.moveToNext());
                 }

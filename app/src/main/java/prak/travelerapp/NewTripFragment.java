@@ -300,7 +300,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                         @Override
                         public void weatherProcessFailed() {
-                            //Log.d("New Trip Frag", "Weather Process Failed");
+                            Logger.getInstance().log("New Trip Frag", "Weather Process Failed");
                             Toast.makeText(getActivity(), "Cant fetch weather data, no internet connection", Toast.LENGTH_SHORT).show();
                             putTripInDatabase(null, type_one, type_two, city, country, startDate, endDate);
                         }

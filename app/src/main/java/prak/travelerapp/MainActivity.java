@@ -301,8 +301,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             boolean day_before_pushed = sharedPref.getBoolean(String.valueOf(R.bool.day_before_notification), false);
 
             DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss");
-            //Log.d("Main", "Push: " + push_enabled + " ," + " day before pushed " + day_before_pushed);
-            //Log.d("Main", " Push Date: " + date.toString(fmt) + " " + active_trip.getCity() + " start date: " + active_trip.getStartdate().toString(fmt));
+            Logger.getInstance().log("Main", "Push: " + push_enabled + " ," + " day before pushed " + day_before_pushed);
+            Logger.getInstance().log("Main", " Push Date: " + date.toString(fmt) + " " + active_trip.getCity() + " start date: " + active_trip.getStartdate().toString(fmt));
             if (push_enabled) {
                 if (!day_before_pushed) {
                     Intent myIntent = new Intent(MainActivity.this, NotificationReceiver.class);
