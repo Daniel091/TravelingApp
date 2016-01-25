@@ -316,7 +316,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
             }
 
         }else{
-            Toast.makeText(getActivity(), "Wähle ein Reiseziel", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Wähle ein Ziel aus der Liste", Toast.LENGTH_SHORT).show();
         }
     }
 
