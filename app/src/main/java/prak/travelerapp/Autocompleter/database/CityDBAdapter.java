@@ -44,7 +44,7 @@ public class CityDBAdapter {
         }
         catch (IOException mIOException)
         {
-            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
+            //Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
             throw new Error("UnableToCreateDatabase");
         }
         return this;
@@ -60,7 +60,7 @@ public class CityDBAdapter {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "open >>"+ mSQLException.toString());
+            //Log.e(TAG, "open >>"+ mSQLException.toString());
             throw mSQLException;
         }
         return this;
@@ -88,7 +88,7 @@ public class CityDBAdapter {
             sql += " ORDER BY " + fieldObjectId + " DESC";
             sql += " LIMIT 0,15";
         }else{
-            Log.d("mw", searchTerm);
+            //Log.d("mw", searchTerm);
             String searchTermWithoutUmlaute = searchTerm;
             searchTermWithoutUmlaute = searchTermWithoutUmlaute.replace("ö","oe");
             searchTermWithoutUmlaute =searchTermWithoutUmlaute.replace("ä","ae");
@@ -149,7 +149,7 @@ public class CityDBAdapter {
                         // Get version from Cursor
                         String cityname = mCur.getString(mCur.getColumnIndex("Name"));
                         // add the bookName into the bookTitles ArrayList
-                        Log.d("mw", cityname);
+                        //Log.d("mw", cityname);
                         // move to next row
                    // } while (mCur.moveToNext());
                 }
@@ -159,7 +159,7 @@ public class CityDBAdapter {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            //Log.e(TAG, "getTestData >>"+ mSQLException.toString());
             throw mSQLException;
         }
     }

@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import prak.travelerapp.R;
 
@@ -22,6 +26,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<ListItem>> _listDataChild;
     public ItemCheckedListener listener;
+    private TextView checkedItems;
+    private ImageView checkMark;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ListItem>> listChildData) {
@@ -46,8 +52,52 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         protected CheckBox checkbox;
     }
 
+    /**
+     * Liefert index der Gruppe in der sich ein item befindet
+     * @param id id des gesuchten items
+     * @return
+     */
+    public int getGroupPositionForItem(int id){
+        String groupName = "";
+        Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, List<ListItem>> pair = it.next();
+            List<ListItem> childs = pair.getValue();
+            for(ListItem child : childs){
+                if(child.getId() == id){
+                    groupName=pair.getKey();
+                }
+            }
+            for(int i = 0; i< _listDataHeader.size(); i++){
+                if(groupName.equals(_listDataHeader.get(i))){
+                    return i;
+                }
+            }
+            }
+        return -1;
+    }
+
+    /**
+     * Liefert child index innerhalb einer Gruppe für ein item
+     * @param id id des gesuchten items
+     * @return
+     */
+    public int getChildPositionForItem(int id){
+        Iterator<Map.Entry<String, List<ListItem>>> it = _listDataChild.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, List<ListItem>> pair = it.next();
+            List<ListItem> childs = pair.getValue();
+            for(int i= 0; i<childs.size();i++){
+                if(childs.get(i).getId() == id){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         View view = null;
@@ -61,15 +111,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                                             boolean isChecked) {
-
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ListItem item = (ListItem) viewHolder.checkbox.getTag();
                     item.setChecked(buttonView.isChecked());
                     listener.itemClicked(item);
                 }
             });
-
 
             //verhindere, dass die view den longclick empfängt-> liste empfängt longclick
             view.setOnLongClickListener(new View.OnLongClickListener(){
@@ -82,7 +129,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             view.setTag(viewHolder);
             viewHolder.checkbox.setTag(getChild(groupPosition, childPosition));
         }else{
-
             view = convertView;((ViewHolder) view.getTag()).checkbox.setTag(getChild(groupPosition, childPosition));
         }
 
@@ -114,20 +160,41 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
+        checkMark = (ImageView) convertView.findViewById(R.id.checkMark);
+        checkedItems = (TextView) convertView.findViewById(R.id.checkedItems);
+        setUpCheckedItems(groupPosition);
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
-        //lblListHeader.setTypeface(null, Typeface.NORMAL);
         lblListHeader.setText(headerTitle.toUpperCase());
 
         return convertView;
+    }
+
+    public void setUpCheckedItems(int groupPosition) {
+        String group_name = (String) getGroup(groupPosition);
+        List<ListItem> group_items = _listDataChild.get(group_name);
+        int unchecked_items = 0;
+        for (ListItem item : group_items){
+            if (!item.isChecked()){
+                unchecked_items++;
+            }
+        }
+
+        if (unchecked_items == 0){
+            checkedItems.setVisibility(View.GONE);
+            checkMark.setVisibility(View.VISIBLE);
+        } else {
+            checkMark.setVisibility(View.GONE);
+            checkedItems.setVisibility(View.VISIBLE);
+            checkedItems.setText(_context.getResources().getString(R.string.numberOpen, String.valueOf(unchecked_items)));
+        }
     }
 
     @Override

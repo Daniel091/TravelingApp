@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
-
-    <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lblListItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+    android:paddingBottom="@dimen/space_small"
+    android:paddingTop="@dimen/space_small">
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="@dimen/space_small"
         android:id="@+id/checkBox"
         android:checked="false" />
+
+    <TextView
+        android:id="@+id/lblListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginLeft="@dimen/space_large"
+        android:paddingTop="6dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package prak.travelerapp.Autocompleter;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 
 /**
@@ -42,6 +43,8 @@ public class CityAutoCompleteView extends AutoCompleteTextView {
         @Override
         protected void replaceText(final CharSequence text) {
             super.replaceText(text);
+            InputMethodManager in = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(this.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
 

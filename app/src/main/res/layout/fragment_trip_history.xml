@@ -30,15 +30,24 @@
                 android:id="@+id/textview_newTrip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vergangene Reisen"
+                android:text="@string/trip_history"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="60dp"
-                android:layout_marginLeft="28dp"
-                android:textSize="30dp"/>
+                android:layout_marginLeft="@dimen/space_medium"
+                android:textSize="@dimen/text_large"/>
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/history_list_noOldTrips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_medium"
+        android:gravity="center_horizontal"
+        android:text="@string/trip_history_noOldTrips"/>
+
     <ListView
         android:divider="@drawable/history_list_divider"
         android:dividerHeight="1dp"

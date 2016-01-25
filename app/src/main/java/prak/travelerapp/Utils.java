@@ -1,13 +1,12 @@
 package prak.travelerapp;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.graphics.Typeface;
 import android.util.Log;
 
 import org.joda.time.DateTime;
@@ -17,18 +16,13 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
-
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 
 import prak.travelerapp.TripDatabase.model.TravelType;
 
-/**
- * Created by Michael on 25.11.15.
- */
 public class Utils {
-
 
     /**
      * Checks if internet connetion is active
@@ -85,7 +79,7 @@ public class Utils {
             defaultFontTypefaceField.setAccessible(true);
             defaultFontTypefaceField.set(null, customFontTypeface);
         } catch (Exception e) {
-            Log.e("Can not set custom font " + customFontFileNameInAssets + " instead of " + defaultFontNameToOverride, e.toString());
+            //Log.e("Font problem ", customFontFileNameInAssets + " instead of " + defaultFontNameToOverride + " " + e.toString());
         }
     }
 
@@ -121,6 +115,11 @@ public class Utils {
         return null;
     }
 
+    /**
+     * Takes TravelType and gives back default background image
+     * @param type
+     * @return
+     */
     public static int getDefaultPicResID(TravelType type) {
         switch (type){
             case STRANDURLAUB:
@@ -138,10 +137,38 @@ public class Utils {
             case FESTIVAL:
                 return R.drawable.festival;
             case PARTYURLAUB:
-                return R.drawable.fireworks;
+                return R.drawable.party;
         }
 
         return 0;
+    }
+
+    /**
+     * Takes TravelType and gives back Source for background image
+     * @param type
+     * @return
+     */
+    public static String getDefaultPicSource(TravelType type) {
+        switch (type){
+            case STRANDURLAUB:
+                return "<a href='https://www.flickr.com/photos/skynoir/4648304894/'>\u00A9 Bill Dickinson / flickr.com</a>";
+            case STAEDTETRIP:
+                return "<a href='https://www.flickr.com/photos/robhurson/14726526451/'>\u00A9 Rob Hurson / flickr.com</a>";
+            case GESCHAEFTSREISE:
+                return "<a href='https://www.flickr.com/photos/schomy/21911737415/'>\u00A9 Markus Jaschke / flickr.com</a>";
+            case SKIFAHREN:
+                return "<a href='https://www.flickr.com/photos/image-catalog/18199238360/'>\u00A9 Image Catalog / flickr.com</a>";
+            case CAMPING:
+                return "<a href='https://www.flickr.com/photos/blmoregon/11519019346/'>\u00A9 Bureau of Land Mana... / flickr.com</a>";
+            case WANDERN:
+                return "<a href='https://www.flickr.com/photos/symmetry_mind/2434490628/'>\u00A9 Symmetry Mind / flickr.com</a>";
+            case FESTIVAL:
+                return "<a href='https://www.flickr.com/photos/thomashawk/14471086744/'>\u00A9 Thomas Hawk / flickr.com</a>";
+            case PARTYURLAUB:
+                return "<a href='https://www.flickr.com/photos/johnrabbit/8660242398/'>\u00A9 Sean H. / flickr.com</a>";
+        }
+
+        return "";
     }
 
 }

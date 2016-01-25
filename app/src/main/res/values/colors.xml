@@ -8,8 +8,9 @@
     <color name="black">#1d1d26</color>
     <color name="white">#ffffff</color>
     <color name="darkGrey">#a8a8aa</color>
-    <color name="lightGrey">#d3d3d3</color>
-    <color name="lightOpacityGrey">#dedede</color>
+    <color name="mediumGrey">#d3d3d3</color>
+    <color name="lightGrey">#dedede</color>
+    <color name="lighterGrey">#f7f7f7</color>
 
     <color name="color_overlay">#7F6f0054</color>
 </resources>

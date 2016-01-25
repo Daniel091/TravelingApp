@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">TRAVeL</string>
-    <string name="heading">Traveler</string>
+    <string name="heading">TRAVeL</string>
     <string name="welcome">TRAVeL</string>
 
     <string name="newTrip">Eine neue Reise starten</string>
@@ -27,16 +27,19 @@
     <string name="opener_text">Wohin gehts?\r\nWas hast du vor?\r\nDas solltest du einpacken!</string>
     <string name="neueReise">Neue Reise</string>
     <string name="missingThings">es fehlen noch %1$s Dinge</string>
+    <string name="numberOpen">%1$s offen</string>
     <string name="daysToTrip">in %1$s Tagen</string>
     <string name="daysToReturn"> zurück in %1$s Tagen</string>
     <string name="kofferpacken">Koffer packen</string>
     <string name="settings">Einstellungen</string>
-    <string name="city_default">San Francisco</string>
+    <string name="city_default">z.B. San Francisco</string>
     <string name="reiseziel">Reiseziel</string>
     <string name="preference_file_key">prak.travelerapp.usergender</string>
     <string name="saved_image_path"></string>
     <string name="saved_gender">gender</string>
-    <integer name="saved_notification_var">1</integer>
+    <string name="saved_author">author</string>
+    <bool name="day_before_notification">false</bool>
+    <bool name="push_notifications">true</bool>
     <string name="category1_spinner_placeholder">Wähle eine Kategorie</string>
     <string name="category2_spinner_placeholder">Optional</string>
     <string name="cancel">Reise abbrechen</string>
@@ -50,7 +53,8 @@
         <item>Aktuelle Packliste</item>
         <item>Vergangene Reisen</item>
         <item>Einstellungen</item>
-        <item>Places Test</item>
+        <item>Über uns</item>
+        <item>Hilfe</item>
     </string-array>
 
     <string-array name="category_array">
@@ -59,4 +63,141 @@
         <item>Skifahren</item>
         <item>Festival</item>
     </string-array>
+
+    <string name="delete_item">Gegenstand löschen</string>
+    <string name="delete_for_current_trip">Aktuelle Reise</string>
+    <string name="delete_forever">Für immer</string>
+
+    <string name="new_item">Neuer Gegenstand</string>
+    <string name="item_name">Name</string>
+    <string name="item_hint">z.B. Flugticket</string>
+    <string name="item_category">Kategorie</string>
+    <string name="item_addButton">hinzufügen</string>
+
+    <string name="final_cancel">Ja</string>
+    <string name="dont_cancel">Nein</string>
+
+    <string name="system">System</string>
+    <string name="content">Inhalte</string>
+    <string name="personal_items">Eigene Gegenstände</string>
+    <string name="set_back">Gewählte Inhalte zurücksetzen</string>
+
+    <string name="trip_history">Vergangene Reisen</string>
+    <string name="trip_history_noOldTrips">Keine vergangenen Reisen verfügbar</string>
+
+    <string name="for_all_types">Für alle Reisetypen</string>
+
+    <string name="about">Über uns</string>
+
+    <string name="help">Hilfe</string>
+
+
+    <!-- About us -->
+    <string name="copyright_header">TRAVeL</string>
+    <string name="copyright_content1">Diese App wurde im Rahmen eines Seminars an der
+        Ludwig-Maximilians Universität München entwickelt</string>
+
+    <string name="about_creator_header">Entwicklerteam</string>
+    <string name="about_creator">Daniel Eichinger\nMaximilian Graf\nMarcel Heil\nMichael Wälischmiller</string>
+    <string name="about_creator_mail"><a href='mailto:travelapp.de@gmail.com'>travelapp.de@gmail.com</a>\n<a href='http://eyeslovetosee.de/travel'>eyeslovetosee.de/travel</a></string>
+
+    <string name="about_api_header">Verwendete APIs</string>
+    <string name="about_api1_header">OpenWeatherMap</string>
+    <string name="about_api1_content">OpenWeatherMap wurde als Wetter Service verwendet, um die Packliste zu generieren und das Wetter im Startbildschirm anzuzeigen.</string>
+    <string name="about_api1_link"><a href='http://openweathermap.org'>OpenWeatherMap.org</a></string>
+    <string name="about_api2_header">500px.com</string>
+    <string name="about_api2_content">500px wurde zum automatischen generieren eines Hintergrundbildes auf dem Startbildschirm verwendet. Die genauen Quellen sind auf dem Startbildschirm zu sehen.</string>
+    <string name="about_api2_link"><a href='http://500px.com'>500px.com</a></string>
+
+
+    <!-- FAQ -->
+    <string name="first_steps">Erste Schritte</string>
+    <string name="faq">FAQ</string>
+
+    <string name="first_steps_text">
+        TRAVeL ist die intelligente Packliste
+        für deine nächste Reise.\n\nDurch Eingabe deines Geschlechts, des Zielorts, des Reisezeitraums
+        und der Reisekategorie (bis zu zwei verschiedene)
+        stellt dir unsere App automatisch die passenden
+        Gegenstände zusammen, die du für deiner Reise
+        benötigst.\n\nTRAVeL zeigt dir zusätzlich aktuelle Informationen zu deinem Zielort, wie z.B.
+        das Wetter für die ersten Tage der Reise.\n\nIn der Packliste siehst du alle Gegenstände
+        nach Kategorie geordnet. Dort kannst du sie abhaken, wenn sie in deinem Koffer sind oder
+        löschen, wenn du einen Gegenstand nicht benötigst. Außerdem kannst du eigene Gegenstände erstellen.
+    </string>
+
+    <string name="faq_text">
+        Hier beantworten wir dir die am häufigsten gestellten Fragen zu unserer App.
+    </string>
+
+    <string name="frage1">
+        Werden meine eingegeben Daten weiter verwendet?
+    </string>
+    <string name="antwort1">
+        Deine Daten behandeln wir vertraulich. Alle relevanten Informationen werden lediglich lokal
+        auf deinem Smartphone gespeichert und nur dazu verwendet, die optimale Packliste zu
+        generieren und um aktuelle Wetterdaten zu deinem Urlaubsort zu erhalten.
+    </string>
+
+    <string name="frage2">
+        Wie kann ich einen neuen Gegenstand erstellen?
+    </string>
+    <string name="antwort2">
+        In der Packliste gelangst du durch klicken auf das "+" zum Erstellen des
+        neuen Gegenstandes. Hier gibst du dem Gegenstand einen eigenen Namen und teilst ihm
+        die passende Kategorie zu. Mit einem Klick auf "Gegenstand hinzufügen" wird dieser dann erstellt.
+    </string>
+
+    <string name="frage3">
+        Wie kann ich Gegenstände löschen?
+    </string>
+
+    <string name="antwort3">
+        Bist du in deiner Packliste, drückst du einfach lange auf den Gegenstand, den du löschen willst.
+        Es öffnet sich ein Fenster, indem du entscheiden kannst, ob du den Gegenstand nur für die
+        aktuelle Reise oder auch für alle zukünftigen Reisen löschen willst. Durch klicken auf
+        die jeweilige Option wird der Gegenstand dann aus deiner Liste gelöscht.
+    </string>
+
+    <string name="frage4">
+        Wie kann ich eine Reise abbrechen?
+    </string>
+
+    <string name="antwort4">Im Übersichtsfenster deiner aktuellen Reise befindet sich am unteren Ende
+    des Bildschirms ein Reise abbrechen Button. Nach einem Klick darauf muss der Abbruch nochmal
+    bestätigt werden.
+    </string>
+
+    <string name="frage5">
+        Wie kann ich die App wieder auf den ürsprünglichen Zustand zurücksetzen?
+    </string>
+
+    <string name="antwort5">
+        In den Einstellungen findest du einen Unterpunkt Inhalte. Dort wählst du einfach die Inhalte
+        aus, die du zurücksetzen möchtest und bestätigst dies über den darunter liegenden Button.
+    </string>
+
+    <string name="frage6">
+        Wie kann ich eine vergangene Reise/Packliste wieder laden?
+    </string>
+
+    <string name="antwort6">
+        Vergangene Reisen inklusive ihrer Packlisten können von dir für eine neue Reise
+        wiederverwendet werden. Wähle deine Reise aus der Liste der vergangenen Reisen aus - damit
+        gelangst du auf deine alte Packliste. Von dort gelangst du über den -> Button zu einem
+        Bildschirm, in dem du ein neues Reiseziel und deine Reisedaten eingeben kannst. Nachdem
+        du die Daten durch Klick auf den -> Button bestätigt hast, kannst du wieder mit dem
+        Koffer packen loslegen.
+    </string>
+
+    <string name="frage7">
+        Wie kann ich eine alte Packliste nochmal anschauen?
+    </string>
+
+    <string name="antwort7">
+        Alte Packlisten gehen nicht verloren. Bei den vergangenen Reisen genügt ein Klick auf die jeweilige
+        Reise, um deren Packliste nochmal ansehen zu können.
+    </string>
+
+
 </resources>

@@ -51,15 +51,15 @@ public class TripDBAdapter {
                 // move cursor to first row
                 if (cursor.moveToFirst()) {
                     do {
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ID)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE2)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ACTIVE)));
-                        Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ID)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_NAME)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_COUNTRY)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_STARTDATE)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ENDDATE)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE1)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_TYPE2)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ACTIVE)));
+                        //Log.d("DBTEST", cursor.getString(cursor.getColumnIndex(TripDBHelper.COLUMN_ITEMS)));
 
                     } while (cursor.moveToNext());
                     cursor.close();
@@ -70,7 +70,7 @@ public class TripDBAdapter {
         }
         catch (SQLException mSQLException)
         {
-            Log.e("TripDBAdapter", "getTestData >>" + mSQLException.toString());
+            //Log.e("TripDBAdapter", "getTestData >>" + mSQLException.toString());
             throw mSQLException;
         }
     }

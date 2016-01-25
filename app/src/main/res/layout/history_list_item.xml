@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/space_small"
+    android:paddingBottom="@dimen/space_small"
+    android:paddingLeft="@dimen/space_medium"
+    android:paddingRight="@dimen/space_medium" >
 
-    <TextView
-        android:id="@+id/textview_cityName"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="28dp"
-        android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_gravity="start">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/trip_icon"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="start"
+            android:src="@mipmap/ic_history_party"/>
+
+        <TextView
+            android:id="@+id/textview_cityName"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginLeft="@dimen/space_small"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"
+            android:layout_gravity="start">
+        </TextView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +44,7 @@
             android:id="@+id/textview_arrivalDate"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="28dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_medium"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_gravity="start">
@@ -36,10 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textSize="16sp"
-            android:textColor="@android:color/darker_gray"
+            android:layout_marginLeft="@dimen/space_small"
+            android:layout_marginRight="@dimen/space_small"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/darkGrey"
             android:text="bis">
         </TextView>
 
@@ -48,12 +66,10 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:gravity="center_vertical"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_medium"
             android:textColor="@color/black">
         </TextView>
 
-
     </LinearLayout>
-
 
 </LinearLayout>

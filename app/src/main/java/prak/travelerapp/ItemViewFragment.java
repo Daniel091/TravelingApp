@@ -18,8 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -41,57 +44,46 @@ import prak.travelerapp.ItemDatabase.ItemDBAdapter;
 import prak.travelerapp.ItemList.ExpandableListAdapter;
 import prak.travelerapp.ItemList.ItemCheckedListener;
 import prak.travelerapp.ItemList.ListItem;
-import prak.travelerapp.PictureAPI.GetImageURLTask;
 import prak.travelerapp.TripDatabase.TripDBAdapter;
+import prak.travelerapp.TripDatabase.model.TravelType;
 import prak.travelerapp.TripDatabase.model.Trip;
-import prak.travelerapp.TripDatabase.model.TripItems;
 import prak.travelerapp.TripDatabase.model.Tupel;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
- * Fragment, dass uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
+ * Fragment, das uns die Liste anzeigt und verschiedene Funktionalitäten zur Verfügung stellt
  */
 public class ItemViewFragment extends Fragment implements AdapterView.OnItemSelectedListener,ItemCheckedListener{
-
-    // Log Tag
-    public static final String LOG_TAG = ItemViewFragment.class.getSimpleName();
-
-    // Instanzen
-    ItemDBAdapter itemDBAdapter;
-    TripDBAdapter tripDBAdapter;
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-
+    private ItemDBAdapter itemDBAdapter;
+    private TripDBAdapter tripDBAdapter;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
     int[] openedSections = new int[5];
-
-    // Holt Items aus der DB
     ArrayList<Dataset> itemList;
-
-    // Layout
     private LayoutInflater inflater;
-
-    // Container
-    ViewGroup container;
+    private ViewGroup container;
 
     // UI Elemente für das Popup Window
     private PopupWindow dummyPopup;
-    private int windowWidth;
-    private int windowHeight;
     private EditText userInput;
-    private Spinner spinner;
     private static final String[]paths = {"Kleidung", "Hygiene", "Equipment", "Dokumente", "Sonstiges"};
-    private Button finalAddButton;
-    private ImageButton button_hamburger;
     private ImageView imageView_location;
+    private ImageButton button_hamburger;
     private TextView tripCity;
+    private FloatingActionButton buttonAddItem;
     private Trip activeTrip;
-
-    private Button delete_final_button;
-    private Button delete_for_trip;
+    private CheckBox allTravelTypes;
 
     // Werte für das vom User hinzugefügte Item
-    private String customItem; // Name des manuellen Icons
-    private int customCat;  // Gewählte Kategorie des ausgewählten Icons
+    private String customItem;
+    private int customCat;
+    private int strandurlaub;
+    private int staedtetrip;
+    private int skifahren;
+    private int wandern;
+    private int geschaeftsreise;
+    private int partyurlaub;
+    private int camping;
+    private int festival;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,32 +92,46 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         this.container = container;
         View view = inflater.inflate(R.layout.fragment_item_view, container, false);
 
-        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+        tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        activeTrip = tripDBAdapter.getActiveTrip();
+
+        prepareViews(view);
+        prepareListeners();
+        tripCity.setText(activeTrip.getCity());
+
+        itemDBAdapter = new ItemDBAdapter(getActivity());
+        itemDBAdapter.createDatabase();
+        itemDBAdapter.open();
+
+        //update die anzahl der verbleibenden Items im Menü
+        ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+
+        //sort the tripitems with ID ascending
+        ArrayList<Tupel> tripitems = activeTrip.getTripItems().getItems();
+        Collections.sort(tripitems);
+        //sortiere die items ebenfalls entsprechend der ID aufsteigend
+        itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
+        Collections.sort(itemList);
+        showAllListEntries(itemList, tripitems);
+        return view;
+    }
+
+    private void prepareListeners() {
         button_hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openDrawer();
             }
         });
-
-        FloatingActionButton buttonAddItem = (FloatingActionButton) view.findViewById(R.id.button_add_item);
         buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                showDummyPopup(v);
+                showDummyPopup();
                 showPopup(v);
             }
         });
-        tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
-        activeTrip = ((MainActivity) getActivity()).getActive_trip();
-        tripCity.setText(activeTrip.getCity());
-
-        imageView_location = (ImageView) view.findViewById(R.id.locationImage);
-        setLocationImage();
-
-        expListView = (ExpandableListView) view.findViewById(R.id.item_list_view);
-
         expListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 // When clicked on child, function longClick is executed
@@ -134,8 +140,8 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                     int childPosition = ExpandableListView.getPackedPositionChild(id);
                     ListItem listItem = listAdapter.getChild(groupPosition, childPosition);
 
-                    showDummyPopup(view);
-                    showDeletePopup(view,listItem);
+                    showDummyPopup();
+                    showDeletePopup(view, listItem, groupPosition, childPosition);
 
                     return true;
                 }
@@ -143,7 +149,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
             }
 
         });
-
         //prevent default scrolling action on Group toggle
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -160,49 +165,42 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 return true;
             }
         });
-        return view;
+    }
+
+    private void prepareViews(View view) {
+        expListView = (ExpandableListView) view.findViewById(R.id.item_list_view);
+        button_hamburger = (ImageButton) view.findViewById(R.id.button_hamburger);
+        buttonAddItem = (FloatingActionButton) view.findViewById(R.id.button_add_item);
+        tripCity = (TextView) view.findViewById(R.id.textview_tripCity);
+        imageView_location = (ImageView) view.findViewById(R.id.locationImage);
+        setLocationImage();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        tripDBAdapter = new TripDBAdapter(getActivity());
-        tripDBAdapter.open();
-        activeTrip = tripDBAdapter.getActiveTrip();
-
-        itemDBAdapter = new ItemDBAdapter(getActivity());
-        itemDBAdapter.createDatabase();
-        itemDBAdapter.open();
-
-        //update die anzahl der verbleibenden Items im Menü
-        ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
-
-        //sort the tripitems with ID ascending
-        ArrayList<Tupel> tripitems = activeTrip.getTripItems().getItems();
-        Collections.sort(tripitems);
-        itemList = itemDBAdapter.getItems(activeTrip.getTripItems());
-        Collections.sort(itemList);
-
-        showAllListEntries(itemList, tripitems);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        tripDBAdapter = new TripDBAdapter(getActivity());
+        tripDBAdapter.open();
+        itemDBAdapter = new ItemDBAdapter(getActivity());
+        itemDBAdapter.open();
     }
 
-        @Override
+    @Override
     public void onPause() {
         super.onPause();
         tripDBAdapter.updateTripItems(activeTrip);
         itemDBAdapter.close();
+        ((MainActivity) getActivity()).setActive_trip(activeTrip);
+        ((MainActivity) getActivity()).updateMenueRemainingItems(activeTrip);
 
         if(tripDBAdapter != null){
             tripDBAdapter.close();
         }
-
-
     }
 
     /**
@@ -221,14 +219,14 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         listDataHeader.add("Sonstiges");
 
 
-        HashMap<String, List<ListItem>> listDataChild = new HashMap<String, List<ListItem>>();
+        HashMap<String, List<ListItem>> listDataChild = new HashMap<>();
 
         // Unterlisten-Kategorien
-        List<ListItem> kleidung = new ArrayList<ListItem>();
-        List<ListItem> hygiene = new ArrayList<ListItem>();
-        List<ListItem> equipment = new ArrayList<ListItem>();
-        List<ListItem> dokumente = new ArrayList<ListItem>();
-        List<ListItem> sonstiges = new ArrayList<ListItem>();
+        List<ListItem> kleidung = new ArrayList<>();
+        List<ListItem> hygiene = new ArrayList<>();
+        List<ListItem> equipment = new ArrayList<>();
+        List<ListItem> dokumente = new ArrayList<>();
+        List<ListItem> sonstiges = new ArrayList<>();
 
         // erstellt Listitems aus den daten der ItemList und den tripitems
         for(int i = 0; i < items.size(); i++){
@@ -272,29 +270,32 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    /**
+     * Checkbox eines items wurde gecheckt oder unchecked
+     * @param clickedItem
+     */
     @Override
     public void itemClicked(ListItem clickedItem) {
-
-        System.out.println(clickedItem.getId() + " " + clickedItem.getName() + " " + clickedItem.isChecked());
-
         //update checked state of tripitems
         activeTrip.getTripItems().getItem(clickedItem.getId()).setY(clickedItem.isChecked() ? 1 : 0);
 
         //update die anzahl der verbleibenden Items im Menü
         ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
+
+        // update der Anzahl in der Group-Kategorie-View
+        listAdapter.notifyDataSetChanged();
     }
 
     /**
      * Nur ein Dummy Popup zum dimmen des Backgrounds bei Aufruf des eigentlichen Popups
      */
-    public void showDummyPopup(View anchorView) {
-
+    public void showDummyPopup() {
         final View popupDummyView = inflater.inflate(R.layout.dummy_popup, container, false);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        windowHeight = displaymetrics.heightPixels;
-        windowWidth = displaymetrics.widthPixels;
+        int windowHeight = displaymetrics.heightPixels;
+        int windowWidth = displaymetrics.widthPixels;
 
         dummyPopup = new PopupWindow(popupDummyView,
                windowWidth, windowHeight, false);
@@ -303,19 +304,13 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
     // Popup zum eingeben eines neuen Items
     public void showPopup(final View anchorView) {
-
         final View popupView = inflater.inflate(R.layout.add_item_popup, container, false);
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        /**
-         * Elemente des PopUp windows
-         */
-
         // Eingabefeld
         userInput = (EditText) popupView.findViewById(R.id.userInput);
-        userInput.setHint("z.B. Flugticket");
         userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -329,16 +324,61 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         });
 
         // Spinner
-        spinner = (Spinner) popupView.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(),
+        Spinner spinner = (Spinner) popupView.findViewById(R.id.spinner);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(popupView.getContext(),
                 android.R.layout.simple_spinner_item, paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        strandurlaub = 0;
+        staedtetrip = 0;
+        skifahren = 0;
+        wandern = 0;
+        geschaeftsreise = 0;
+        partyurlaub = 0;
+        camping = 0;
+        festival = 0;
+
+        allTravelTypes = (CheckBox) popupView.findViewById(R.id.checkBoxTravelType);
+        allTravelTypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (allTravelTypes.isChecked()) {
+                    setTravelType();
+                } else {
+                    strandurlaub = 0;
+                    staedtetrip = 0;
+                    skifahren = 0;
+                    wandern = 0;
+                    geschaeftsreise = 0;
+                    partyurlaub = 0;
+                    camping = 0;
+                    festival = 0;
+
+                    TravelType tripType1 = activeTrip.getType1();
+                    String tripType1asString = tripType1.getStringValue();
+                    getTravelType(tripType1asString);
+
+                    TravelType tripType2 = activeTrip.getType2();
+                    String tripType2asString = tripType2.getStringValue();
+                    getTravelType(tripType2asString);
+                }
+            }
+        });
+
+        TravelType tripType1 = activeTrip.getType1();
+        String tripType1asString = tripType1.getStringValue();
+        getTravelType(tripType1asString);
+
+        TravelType tripType2 = activeTrip.getType2();
+        String tripType2asString = tripType2.getStringValue();
+        getTravelType(tripType2asString);
+
+
         // Button zum finalen hinzufügen eines Items
-        finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
+        Button finalAddButton = (Button) popupView.findViewById(R.id.button_final_add);
         finalAddButton.setOnClickListener(new View.OnClickListener() {
 
             @TargetApi(Build.VERSION_CODES.M)
@@ -350,14 +390,23 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                 if (userInput.length() == 0) {
                     Toast.makeText(popupView.getContext(), "Bitte Namen des Items eingeben", Toast.LENGTH_SHORT).show();
                 } else {
-                    Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, customCat);
+                    Dataset customDataSet = itemDBAdapter.createDataset(customItem, 0, 0, strandurlaub, staedtetrip, skifahren,
+                            wandern, geschaeftsreise, partyurlaub, camping, festival, customCat);
                     itemList.add(customDataSet);
                     activeTrip.getTripItems().addItem(customDataSet.getItemID());
 
+                    ((MainActivity) getActivity()).updateMenueRemainingItems(activeTrip);
+
                     showAllListEntries(itemList, activeTrip.getTripItems().getItems());
+
+                    //get position of the new item -> scroll to position
+                    int groupPosition = listAdapter.getGroupPositionForItem(customDataSet.getItemID());
+                    int childPosition = listAdapter.getChildPositionForItem(customDataSet.getItemID());
+                    expListView.setSelectedChild(groupPosition,childPosition,true);
 
                     popupWindow.dismiss();
                     Toast.makeText(popupView.getContext(), "Gegenstand hinzugefügt", Toast.LENGTH_SHORT).show();
+                    listAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -383,22 +432,20 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
         // zeigt das popup window unter der anchor view an
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-
     }
 
     // Popup zum löschen eines Items
-    private void showDeletePopup(View anchorView,ListItem listItem) {
+    private void showDeletePopup(View anchorView,ListItem listItem, final int groupPosition, final int childPosition) {
         final ListItem item = listItem;
         final View popupView = inflater.inflate(R.layout.delete_item_popup, container, false);
 
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        delete_for_trip = (Button) popupView.findViewById(R.id.button_delete_for_trip);
+        Button delete_for_trip = (Button) popupView.findViewById(R.id.button_delete_for_trip);
         delete_for_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //remove item from itemlist
                 for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
                     Dataset dataset = it.next();
@@ -407,7 +454,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
-
                 //remove item from tripitems
                 for (Iterator<Tupel> it = activeTrip.getTripItems().getItems().iterator(); it.hasNext(); ) {
                     Tupel tupel = it.next();
@@ -416,20 +462,20 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
+                ((MainActivity) getActivity()).updateMenueRemainingItems(activeTrip);
 
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
-
+                expListView.setSelectedChild(groupPosition, childPosition - 1, false);
                 popupWindow.dismiss();
 
-                Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+                Toast.makeText(popupView.getContext(), "Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
             }
         });
 
-        delete_final_button = (Button) popupView.findViewById(R.id.button_delete_final);
+        Button delete_final_button = (Button) popupView.findViewById(R.id.button_delete_final);
         delete_final_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //remove item from itemlist
                 for (Iterator<Dataset> it = itemList.iterator(); it.hasNext(); ) {
                     Dataset dataset = it.next();
@@ -438,7 +484,6 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
-
                 //remove item from tripitems
                 for (Iterator<Tupel> it = activeTrip.getTripItems().getItems().iterator(); it.hasNext(); ) {
                     Tupel tupel = it.next();
@@ -447,16 +492,16 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
                         break;
                     }
                 }
+                ((MainActivity)getActivity()).updateMenueRemainingItems(activeTrip);
 
                 itemDBAdapter.deleteItem(item.getId());
                 showAllListEntries(itemList, activeTrip.getTripItems().getItems());
-
+                expListView.setSelectedChild(groupPosition,childPosition-1,false);
                 popupWindow.dismiss();
                 Toast.makeText(popupView.getContext(),"Gegenstand gelöscht", Toast.LENGTH_SHORT).show();
+                listAdapter.notifyDataSetChanged();
             }
         });
-
-
         // Listener, der abfängt sobald das popup window geschlossen wird und damit automatisch
         // das dummy popup mitschliesst
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -502,9 +547,7 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
 
     // Regelt was passiert, wenn keine Kategorie ausgewählt wurde
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Nicht benötigt. Methode muss aber overrided sein.
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     public void setLocationImage(){
         SharedPreferences sharedPref = getActivity().getBaseContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -526,4 +569,52 @@ public class ItemViewFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    /**
+     * Setzt den Reisetyp für alle auf Reisetypen
+     */
+    public void setTravelType() {
+        strandurlaub = 1;
+        staedtetrip = 1;
+        skifahren = 1;
+        wandern = 1;
+        geschaeftsreise = 1;
+        partyurlaub = 1;
+        camping = 1;
+        festival = 1;
+    }
+    /**
+     * Weist einem Gegenstand den passenden Reisetyp zu
+     * @param travelType
+     */
+    public void getTravelType(String travelType) {
+        switch (travelType) {
+            case "Keine Kategorie":
+                break;
+            case "Strandurlaub":
+                strandurlaub = 1;
+                break;
+            case "Städtetrip":
+                staedtetrip = 1;
+                break;
+            case "Skifahren":
+                skifahren = 1;
+                break;
+            case "Wandern":
+                wandern = 1;
+                break;
+            case "Geschäftsreise":
+                geschaeftsreise = 1;
+                break;
+            case "Partyurlaub":
+                partyurlaub = 1;
+                break;
+            case "Camping":
+                camping = 1;
+                break;
+            case "Festival":
+                festival = 1;
+                break;
+        }
+
+    }
 }

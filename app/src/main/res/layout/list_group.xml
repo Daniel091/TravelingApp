@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:background="#f7f7f7">
+    android:paddingTop="@dimen/space_small"
+    android:paddingBottom="@dimen/space_small"
+    android:background="@color/lighterGrey">
 
     <TextView
         android:text="test"
         android:id="@+id/lblListHeader"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17sp"
+        android:paddingLeft="@dimen/space_large"
+        android:textSize="@dimen/text_medium"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="@color/black" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginLeft="10dp"
+        android:paddingRight="@dimen/space_small"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/checkedItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/darkGrey"
+        />
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_check"
+        android:id="@+id/checkMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>

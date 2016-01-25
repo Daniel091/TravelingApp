@@ -1,5 +1,6 @@
 package prak.travelerapp.ItemDatabase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +23,8 @@ public class ItemDBHelper extends SQLiteOpenHelper {
 
     private static String DB_PATH = "";
     private static String DB_NAME ="items.db";// Database name
+    // database version
+    static final int DB_VERSION = 1;
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -30,6 +33,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "NAME";
     public static final String TABLE_NAME = "item_table";
     public static final String COLUMN_GENDER = "GESCHLECHT";
+    public static final String COLUMN_KATEGORIE = "KATEGORIE";
     public static final String COLUMN_NASS = "NASS";
     public static final String COLUMN_STAEDTETRIP = "STAEDTETRIP";
     public static final String COLUMN_STRANDURLAUB = "STRANDURLAUB";
@@ -39,27 +43,18 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PARTYURLAUB = "PARTYURLAUB";
     public static final String COLUMN_CAMPING = "CAMPING";
     public static final String COLUMN_FESTIVAL = "FESTIVAL";
-    public static final String COLUMN_KATEGORIE = "KATEGORIE";
-
-    public static String[] columns = {
-            COLUMN_ID,
-            COLUMN_NAME,
-            COLUMN_GENDER,
-            COLUMN_NASS,
-            COLUMN_STAEDTETRIP,
-            COLUMN_STRANDURLAUB,
-            COLUMN_SKIFAHREN,
-            COLUMN_WANDERN,
-            COLUMN_GESCHAEFTSREISE,
-            COLUMN_PARTYURLAUB,
-            COLUMN_CAMPING,
-            COLUMN_FESTIVAL,
-            COLUMN_KATEGORIE
-    };
+    public static final String COLUMN_TEMP_STAEDTETRIP = "TEMP_STAEDTETRIP";
+    public static final String COLUMN_TEMP_STRANDURLAUB = "TEMP_STRANDURLAUB";
+    public static final String COLUMN_TEMP_SKIFAHREN = "TEMP_SKIFAHREN";
+    public static final String COLUMN_TEMP_WANDERN = "TEMP_WANDERN";
+    public static final String COLUMN_TEMP_GESCHAEFTSREISE = "TEMP_GESCHÄFTSREISE";
+    public static final String COLUMN_TEMP_PARTYURLAUB = "TEMP_PARTYURLAUB";
+    public static final String COLUMN_TEMP_CAMPING = "TEMP_CAMPING";
+    public static final String COLUMN_TEMP_FESTIVAL = "TEMP_FESTIVAL";
 
     public ItemDBHelper(Context context)
     {
-        super(context, DB_NAME, null, 1);// 1? Its database Version
+        super(context, DB_NAME, null, DB_VERSION);
         if(android.os.Build.VERSION.SDK_INT >= 17){
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         }
@@ -83,12 +78,27 @@ public class ItemDBHelper extends SQLiteOpenHelper {
             {
                 //Copy the database from assests
                 copyDataBase();
-                Log.e(TAG, "createDatabase database created");
+                //Log.e(TAG, "createDatabase database created");
             }
             catch (IOException mIOException)
             {
                 throw new Error("ErrorCopyingDataBase");
             }
+        }
+    }
+
+    public void resetDatabase() throws IOException{
+        this.getReadableDatabase();
+        this.close();
+        try
+        {
+            //Copy the database from assests
+            copyDataBase();
+            //Log.e(TAG, "resetDatabase database reseted");
+        }
+        catch (IOException mIOException)
+        {
+            throw new Error("ErrorCopyingDataBase");
         }
     }
 
@@ -143,6 +153,33 @@ public class ItemDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        /*Log.d("Upgrade ItemDB", String.format("IansSQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
+        if(oldVersion < 2){
+
+            ContentValues values = new ContentValues();
+            values.put(ItemDBHelper.COLUMN_NAME, "UpdateTest");
+            values.put(ItemDBHelper.COLUMN_GENDER, 1);
+            values.put(ItemDBHelper.COLUMN_NASS, 0);
+            values.put(ItemDBHelper.COLUMN_STRANDURLAUB, 1);
+            values.put(ItemDBHelper.COLUMN_STAEDTETRIP, 1);
+            values.put(ItemDBHelper.COLUMN_SKIFAHREN, 1);
+            values.put(ItemDBHelper.COLUMN_WANDERN, 1);
+            values.put(ItemDBHelper.COLUMN_GESCHAEFTSREISE, 1);
+            values.put(ItemDBHelper.COLUMN_PARTYURLAUB, 1);
+            values.put(ItemDBHelper.COLUMN_CAMPING, 1);
+            values.put(ItemDBHelper.COLUMN_FESTIVAL, 1);
+            values.put(ItemDBHelper.COLUMN_TEMP_STRANDURLAUB, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_STAEDTETRIP, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_SKIFAHREN, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_WANDERN, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_GESCHAEFTSREISE, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_PARTYURLAUB, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_CAMPING, 0);
+            values.put(ItemDBHelper.COLUMN_TEMP_FESTIVAL, 0);
+            values.put(ItemDBHelper.COLUMN_KATEGORIE, 1);
+            db.insert(TABLE_NAME,null, values);
+
+        }*/
     }
 
 

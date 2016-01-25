@@ -5,6 +5,7 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
 
     <!-- Font Settings -->
+    <dimen name="text_largeStart">38sp</dimen>
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_medium">17sp</dimen>
     <dimen name="text_large">38sp</dimen>

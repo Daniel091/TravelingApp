@@ -1,16 +1,8 @@
 package prak.travelerapp.PictureAPI;
 
-/**
- * Created by Michael on 07.12.15.
- */
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import prak.travelerapp.FlickrAPI.AsyncFlickrResponse;
-import prak.travelerapp.FlickrAPI.FlickrHTTPClient;
 
 public class GetImageURLTask extends AsyncTask<String, Void, String> {
 
@@ -19,31 +11,30 @@ public class GetImageURLTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-            String data = "";
-            //only searchterm given
-            if(params.length == 1){
-                data = ( (new PictureHTTPClient()).getImageURL(params[0]));
-            //searchterm and Tag given
-            }else{
-                data = ( (new PictureHTTPClient()).getImageURL(params[0], params[1]));
-            }
+        String data = "";
+        //only searchterm given
+        if(params.length == 1){
+            data = ( (new PictureHTTPClient()).getImageURL(params[0]));
+        //searchterm and Tag given
+        }else{
+            data = ( (new PictureHTTPClient()).getImageURL(params[0], params[1]));
+        }
 
-            String url = "";
-             // We create out JSONObject from the data
-            try {
-                JSONObject jObj = new JSONObject(data);
-                JSONObject firstPhoto = jObj.getJSONArray("photos").getJSONObject(0);
-                url = firstPhoto.getString("image_url");
-            } catch (Exception e) {
-                return null;
-            }
-            if(!url.isEmpty()){
-                return url;
-            }else{
-                return null;
-            }
+        String url = "";
 
-
+        // We create out JSONObject from the data
+        try {
+            JSONObject jObj = new JSONObject(data);
+            JSONObject firstPhoto = jObj.getJSONArray("photos").getJSONObject(0);
+            url = firstPhoto.getString("image_url");
+        } catch (Exception e) {
+            return null;
+        }
+        if(!url.isEmpty()){
+            return url;
+        }else{
+            return null;
+        }
 
     }
 

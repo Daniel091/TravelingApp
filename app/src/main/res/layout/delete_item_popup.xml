@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     android:background="@color/white">
 
     <TextView
@@ -11,35 +10,42 @@
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gegenstand löschen"
+        android:text="@string/delete_item"
         android:textStyle="bold"
         android:id="@+id/textView"
         android:textSize="@dimen/text_medium"
-
-        android:textColor="@color/black"
-        android:textAlignment="center"/>
+        android:gravity="center" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@drawable/landing_divider"/>
 
-    <Button
-        android:layout_alignParentRight="true"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Für aktuelle Reise löschen"
-        android:textStyle="bold"
-        android:id="@+id/button_delete_for_trip"
-        android:textColor="@color/white" />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_alignParentLeft="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="Für immer löschen"
-        android:id="@+id/button_delete_final"
-        android:textColor="@color/white" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="@string/delete_for_current_trip"
+            android:textStyle="bold"
+            android:id="@+id/button_delete_for_trip"
+            android:background="@color/white"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="@string/delete_forever"
+            android:id="@+id/button_delete_final"
+            android:background="@color/white"
+            android:textColor="@color/colorAccent" />
+
+    </LinearLayout>
 
 </LinearLayout>
