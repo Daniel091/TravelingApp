@@ -52,7 +52,7 @@ public class TripDBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("Upgrade TripDB", String.format("IansSQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
+        //Log.d("Upgrade TripDB", String.format("IansSQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
     }
 
 }

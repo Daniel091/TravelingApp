@@ -36,7 +36,7 @@ public class GetAuthorTask extends AsyncTask<String, Void, String> {
             if(name.length() > 20)
                 name = name.substring(0,20) + "...";
             author = "<a href='http://www.500px.com" + source + "'>\u00A9 " + name + " / 500px </a>";
-            Log.d("Quelle",author);
+            //Log.d("Quelle",author);
         } catch (Exception e) {
             return null;
         }

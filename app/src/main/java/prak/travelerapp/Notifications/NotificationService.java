@@ -47,7 +47,7 @@ public class NotificationService extends Service{
         }
         @Override
         protected Integer doInBackground(Void... params) {
-            Log.d("Started Task", "Started");
+            //Log.d("Started Task", "Started");
             // get Active Trip
             TripDBAdapter tripDBAdapter = new TripDBAdapter(context);
             tripDBAdapter.open();
@@ -106,7 +106,7 @@ public class NotificationService extends Service{
                 notification.flags = Notification.FLAG_AUTO_CANCEL;
                 manager.notify(0, notification);
             }
-            Log.d("Pushed Notification", "Successfully");
+            //Log.d("Pushed Notification", "Successfully");
             stopSelf();
         }
     }

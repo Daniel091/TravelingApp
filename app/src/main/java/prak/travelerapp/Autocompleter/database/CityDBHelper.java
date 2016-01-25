@@ -49,7 +49,7 @@ public class CityDBHelper extends SQLiteOpenHelper {
             {
                 //Copy the database from assests
                 copyDataBase();
-                Log.e(TAG, "createDatabase database created");
+                //Log.e(TAG, "createDatabase database created");
             }
             catch (IOException mIOException)
             {
@@ -62,7 +62,7 @@ public class CityDBHelper extends SQLiteOpenHelper {
     private boolean checkDataBase()
     {
         File dbFile = new File(DB_PATH + DB_NAME);
-        //Log.v("dbFile", dbFile + "   "+ dbFile.exists());
+        ////Log.v("dbFile", dbFile + "   "+ dbFile.exists());
         return dbFile.exists();
     }
 
@@ -87,7 +87,7 @@ public class CityDBHelper extends SQLiteOpenHelper {
     public boolean openDataBase() throws SQLException
     {
         String mPath = DB_PATH + DB_NAME;
-        //Log.v("mPath", mPath);
+        ////Log.v("mPath", mPath);
         mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
         //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return mDataBase != null;

@@ -78,7 +78,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
             {
                 //Copy the database from assests
                 copyDataBase();
-                Log.e(TAG, "createDatabase database created");
+                //Log.e(TAG, "createDatabase database created");
             }
             catch (IOException mIOException)
             {
@@ -94,7 +94,7 @@ public class ItemDBHelper extends SQLiteOpenHelper {
         {
             //Copy the database from assests
             copyDataBase();
-            Log.e(TAG, "resetDatabase database reseted");
+            //Log.e(TAG, "resetDatabase database reseted");
         }
         catch (IOException mIOException)
         {

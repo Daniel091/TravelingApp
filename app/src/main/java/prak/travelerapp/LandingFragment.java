@@ -206,7 +206,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
                 GetImageURLTask getImageURLTask = new GetImageURLTask();
                 getImageURLTask.delegate = this;
                 getImageURLTask.execute(keyword);
-                Log.d("500px loads new image ", keyword);
+                //Log.d("500px loads new image ", keyword);
 
                 GetAuthorTask getAuthorTask = new GetAuthorTask();
                 getAuthorTask.delegate = this;
@@ -306,7 +306,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getAuthorProcessFailed() {
-        Log.d("500px Autor", "nicht gefunden");
+        //Log.d("500px Autor", "nicht gefunden");
     }
 
     @Override
@@ -319,7 +319,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
     @Override
     public void getURLProcessFailed() {
         // No internet connection here
-        Log.d("500px API", "URL Process failed, now Default Picture");
+        //Log.d("500px API", "URL Process failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
         editor.apply();
@@ -344,7 +344,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
 
     @Override
     public void getImageFromURLProcessFailed() {
-        Log.d("mw", "Image Process Failed, now Default Picture");
+        //Log.d("mw", "Image Process Failed, now Default Picture");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.saved_image_path), "image_by_categorie");
         editor.apply();
@@ -379,7 +379,7 @@ public class LandingFragment extends Fragment implements AsyncPictureResponse, A
         editor.putString(getString(R.string.saved_image_path), directory.getAbsolutePath());
         editor.apply();
 
-        Log.d("Landing","Image saved to " + directory.getAbsolutePath());
+        //Log.d("Landing","Image saved to " + directory.getAbsolutePath());
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(mypath);

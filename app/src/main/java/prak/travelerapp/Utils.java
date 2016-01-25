@@ -79,7 +79,7 @@ public class Utils {
             defaultFontTypefaceField.setAccessible(true);
             defaultFontTypefaceField.set(null, customFontTypeface);
         } catch (Exception e) {
-            Log.e("Font problem ", customFontFileNameInAssets + " instead of " + defaultFontNameToOverride + " " + e.toString());
+            //Log.e("Font problem ", customFontFileNameInAssets + " instead of " + defaultFontNameToOverride + " " + e.toString());
         }
     }
 

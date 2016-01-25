@@ -42,7 +42,7 @@ public class StartFragment extends Fragment implements View.OnClickListener,Radi
                 radioGroup_gender.check(R.id.radio_female);
             }
             radioGroup_gender.setOnCheckedChangeListener(this);
-            Log.d("StartFrag","Got gender from SharedPref " + gender_fromPref);
+            //Log.d("StartFrag","Got gender from SharedPref " + gender_fromPref);
         }
     }
 

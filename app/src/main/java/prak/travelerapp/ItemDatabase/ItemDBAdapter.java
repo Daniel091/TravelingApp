@@ -37,7 +37,7 @@ public class ItemDBAdapter {
         }
         catch (IOException mIOException)
         {
-            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
+            //Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
             throw new Error("UnableToCreateDatabase");
         }
         return this;
@@ -50,7 +50,7 @@ public class ItemDBAdapter {
         }
         catch (IOException mIOException)
         {
-            Log.e(TAG, mIOException.toString() + "  UnableToResetDatabase");
+            //Log.e(TAG, mIOException.toString() + "  UnableToResetDatabase");
             throw new Error("UnableToResetDatabase");
         }
         return this;
@@ -66,7 +66,7 @@ public class ItemDBAdapter {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "open >>"+ mSQLException.toString());
+            //Log.e(TAG, "open >>"+ mSQLException.toString());
             throw mSQLException;
         }
         return this;
@@ -104,7 +104,7 @@ public class ItemDBAdapter {
         }
         catch (SQLException mSQLException)
         {
-            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            //Log.e(TAG, "getTestData >>"+ mSQLException.toString());
             throw mSQLException;
         }
     }

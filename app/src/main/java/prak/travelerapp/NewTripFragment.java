@@ -300,7 +300,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
 
                         @Override
                         public void weatherProcessFailed() {
-                            Log.d("New Trip Frag", "Weather Process Failed");
+                            //Log.d("New Trip Frag", "Weather Process Failed");
                             Toast.makeText(getActivity(), "Cant fetch weather data, no internet connection", Toast.LENGTH_SHORT).show();
                             putTripInDatabase(null, type_one, type_two, city, country, startDate, endDate);
                         }
@@ -468,7 +468,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                 genderValue=2;
                 break;
             case "not_selected":
-                Log.e("ERROR", "Kein Gender festgelegt");
+                //Log.e("ERROR", "Kein Gender festgelegt");
                 break;
         }
 
