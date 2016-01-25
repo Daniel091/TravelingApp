@@ -11,6 +11,7 @@
     <dimen name="space_large">68dp</dimen>
 
     <!-- Font Settings -->
+    <dimen name="text_largeStart">20sp</dimen>
     <dimen name="text_small">8sp</dimen>
     <dimen name="text_medium">10sp</dimen>
     <dimen name="text_large">24sp</dimen>

@@ -23,7 +23,7 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="70dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_large"/>
+            android:textSize="@dimen/text_largeStart"/>
 
         <TextView
             android:id="@+id/textview_opener2"
@@ -34,7 +34,7 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="@dimen/space_medium"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_large"/>
+            android:textSize="@dimen/text_largeStart"/>
 
         <TextView
             android:id="@+id/textview_opener3"
@@ -45,7 +45,7 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="@dimen/space_medium"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_large"/>
+            android:textSize="@dimen/text_largeStart"/>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/radioGroup_gender"
