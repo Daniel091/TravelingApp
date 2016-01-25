@@ -2,10 +2,12 @@ package prak.travelerapp;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * About the developers and credits
@@ -25,6 +27,16 @@ public class AboutFragment extends Fragment {
                 ((MainActivity) getActivity()).openDrawer();
             }
         });
+
+        TextView linkMail = (TextView) view.findViewById(R.id.textView4link);
+        TextView linkWeather = (TextView) view.findViewById(R.id.textView7link);
+        TextView link500px = (TextView) view.findViewById(R.id.textView9link);
+        linkMail.setClickable(true);
+        linkMail.setMovementMethod(LinkMovementMethod.getInstance());
+        linkWeather.setClickable(true);
+        linkWeather.setMovementMethod(LinkMovementMethod.getInstance());
+        link500px.setClickable(true);
+        link500px.setMovementMethod(LinkMovementMethod.getInstance());
 
         return view;
     }

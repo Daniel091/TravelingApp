@@ -91,10 +91,26 @@
 
     <string name="help">Hilfe</string>
 
+
+    <!-- About us -->
     <string name="copyright_header">TRAVeL</string>
     <string name="copyright_content1">Diese App wurde im Rahmen eines Seminars an der
         Ludwig-Maximilians Universität München entwickelt</string>
 
+    <string name="about_creator_header">Entwicklerteam</string>
+    <string name="about_creator">Daniel Eichinger\nMaximilian Graf\nMarcel Heil\nMichael Wälischmiller</string>
+    <string name="about_creator_mail"><a href='mailto:travelapp.de@gmail.com'>travelapp.de@gmail.com</a>\n<a href='http://eyeslovetosee.de/travel'>eyeslovetosee.de/travel</a></string>
+
+    <string name="about_api_header">Verwendete APIs</string>
+    <string name="about_api1_header">OpenWeatherMap</string>
+    <string name="about_api1_content">OpenWeatherMap wurde als Wetter Service verwendet, um die Packliste zu generieren und das Wetter im Startbildschirm anzuzeigen.</string>
+    <string name="about_api1_link"><a href='http://openweathermap.org'>OpenWeatherMap.org</a></string>
+    <string name="about_api2_header">500px.com</string>
+    <string name="about_api2_content">500px wurde zum automatischen generieren eines Hintergrundbildes auf dem Startbildschirm verwendet. Die genauen Quellen sind auf dem Startbildschirm zu sehen.</string>
+    <string name="about_api2_link"><a href='http://500px.com'>500px.com</a></string>
+
+
+    <!-- FAQ -->
     <string name="first_steps">Erste Schritte</string>
     <string name="faq">FAQ</string>
 
