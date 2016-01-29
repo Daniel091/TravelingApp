@@ -93,9 +93,8 @@
 
 
     <!-- About us -->
-    <string name="copyright_header">TRAVeL</string>
-    <string name="copyright_content1">Diese App wurde im Rahmen eines Seminars an der
-        Ludwig-Maximilians Universität München entwickelt</string>
+    <string name="copyright_content1">Diese App wurde im Rahmen eines Seminars am Lehrstuhl "Mobile und verteilte Systeme" der
+        Ludwig-Maximilians Universität München entwickelt.</string>
 
     <string name="about_creator_header">Entwicklerteam</string>
     <string name="about_creator">Daniel Eichinger\nMaximilian Graf\nMarcel Heil\nMichael Wälischmiller</string>
@@ -108,6 +107,18 @@
     <string name="about_api2_header">500px.com</string>
     <string name="about_api2_content">500px wurde zum automatischen generieren eines Hintergrundbildes auf dem Startbildschirm verwendet. Die genauen Quellen sind auf dem Startbildschirm zu sehen.</string>
     <string name="about_api2_link"><a href='http://500px.com'>500px.com</a></string>
+
+    <string name="about_privacy_header">Datenschutz</string>
+    <string name="about_privacy">TRAVeL speichert alle eingegebenen Daten ausschließlich auf deinem Smartphone. Somit gelangen keine persönlichen Informationen an Dritte oder die Entwickler.</string>
+
+    <string name="about_disclaimer_header">Disclaimer</string>
+    <string name="about_disclaimer1_header">Haftung für Inhalte</string>
+    <string name="about_disclaimer1_content">Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</string>
+    <string name="about_disclaimer2_header">Haftung für Links</string>
+    <string name="about_disclaimer2_content">Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</string>
+    <string name="about_disclaimer3_header">Urheberrecht</string>
+    <string name="about_disclaimer3_content">Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</string>
+    <string name="about_disclaimer_link">Quelle: <a href='http://www.e-recht24.de/muster-disclaimer.html'>eRecht24</a></string>
 
 
     <!-- FAQ -->

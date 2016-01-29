@@ -14,28 +14,16 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/airport"
+            android:src="@drawable/about"
             android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:id="@+id/transparentOverlay"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_overlay" >
+            android:layout_height="match_parent" >
 
             <include layout="@layout/button_hamburger"/>
-
-            <TextView
-                android:id="@+id/textview_newTrip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about"
-                android:textColor="@android:color/white"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="60dp"
-                android:layout_marginLeft="@dimen/space_medium"
-                android:textSize="@dimen/text_large"/>
         </RelativeLayout>
 
     </RelativeLayout>
@@ -59,20 +47,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_medium"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:text="@string/copyright_header"
-                android:gravity="left"
-                android:id="@+id/textView1"
-                android:paddingLeft="@dimen/space_medium"
-                android:paddingRight="@dimen/space_medium"/>
-
-            <TextView
-                android:layout_alignParentLeft="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_small"
                 android:layout_marginBottom="@dimen/space_small"
                 android:textSize="@dimen/text_medium"
                 android:text="@string/copyright_content1"
@@ -217,6 +191,147 @@
                 android:text="@string/about_api2_link"
                 android:gravity="left"
                 android:id="@+id/textView9link"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/landing_divider"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/about_privacy_header"
+                android:gravity="left"
+                android:id="@+id/textView10"
+                android:layout_marginTop="@dimen/space_small"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_privacy"
+                android:gravity="left"
+                android:id="@+id/textView11"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/landing_divider"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="@string/about_disclaimer_header"
+                android:gravity="left"
+                android:id="@+id/textView12"
+                android:layout_marginTop="@dimen/space_small"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium"/>
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer1_header"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView13"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer1_content"
+                android:gravity="left"
+                android:id="@+id/textView14"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer2_header"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView15"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer2_content"
+                android:gravity="left"
+                android:id="@+id/textView16"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer3_header"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:id="@+id/textView17"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer3_content"
+                android:gravity="left"
+                android:id="@+id/textView18"
+                android:paddingLeft="@dimen/space_medium"
+                android:paddingRight="@dimen/space_medium" />
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_small"
+                android:textSize="@dimen/text_medium"
+                android:text="@string/about_disclaimer_link"
+                android:gravity="left"
+                android:id="@+id/textView12link"
                 android:paddingLeft="@dimen/space_medium"
                 android:paddingRight="@dimen/space_medium" />
 
