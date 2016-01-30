@@ -31,12 +31,15 @@ public class AboutFragment extends Fragment {
         TextView linkMail = (TextView) view.findViewById(R.id.textView4link);
         TextView linkWeather = (TextView) view.findViewById(R.id.textView7link);
         TextView link500px = (TextView) view.findViewById(R.id.textView9link);
+        TextView linkDisclaimer = (TextView) view.findViewById(R.id.textView12link);
         linkMail.setClickable(true);
         linkMail.setMovementMethod(LinkMovementMethod.getInstance());
         linkWeather.setClickable(true);
         linkWeather.setMovementMethod(LinkMovementMethod.getInstance());
         link500px.setClickable(true);
         link500px.setMovementMethod(LinkMovementMethod.getInstance());
+        linkDisclaimer.setClickable(true);
+        linkDisclaimer.setMovementMethod(LinkMovementMethod.getInstance());
 
         return view;
     }

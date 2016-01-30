@@ -5,6 +5,8 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import prak.travelerapp.Logger;
+
 /**
  * Class creates URL to background image loaded from API
  */
@@ -36,7 +38,7 @@ public class GetAuthorTask extends AsyncTask<String, Void, String> {
             if(name.length() > 20)
                 name = name.substring(0,20) + "...";
             author = "<a href='http://www.500px.com" + source + "'>\u00A9 " + name + " / 500px </a>";
-            //Log.d("Quelle",author);
+            Logger.getInstance().log("Quelle",author);
         } catch (Exception e) {
             return null;
         }
