@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -84,7 +83,7 @@ public class TripDBAdapter {
         String endDateString = Utils.dateTimeToString(endDate);
         String items = list.makeString();
 
-        System.out.println(items);
+        Logger.getInstance().log("TripDB", items);
 
         ContentValues contentValue = new ContentValues();
         contentValue.put(TripDBHelper.COLUMN_NAME, name);

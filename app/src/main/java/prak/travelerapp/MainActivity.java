@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //Wegen Problemen mit Menü setze das Menü bei backpress immer manuell auf den entsprechenden Menüpunkt des Fragments,
             //zu welchem zurückgegangen wird
             String fragmentTag = getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount() - 2).getName();
-            System.out.println(fragmentTag);
+            Logger.getInstance().log("Main", "Back pressed: " + fragmentTag);
             switch (fragmentTag){
                 case "StartFragment":
                     // unlock Drawer when you go back from NewTripFragment

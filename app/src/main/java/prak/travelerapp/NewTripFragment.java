@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -271,7 +270,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                             for (int i = 0; i < weather.days.size(); i++) {
                                 DateTime date = weather.days.get(i).getDate();
                                 if (DateTimeComparator.getDateOnlyInstance().compare(startDate, date) == 0) {
-                                    System.out.println("Startdate is " + date.toString("dd.MM.yyyy"));
+                                    Logger.getInstance().log("NewTrip", "Startdate is " + date.toString("dd.MM.yyyy"));
                                     relevantDayStartIndex = i;
                                     relevantDayEndIndex = weather.days.size() - 1;
                                 }
@@ -281,7 +280,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
                                 for (int z = 0; z < weather.days.size(); z++) {
                                     DateTime date = weather.days.get(z).getDate();
                                     if (DateTimeComparator.getDateOnlyInstance().compare(endDate, date) == 0) {
-                                        System.out.println("Enddate is " + date.toString("dd.MM.yyyy"));
+                                        Logger.getInstance().log("NewTrip", "Enddate is " + date.toString("dd.MM.yyyy"));
                                         relevantDayEndIndex = z;
                                     }
                                 }
@@ -503,7 +502,7 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
         }
 
         String itemString = items.makeString();
-        System.out.println(itemString);
+        Logger.getInstance().log("NewTrip", itemString);
         return items;
     }
 
