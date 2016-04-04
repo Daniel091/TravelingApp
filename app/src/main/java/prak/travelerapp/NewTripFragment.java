@@ -425,8 +425,9 @@ public class NewTripFragment extends Fragment implements View.OnClickListener,Te
     @Override
     public void onDestroy(){
         super.onDestroy();
-        cityDB.close();
-
+        if (cityDB != null) {
+            cityDB.close();
+        }
     }
 
     @Override
